@@ -254,6 +254,7 @@
         <p id='totalSVXMiningRate' class="text-center text-white">...</p>
         <p id='svxMiningMultiplier' class="text-center text-white">...</p>
         <p id='svxMiningBurn' class="text-center text-white">...</p>
+        <p id='svxMiningCost' class="text-center text-white">...</p>
     </div>
         <br>
           <!--checkbox for the automining feature, just check this and it will mine according to the parameters the user has set-->
@@ -1228,7 +1229,8 @@
                                         sovBurnAmount = sovBurnAmount.toFixed(1);
                                     var total_mining_rate = mining_rate * myRange;
                                         total_mining_rate = total_mining_rate.toFixed(4);
-
+                                    var miningCost = (sovBurnAmount / total_mining_rate);
+                                        miningCost = miningCost.toFixed(4);
 
                                     document.getElementById('svxMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Reward per Single Mining Action: <span style='color:#00bb00'>" + mining_rate + "</span> SVX</span>";
 
@@ -1248,6 +1250,10 @@
                                     document.getElementById('svxMiningMultiplier').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Multiplier: <span style='color:orange'> " + mining_multiplier + "</span>";
 
                                     document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>Total Burn per Transaction: <span style='color:red'> " + sovBurnAmount + "</span> SOV </span>";
+
+                                    document.getElementById('svxMiningCost').innerHTML = "<span class='bold' style='font-size:14px;'>Mining 1 SVX costs <span style='color:#00bb00'> " + miningCost + "</span> SOV</span>";
+
+                                    
 
 
                                 //                        document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>SVX Supply " + svx_supply + " svxpower: "+svxpower+"  bonus_percentage:"+bonus_percentage+"</span>";

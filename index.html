@@ -249,10 +249,18 @@
             </svg>
         </div>
         <br>
-        <h6 id='svxMiningRate' class="text-center">...</h6>
-        <h6 id='totalSVXMiningRate' class="text-center">...</h6>
-        <h6 id='svxMiningMultiplier' class="text-center">...</h6>
-        <h6 id='svxMiningBurn' class="text-center">...</h6>
+    <div class="container bg-dark border rounded shadow">
+        <h6 id='svxMiningRate' class="text-center text-white">...</h6>
+    </div>
+    <div class="container bg-dark border rounded shadow">
+        <h6 id='totalSVXMiningRate' class="text-center text-white">...</h6>
+    </div>
+    <div class="container bg-dark border rounded shadow">
+        <h6 id='svxMiningMultiplier' class="text-center text-white">...</h6>
+    </div>
+    <div class="container bg-dark border rounded shadow">
+        <h6 id='svxMiningBurn' class="text-center text-white">...</h6>
+    </div>
         <br>
           <!--checkbox for the automining feature, just check this and it will mine according to the parameters the user has set-->
         <div class='d-flex'><h6>SOV sent per mining action:</h6><input type='number' min="0" class='text-center form-control m-2' id='sov_burn_amount' value='150' oninput="this.value = Math.abs(this.value)"></div>
@@ -1243,7 +1251,7 @@
             
 
 
-                                    document.getElementById('svxMiningMultiplier').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Multiplier: <span style='color:blue'> " + mining_multiplier + "</span>";
+                                    document.getElementById('svxMiningMultiplier').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Multiplier: <span style='color:orange'> " + mining_multiplier + "</span>";
 
                                     document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>Total Burn per Transaction: <span style='color:red'> " + sovBurnAmount + "</span> SOV </span>";
 

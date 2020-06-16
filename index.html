@@ -249,17 +249,22 @@
             </svg>
         </div>
         <br>
-
-        <p id='svxMiningBurn' class="text-center">...</p>
-
         <h6 id='svxMiningRate' class="text-center">...</h6>
+        <h6 id='totalSVXMiningRate' class="text-center">...</h6>
+        <h6 id='svxMiningMultiplier' class="text-center">...</h6>
+        <h6 id='svxMiningBurn' class="text-center">...</h6>
+        <br>
           <!--checkbox for the automining feature, just check this and it will mine according to the parameters the user has set-->
+        <div class='d-flex'><h6>SOV sent per mining action:</h6><input type='number' min="0" class='text-center form-control m-2' id='sov_burn_amount' value='150' oninput="this.value = Math.abs(this.value)"></div>
+
+        <div class='d-flex'><h6>Mine when single action reward is ≥</h6><input type='number' min="0" step="0.01" class='text-center form-control m-2' id='target_mining_rate' value='1' oninput="this.value = Math.abs(this.value)"></div>
+
         <div class="row">
             <div class="custom-control custom-checkbox m-4">
                 <input type='checkbox' class="custom-control-input" id='checkbox-3' onclick='switch_autominer(this)'>
                 <label class="custom-control-label" for='checkbox-3' style='font-size:15px;'>Auto</label>
             </div>
-            <button type="button" class="btn btn-dark btn-block col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mining Transfer X 1</button>  
+            <button type="button" class="btn btn-dark btn-block col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mining Actions X 1</button>  
         </div>
 
         
@@ -304,24 +309,13 @@
 </style>
         <!--this is the div for the slider, the above css is for it's container-->
         <div class="slidecontainer" style='width:100%;'>
-            <input type="range" min="1" max="100" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
+            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
         </div>
 
         <div class="text-center">
-        <small>Mining transfers per transaction</small>
-        </div>
-      
-        <div class='d-flex'>SOV transfer amount:<input type='number' min="0" class='text-center form-control m-2' id='sov_burn_amount' value='150' oninput="this.value = Math.abs(this.value)"></div>
-
-        <h6 id='svxMiningMultiplier' class="text-center">...</h6>
-
-        <div class="text-center">
-            <small class="text-center">*Transfer more SOV, receive a higher mining multiplier</small>
+        <small>Bundled mining actions per transaction</small>
         </div>
 
-        <div class="row justify-content-center">
-                <small>*SOV burns when transfered. Please trade and mine responsibly</small>
-        </div>
            
         <button type="button" id='doinit' class='btn btn-outline-success btn-sm btn-block' onclick='doinit()'>Click Here to Initialize SVX for Mining </button>
 
@@ -478,6 +472,111 @@
                     // Transaction BEGIN ------------------------
                     function dotransaction_bundle() {
 
+
+                         eosobject.getTableRows({
+                            "json": "true",
+                            "code": "svxmintofeos",
+                            "scope": "SVX",
+                            "table": "stat"
+                        }).then(function(value) {
+                                //console.log("Table stat: ");
+                                //console.log(value);
+
+                                svx_supply = value.rows[0].supply;
+
+                                svx_supply = parseFloat(svx_supply);
+
+
+                            } // value
+
+                        );
+
+                         eosobject.getTableRows({
+                            "json": "true",
+                            "code": "svxmintofeos",
+                            "scope": "svxmintofeos",
+                            "table": "accounts"
+                        }).then(function(value) {
+                                //console.log("Table stat: ");
+                                //console.log(value);
+
+                                svx_mining_supply = value.rows[0].balance;
+                                svx_mining_supply = parseFloat(svx_mining_supply);
+
+                            } // value
+
+                        );
+
+                        //var scatter_account2 = 'junglediceio';
+                        eosobject.getTableRows({
+                            "json": "true",
+                            "code": "svxmintofeos",
+                            "scope": scatter_account,
+                            "table": "accounts"
+                        }).then(function(value) {
+                         
+
+                            
+                                var svxUserBalance = value.rows[0].balance;
+                                svxUserBalance = parseFloat(svxUserBalance);
+                                
+
+                                var last = value.rows[0].balance;
+                                last = last.replace("SVX", "");
+
+                                storebalance = value.rows[0].storebalance;
+                                svxpower = value.rows[0].svxpower;
+                                unstaking = value.rows[0].unstaking;
+                                unstake_time = value.rows[0].unstake_time;
+
+                                var svxStoreBalance = parseFloat(storebalance);
+                                var svxUserLiquidBalance = svxUserBalance - svxStoreBalance;
+                               
+
+                                var svxPowerAmount = parseFloat(svxpower);
+
+
+                                //         document.getElementById('debug').innerHTML = "+ " + last;     
+                         
+
+                                
+                            //---
+
+                            /*  var storebalance = value.rows[0].storebalance;
+                            var unstaking = value.rows[0].unstaking;
+                            var unstake_time = value.rows[0].unstake_time;
+                            */
+                           
+                        });
+
+                        var targetMiningRate = document.getElementById('target_mining_rate').value;
+
+                        var bonus_percentage = 0;
+
+                                if (parseFloat(svx_supply) > 0 && parseFloat(svxpower) > 0) {
+
+                                    bonus_percentage = (parseFloat(svxpower) / parseFloat(svx_supply)) * 10000;
+
+                                    if (bonus_percentage > 50) bonus_percentage = 50;
+
+                                    bonus_percentage = parseFloat(bonus_percentage).toFixed(2);
+                                    //                           bonus_percentage = (svxpower / svx_supply) * 10;
+
+                                }
+
+                                else bonus_percentage = 0;
+
+            
+                                    var mining_multiplier_start = document.getElementById('sov_burn_amount').value;
+                                    if (mining_multiplier_start < 150) mining_multiplier_start = 0;
+                                    mining_multiplier_start = format_eos_amount(mining_multiplier_start);
+                                    
+                                    mining_multiplier = Math.log10((mining_multiplier_start / 100) / .15);
+
+
+                        var mining_rate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * mining_multiplier;
+                                    
+
                         var sov_amount = "100.0000 SOV";
 
                         var sov_burn_amount = document.getElementById('sov_burn_amount').value;
@@ -506,6 +605,8 @@
                                 "memo": sov_memo
                             }
                         };
+
+                        if (mining_rate > targetMiningRate) {
 
                         console.log("============================");
                         console.log(action);
@@ -546,7 +647,7 @@
 
                         return (0);
 
-                    } // function dotransaction()
+                    }} // function dotransaction()
 
                     // Transaction END ------------------------
 
@@ -563,7 +664,7 @@
                         cleos -u https://jungle2.cryptolions.io:443  push action svxmintofeos open '{"owner":"garygarygary","symbol":"4,SVX","ram_payer":"garygarygary"}' -p garygarygary@active
 
                         */
-                        //alert("do init");
+                        //alert("do init")
 
                         //   var sov_receive_account = "themintofeos";
                         var sov_receive_account = "svxmintofeos";
@@ -1004,7 +1105,7 @@
                                     bonus_percentage = parseFloat(bonus_percentage).toFixed(2);
                                     //                           bonus_percentage = (svxpower / svx_supply) * 10;
 
-                                    document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Bonus for SVX Staking: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
+                                    document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Bonus for Staking SVX: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
 
                                 } else
                                     document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>...</span>";
@@ -1117,10 +1218,16 @@
 
 
 
+                                    var myRange = document.getElementById('myRange').value;
+                                    var sovBurnAmount = (document.getElementById('sov_burn_amount').value * 0.014) * myRange;
+                                        sovBurnAmount = sovBurnAmount.toFixed(1);
+                                    var total_mining_rate = mining_rate * myRange;
+                                        total_mining_rate = total_mining_rate.toFixed(4);
 
-                                    var sovBurnAmount = document.getElementById('sov_burn_amount').value * 0.014;
 
-                                    document.getElementById('svxMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Reward per Transfer: <span style='color:#00bb00'>" + mining_rate + "</span> SVX</span>";
+                                    document.getElementById('svxMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>SVX Reward per Single Mining Action: <span style='color:#00bb00'>" + mining_rate + "</span> SVX</span>";
+
+                                    document.getElementById('totalSVXMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Total SVX Reward per Transaction: <span style='color:#00bb00'>" + total_mining_rate + "</span> SVX</span>";
 
                                     document.getElementById('sellsoveosMiningRateDiv').innerHTML = "<span class='bold' style='font-size:14px;'>Reward: <span style='color:#00bb00'>" + sellsoveosMiningRate + "</span>  SVX</span>";
 
@@ -1133,9 +1240,9 @@
             
 
 
-                                    document.getElementById('svxMiningMultiplier').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Multiplier per Transfer: " + mining_multiplier + "</span>";
+                                    document.getElementById('svxMiningMultiplier').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Multiplier: <span style='color:blue'> " + mining_multiplier + "</span>";
 
-                                    document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>SOV Burn per Mining Transfer: " + sovBurnAmount + "</span>";
+                                    document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>Total SOV Burned per Transaction: <span style='color:red'> " + sovBurnAmount + "</span>";
 
 
                                 //                        document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>SVX Supply " + svx_supply + " svxpower: "+svxpower+"  bonus_percentage:"+bonus_percentage+"</span>";
@@ -1422,7 +1529,7 @@
                     function showVal(val) {
 
 
-                        document.getElementById('dotransaction_bundle').innerHTML = "Mining Transfer X " + val;
+                        document.getElementById('dotransaction_bundle').innerHTML = "Mining Actions X " + val;
                         
                     } 
 

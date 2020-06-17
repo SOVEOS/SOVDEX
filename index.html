@@ -476,7 +476,7 @@
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            alert('Error' + err.error.details[0].message);
+                            
                             return;
 
                         });
@@ -534,7 +534,7 @@
 
                             
                                 var svxUserBalance = value.rows[0].balance;
-                                svxUserBalance = parseFloat(svxUserBalance);
+                                svxUserBalance = parseFloat(svxUserBalance).toFixed(4);
                                 
 
                                 var last = value.rows[0].balance;
@@ -545,11 +545,12 @@
                                 unstaking = value.rows[0].unstaking;
                                 unstake_time = value.rows[0].unstake_time;
 
-                                var svxStoreBalance = parseFloat(storebalance);
+                                var svxStoreBalance = parseFloat(storebalance).toFixed(4);
                                 var svxUserLiquidBalance = svxUserBalance - svxStoreBalance;
+                                    svxUserLiquidBalance - parseFloat(svxUserBalance).toFixed(4);
                                
 
-                                var svxPowerAmount = parseFloat(svxpower);
+                                var svxPowerAmount = parseFloat(svxpower).toFixed(4);
 
 
                                 //         document.getElementById('debug').innerHTML = "+ " + last;     
@@ -656,7 +657,7 @@
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            alert('Error' + err.error.details[0].message);
+                            
                             return;
 
                         });
@@ -1010,7 +1011,7 @@
 
                                 svx_supply = value.rows[0].supply;
 
-                                svx_supply = parseFloat(svx_supply);
+                                svx_supply = parseFloat(svx_supply).toFixed(4);
 
 
                             } // value
@@ -1027,7 +1028,7 @@
                                 //console.log(value);
 
                                 svx_mining_supply = value.rows[0].balance;
-                                svx_mining_supply = parseFloat(svx_mining_supply);
+                                svx_mining_supply = parseFloat(svx_mining_supply).toFixed(4);
 
                             } // value
 
@@ -1048,30 +1049,35 @@
 
                             try {
                                 var svxUserBalance = value.rows[0].balance;
-                                svxUserBalance = parseFloat(svxUserBalance);
+                                    svxUserBalance = parseFloat(svxUserBalance).toFixed(4);
                                 
 
                                 var last = value.rows[0].balance;
                                 last = last.replace("SVX", "");
 
                                 storebalance = value.rows[0].storebalance;
+                                storebalance = parseFloat(storebalance).toFixed(4)
                                 svxpower = value.rows[0].svxpower;
+                                svxpower = parseFloat(svxpower).toFixed(4);
                                 unstaking = value.rows[0].unstaking;
                                 unstake_time = value.rows[0].unstake_time;
 
-                                var svxStoreBalance = parseFloat(storebalance);
+                                var svxStoreBalance = parseFloat(storebalance).toFixed(4);
                                 var svxUserLiquidBalance = svxUserBalance - svxStoreBalance;
+                                    svxUserLiquidBalance = parseFloat(svxUserLiquidBalance).toFixed(4);
+                                var svxUserLiquidBalanceMax = parseFloat(svxUserLiquidBalance).toFixed(0);
                                
 
-                                var svxPowerAmount = parseFloat(svxpower);
+                                var svxPowerAmount = parseFloat(svxpower).toFixed(4);
+                                var svxMaxUnstake = parseFloat(svxPowerAmount).toFixed(0);
 
                                 
                                // document.getElementById("svx_to_stake").value = stakingSlider.value;
                                 //document.getElementById("svx_to_unstake").value = unstakingSlider.value;
                                // document.getElementById("stakingSlider").max = svxUserLiquidBalance;
                                // document.getElementById("unstakingSlider").max = svxPowerAmount;
-                                document.getElementById("svx_to_stake").placeholder = "Max " + svxUserLiquidBalance;
-                                document.getElementById("svx_to_unstake").placeholder = "Max " + svxPowerAmount;
+                                document.getElementById("svx_to_stake").placeholder = "Max ≈ " + svxUserLiquidBalanceMax;
+                                document.getElementById("svx_to_unstake").placeholder = "Max ≈ " + svxMaxUnstake;
 
                                  if (document.getElementById('SVXBALANCE')) {
                                      document.getElementById('SVXBALANCE').innerHTML = "<span class='bold'>" + svxUserLiquidBalance + " SVX</span>";
@@ -1095,7 +1101,7 @@
 
 
                                 if (document.getElementById('svx_stake_balance')) {
-                                    document.getElementById('svx_stake_balance').value = storebalance;
+                                    document.getElementById('svx_stake_balance').value = svxPowerAmount;
                                 }
 
                                 if (document.getElementById('svx_unstaking_balance')) {

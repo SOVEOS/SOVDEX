@@ -1151,11 +1151,11 @@
                                 var svxStoreBalance = parseFloat(storebalance).toFixed(4);
                                 var svxUserLiquidBalance = svxUserBalance - svxStoreBalance;
                                     svxUserLiquidBalance = parseFloat(svxUserLiquidBalance).toFixed(4);
-                                var svxUserLiquidBalanceMax = parseFloat(svxUserLiquidBalance).toFixed(0);
+                                var svxUserLiquidBalanceMax = Math.floor(svxUserLiquidBalance);
                                
 
                                 var svxPowerAmount = parseFloat(svxpower).toFixed(4);
-                                var svxMaxUnstake = parseFloat(svxPowerAmount).toFixed(0);
+                                var svxMaxUnstake = Math.floor(svxPowerAmount);
 
                                 var node_proz = (svxPowerAmount / 777000) * 100;
                                     node_proz = Number(node_proz).toFixed(1);

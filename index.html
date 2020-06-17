@@ -30,7 +30,7 @@
 
         
         <!--contains the "header" with SOVDEX | BURN-MINER | TRADE-MINER, login button, and account name display on login-->
-        <div class="container-fluid border rounded bg-dark shadow"> 
+        <div class="container-fluid bg-dark shadow"> 
         <br> 
         <h1 class="row d-flex justify-content-center text-white">SOVDEX</h1>
         <img src="image\SVXLOGOtransparentII.png" class="mx-auto d-block" style="width: 200px; height: 200px;">   
@@ -59,7 +59,7 @@
             <br>
 
 
-            <div class="container bg-dark border rounded shadow"> 
+            <div class="container bg-dark border border-primary rounded shadow"> 
                 <br>
                 <div class="input-group">
                     <input type="number" placeholder="1 SOV minimum" min="0" class="form-control" aria-label="Number input with dropdown button" id="sovresourcesInput" oninput="this.value = Math.abs(this.value)">
@@ -104,7 +104,7 @@
 
 
             <!--another container inside the initial one, this is for staking and unstaking SVX-->
-            <div class="container border rounded bg-dark shadow">
+            <div class="container border border-primary rounded bg-dark shadow">
                 <div class="row row-cols-2 mb-1">
                     <p class="col text-center text-white">
                     &nbsp;Staked SVX
@@ -252,14 +252,14 @@
             </svg>
         </div>
         <br>
-    <div class="container bg-dark border rounded shadow">  
+    <div class="container bg-dark border border-primary rounded shadow">  
         <p id='svxMiningRate' class="text-center text-white mt-3">...</p>
         <p id='totalSVXMiningRate' class="text-center text-white">...</p>
         <p id='svxMiningMultiplier' class="text-center text-white">...</p>
         <p id='svxMiningBurn' class="text-center text-white">...</p>
     </div>
     <br>
-    <div class="container bg-dark border rounded shadow"> 
+    <div class="container bg-dark border border-warning rounded shadow"> 
         <p id='svxMiningCost' class="text-center text-white mt-3">...</p>
     </div>
         <br>
@@ -275,9 +275,9 @@
         <div class="row">
             <div class="custom-control custom-checkbox m-4">
                 <input type='checkbox' class="custom-control-input" id='checkbox-3' onclick='switch_autominer(this)'>
-                <label class="custom-control-label" for='checkbox-3' style='font-size:15px;'>Auto</label>
+                <label class="custom-control-label" for='checkbox-3' style='font-size:16px;'>Auto Mine</label>
             </div>
-            <button type="button" class="btn btn-dark btn-block border border-warning col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mine X 1</button>  
+            <button type="button" class="btn btn-dark btn-block border border-success col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mine X 1</button>  
             </div>
 
         
@@ -2112,7 +2112,7 @@
         
                 
         <!--this cointains the trading box and all it's info-->
-        <div class="container border rounded bg-dark shadow">
+        <div class="container border border-primary rounded bg-dark shadow">
         <br>
             <nav>
                 <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
@@ -2248,6 +2248,7 @@
         </div>
         <input id='scatter_host' class="text-center form-control" type='text' aria-describedby="basic-addon1" value=''>
     </div>
+    <br>
                     
     <script>
         var init_node = "eu1.eosdac.io";

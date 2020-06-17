@@ -86,8 +86,18 @@
  
                         <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" /> 
                         <path id='mycpu' d="" fill="none" stroke="#55ff55" stroke-width="30"   stroke-linecap="round"  />
-                        <text id='mycpu_text' x='200' y='180' text-anchor="middle" font-size='80'>0%</text>
+                        <text id='mycpu_text' x='200' y='180' text-anchor="middle" font-size='70'>0%</text>
                         <text id='mycpu_text' x='200' y='270' text-anchor="middle" font-size='70'>CPU</text>
+                    </svg>
+                </div>
+
+                <div class="col">
+                    <svg viewbox="0, 0, 400, 400">
+                        <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" /> 
+                        <path id='mynode' d="" fill="none" stroke="#55ff55" stroke-width="30"   stroke-linecap="round"  />
+                        <text id='mynode_text' x='200' y='150' text-anchor="middle" font-size='60'>0%</text>
+                        <text id='mynode_text' x='200' y='210' text-anchor="middle" font-size='60'>SVX</text>
+                        <text id='mynode_text' x='200' y='270' text-anchor="middle" font-size='60'>NODE</text>
                     </svg>
                 </div>
                 
@@ -95,10 +105,14 @@
                     <svg viewbox="0, 0, 400, 400">
                         <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" /> 
                         <path id='mynet' d="" fill="none" stroke="#55ff55" stroke-width="30"   stroke-linecap="round"  />
-                        <text id='mynet_text' x='200' y='180' text-anchor="middle" font-size='80'>0%</text>
+                        <text id='mynet_text' x='200' y='180' text-anchor="middle" font-size='70'>0%</text>
                         <text id='mynet_text' x='200' y='270' text-anchor="middle" font-size='70'>NET</text>
                     </svg>
                 </div>
+            </div>
+
+            <div class="text-center">
+                    <small> &nbsp;*Full nodes receive inflation rewards and exchange fees</small>
             </div>
             <br>
 
@@ -201,9 +215,74 @@
 
                 } // set_circle_element
 
+                 function set_circle_element_node(elm, value) {
+                    value = value.toFixed(0);
+
+                    value2 = (360 / 100) * value;
+                    // ---
+                    /*
+                    circle2
+                    */
+                    elm2 = elm + "_text";
+                    let f4 = document.getElementById(elm2);
+                    f4.textContent = value + "%";
+
+                    let f3 = document.getElementById(elm);
+
+                    if (value >= 0 && value <= 25)
+                        f3.setAttribute('stroke', "#ff5555");
+
+                    if (value >= 25 && value <= 50)
+                        f3.setAttribute('stroke', "#ffaa00");
+
+                    if (value >= 50 && value <= 75)
+                        f3.setAttribute('stroke', "#5bc0de");
+
+                    if (value >= 75 && value <=99)
+                        f3.setAttribute('stroke', "#0275d8");
+
+                    if (value >= 100)
+                        f3.setAttribute('stroke', "#00bb00");
+
+                    var buffer = "";
+
+                    // 
+
+                    var cx = 200;
+                    var cy = 200;
+
+                    //   buffer += "M "+cx+" "+cy+" ";
+                    buffer += "";
+
+                    var radius = 170;
+
+                    var maxrad = value2;
+                    for (var deg = 0; deg < maxrad; deg += 5) {
+                        deg2 = -deg + 180;
+
+                        var x = Math.sin(deg2 * Math.PI / 180) * radius;
+                        var y = Math.cos(deg2 * Math.PI / 180) * radius;
+
+                        if (deg == 0) {
+                            buffer += "M " + (x + cx) + " " + (y + cy) + " ";
+
+                        } else {
+                            buffer += "L " + (x + cx) + " " + (y + cy) + " ";
+                        }
+                    }
+                    // buffer += "L 240 300 ";
+                    //  buffer += "L 240 350 ";
+                    buffer += " ";
+
+                    f3.setAttribute('d', buffer);
+
+                } // set_circle_element
+
                 var radius = 0;
 
                 var radius_net = 0;
+
+                var radius_node = 0;
 
                 function doitx(param) {
                     //alert("P: " + param);
@@ -230,6 +309,16 @@
 
                         // ---
                     }
+
+                     if (param == 3) {
+                        //   document.getElementById('kreis').cx = 230;
+
+                        radius_node += 5;
+                        set_circle_element_node("mynode", radius_node);
+
+                    }
+
+
 
                 }
             </script>
@@ -1071,6 +1160,9 @@
                                 var svxPowerAmount = parseFloat(svxpower).toFixed(4);
                                 var svxMaxUnstake = parseFloat(svxPowerAmount).toFixed(0);
 
+                                var node_proz = (svxPowerAmount / 777000) * 100;
+                                    node_proz = Number(node_proz).toFixed(1);
+
                                 
                                // document.getElementById("svx_to_stake").value = stakingSlider.value;
                                 //document.getElementById("svx_to_unstake").value = unstakingSlider.value;
@@ -1085,6 +1177,12 @@
 
                                 if (document.getElementById('SVXBALANCE1')) {
                                      document.getElementById('SVXBALANCE1').innerHTML = "<span class='bold'>" + svxUserLiquidBalance + " SVX</span>";
+                                }
+
+                                 if (document.getElementById('mynode')) {
+                                    node_proz = Number(node_proz).toFixed(0) * 1;
+                                    //  document.getElementById('div_cpu').innerHTML =  cpu_proz + "%";
+                                    set_circle_element_node("mynode", node_proz);
                                 }
 
 

@@ -1023,16 +1023,22 @@
 
                             var buysoveosBancor = (-soveosOutstanding*(Math.pow((1-(eosTransferAmount /(soveosBalance + eosTransferAmount))), (soveosCW/100))-1)).toFixed(4);
 
-
-    
                             var sellsoveosBancor = (-soveosBalance*(Math.pow(((1-(sovTransferAmount / (soveosOutstanding + sovTransferAmount)))), (1/(soveosCW/100)))-1)).toFixed(4);
+
+                            var buysoveosAvgPrice = (eosTransferAmount / buysoveosBancor).toFixed(8);
+                            var sellsoveosAvgPrice = (sellsoveosBancor / sovTransferAmount).toFixed(8);
+
+                            buysoveosBancorDiv.textContent = (buysoveosBancor);
+                            sellsoveosBancorDiv.textContent = (sellsoveosBancor);
+
+                            BUYSOVEOSAVGPRICE.innerText = ("Price with slippage = " + buysoveosAvgPrice + " EOS");
+                            SELLSOVEOSAVGPRICE.innerText = ("Price with slippage = " + sellsoveosAvgPrice + " EOS");
             
                             SOVEOSPRICE.innerText = ("SOV Price = " + soveosPrice + " EOS");
 
 
 
-                            buysoveosBancorDiv.textContent = (buysoveosBancor);
-                            sellsoveosBancorDiv.textContent = (sellsoveosBancor);
+                            
                          });
 
 
@@ -1058,16 +1064,19 @@
 
                             var buysovusdtBancor = (-sovusdtOutstanding*(Math.pow((1-(usdtTransferAmount /(sovusdtBalance + usdtTransferAmount))), (sovusdtCW/100))-1)).toFixed(4);
 
-
-    
                             var sellsovusdtBancor = (-sovusdtBalance*(Math.pow(((1-(sovTransferAmount / (sovusdtOutstanding + sovTransferAmount)))), (1/(sovusdtCW/100)))-1)).toFixed(4);
-            
-                            SOVUSDTPRICE.innerText = ("SOV Price = " + sovusdtPrice + " USDT");
 
-
+                            var buysovusdtAvgPrice = (usdtTransferAmount / buysovusdtBancor).toFixed(8);
+                            var sellsovusdtAvgPrice = (sellsovusdtBancor / sovTransferAmount).toFixed(8);
 
                             buysovusdtBancorDiv.textContent = (buysovusdtBancor);
                             sellsovusdtBancorDiv.textContent = (sellsovusdtBancor);
+
+                            BUYSOVUSDTAVGPRICE.innerText = ("Price with slippage = " + buysovusdtAvgPrice + " USDT");
+                            SELLSOVUSDTAVGPRICE.innerText = ("Price with slippage = " + sellsovusdtAvgPrice + " USDT");
+            
+                            SOVUSDTPRICE.innerText = ("SOV Price = " + sovusdtPrice + " USDT");
+                            
                          });
 
 
@@ -1093,16 +1102,20 @@
 
                             var buysvxeosBancor = (-svxeosOutstanding*(Math.pow((1-(eosTransferAmount /(svxeosBalance + eosTransferAmount))), (svxeosCW/100))-1)).toFixed(4);
 
-
-    
                             var sellsvxeosBancor = (-svxeosBalance*(Math.pow(((1-(svxTransferAmount / (svxeosOutstanding + svxTransferAmount)))), (1/(svxeosCW/100)))-1)).toFixed(4);
-            
-                            SVXEOSPRICE.innerText = ("SVX Price = " + svxeosPrice + " EOS");
 
-
+                            var buysvxeosAvgPrice = (eosTransferAmount / buysvxeosBancor).toFixed(8);
+                            var sellsvxeosAvgPrice = (sellsvxeosBancor / svxTransferAmount).toFixed(8);
 
                             buysvxeosBancorDiv.textContent = (buysvxeosBancor);
                             sellsvxeosBancorDiv.textContent = (sellsvxeosBancor);
+
+
+                            BUYSVXEOSAVGPRICE.innerText = ("Price with slippage = " + buysvxeosAvgPrice + " EOS");
+                            SELLSVXEOSAVGPRICE.innerText = ("Price with slippage = " + sellsvxeosAvgPrice + " EOS");
+            
+                            SVXEOSPRICE.innerText = ("SVX Price = " + svxeosPrice + " EOS");
+
                          });
 
 
@@ -1128,16 +1141,20 @@
 
                             var buyeospbtcBancor = (-eospbtcOutstanding*(Math.pow((1-(pbtcTransferAmount /(eospbtcBalance + pbtcTransferAmount))), (eospbtcCW/100))-1)).toFixed(4);
 
-
-    
                             var selleospbtcBancor = (-eospbtcBalance*(Math.pow(((1-(eosTransferAmount / (eospbtcOutstanding + eosTransferAmount)))), (1/(eospbtcCW/100)))-1)).toFixed(8);
+
+                            var buyeospbtcAvgPrice = (pbtcTransferAmount / buyeospbtcBancor).toFixed(8);
+                            var selleospbtcAvgPrice = (selleospbtcBancor / eosTransferAmount).toFixed(8);
+
+                            buyeospbtcBancorDiv.textContent = (buyeospbtcBancor);
+                            selleospbtcBancorDiv.textContent = (selleospbtcBancor);
+
+                            BUYEOSPBTCAVGPRICE.innerText = ("Price with slippage = " + buyeospbtcAvgPrice + " pbtc");
+                            SELLEOSPBTCAVGPRICE.innerText = ("Price with slippage = " + selleospbtcAvgPrice + " pBTC");
             
                             EOSPBTCPRICE.innerText = ("EOS Price = " + eospbtcPrice + " pBTC");
 
 
-
-                            buyeospbtcBancorDiv.textContent = (buyeospbtcBancor);
-                            selleospbtcBancorDiv.textContent = (selleospbtcBancor);
                          });
 
 
@@ -2426,6 +2443,10 @@
                     <small class="text-center text-white">EOS before fees</small>
                     <br>
                     <br>
+                    <div>
+                    <p id="BUYEOSPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
+                    <br>
                 </div>
 
                 <div class="col text-center">
@@ -2436,10 +2457,12 @@
                     <small class="text-center text-white">pBTC before fees</small>
                     <br>
                     <br>
+                    <div>
+                    <p id="SELLEOSPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
+                    <br>
                 </div>
             </div>
-            <br>
-
         <div>
             <p id="EOSPBTCPRICE" class="d-flex justify-content-center text-light">...</p>
         </div>
@@ -2464,6 +2487,11 @@
                     <small class="text-center text-white">SOV before fees</small>
                     <br>
                     <small class="text-center text-white" id="buysoveosMiningRateDiv">...</small>
+                    <br>
+                    <br>
+                    <div>
+                    <p id="BUYSOVEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
                 </div>
 
                 <div class="col text-center">
@@ -2474,10 +2502,13 @@
                     <small class="text-center text-white">EOS before fees</small>
                     <br>
                     <small class="text-center text-white" id="sellsoveosMiningRateDiv">...</small>
+                    <br>
+                    <br>
+                    <div>
+                    <p id="SELLSOVEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
                 </div>
             </div>
-            <br>
-
         <div>
             <p id="SOVEOSPRICE" class="d-flex justify-content-center text-light">...</p>
         </div>
@@ -2500,6 +2531,11 @@
                     <small class="text-center text-white">SOV before fees</small>
                     <br>
                     <small class="text-center text-white" id="buysovusdtMiningRateDiv">...</small>
+                    <br>
+                    <br>
+                    <div>
+                    <p id="BUYSOVUSDTAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
                 </div>
 
                 <div class="col text-center">
@@ -2510,10 +2546,13 @@
                     <small class="text-center text-white">USDT before fees</small>
                     <br>
                     <small class="text-center text-white" id="sellsovusdtMiningRateDiv">...</small>
+                    <br>
+                    <br>
+                    <div>
+                    <p id="SELLSOVUSDTAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
                 </div>
             </div>
-            <br>
-
         <div>
             <p id="SOVUSDTPRICE" class="d-flex justify-content-center text-light">...</p>
         </div>
@@ -2535,8 +2574,11 @@
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="buysvxeosBancorDiv">...</small>
                     <small class="text-center text-white">SVX before fees</small>
-                    
-                    
+                    <br>
+                    <br>                  
+                    <div>
+                    <p id="BUYSVXEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>
                 </div>
 
                 <div class="col text-center">
@@ -2545,12 +2587,13 @@
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="sellsvxeosBancorDiv">...</small>
                     <small class="text-center text-white">EOS before fees</small>
-
-                   
+                    <br>
+                    <br>
+                    <div>
+                    <p id="SELLSVXEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                    </div>                   
                 </div>
             </div>
-            <br>
-
         <div>
             <br>
             <p id="SVXEOSPRICE" class="d-flex justify-content-center text-light">...</p>
@@ -2558,6 +2601,10 @@
     </div>
 
 </div>
+    <div class="text-center text-warning">
+        <small> &nbsp;Small orders incur less slippage than large orders</small>
+    </div>
+    <br>
 </div>
 <br>
 <br>

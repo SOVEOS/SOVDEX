@@ -62,7 +62,7 @@
             <div class="container bg-dark border border-primary rounded shadow"> 
                 <br>
                 <div class="input-group">
-                    <input type="number" placeholder="1 SOV minimum" min="0" class="form-control" aria-label="Number input with dropdown button" id="sovresourcesInput" oninput="this.value = Math.abs(this.value)">
+                    <input type="number" placeholder="1 SOV minimum" min="0" class="form-control" aria-label="Number input with dropdown button" id="sovresourcesInput">
                 <div class="input-group-prepend">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</button>                
                         <div class="dropdown-menu">
@@ -135,11 +135,11 @@
 
                 <div class="row row-cols-2">
                     <div class="col text-center">
-                        <input class="text-center form-control mb-1" type='number' min="0" id='svx_to_stake' oninput="this.value = Math.abs(this.value)">
-                        <button class="btn btn-primary btn-lg btn-block shadow" id='stakebutton' onclick='svx_to_stake_action()'> Stake </button>
+                        <input class="text-center form-control mb-1" type='number' min="0" step="1" id='svx_to_stake'>
+                        <button class="btn btn-primary btn-lg btn-block shadow" id='stakebutton' onclick='svx_to_stake_action()'>Stake </button>
                     </div>
                     <div class="col text-center">
-                        <input class="text-center form-control mb-1" type='number' min="0" id='svx_to_unstake' oninput="this.value = Math.abs(this.value)">
+                        <input class="text-center form-control mb-1" type='number' min="0" step="1" id='svx_to_unstake'>
                         <button class="btn btn-primary btn-lg btn-block shadow" id='stakebutton' onclick='svx_to_unstake_action()'>Unstake</button> 
                     </div>
                 </div>
@@ -350,13 +350,13 @@
     </div>
         <br>
           <!--checkbox for the automining feature, just check this and it will mine according to the parameters the user has set-->
-        <div class='d-flex mt-1'><h6>SOV sent per mining action:</h6><input type='number' min="150" class='text-center form-control ml-3' id='sov_burn_amount' value='150' oninput="this.value = Math.abs(this.value)">
+        <div class='d-flex mt-1'><h6>SOV sent per mining action:</h6><input type='number' min="150" class='text-center form-control ml-3' id='sov_burn_amount' value='150'>
         </div>
         <div class="text-center">
         <small class="text-center text-primar">*all unburned SOV is refunded automatically</small>
         </div>
 
-        <div class='d-flex mt-1'><h6>Mine when single action reward is ≥</h6><input type='number' min="0" step="0.01" class='text-center form-control ml-3' id='target_mining_rate' value='0' oninput="this.value = Math.abs(this.value)"></div>
+        <div class='d-flex mt-1'><h6>Mine when single action reward is ≥</h6><input type='number' min="0" step="0.01" class='text-center form-control ml-3' id='target_mining_rate' value='0'></div>
 
         <div class="row">
             <div class="custom-control custom-checkbox m-4">
@@ -408,7 +408,7 @@
 </style>
         <!--this is the div for the slider, the above css is for it's container-->
         <div class="slidecontainer" style='width:100%;'>
-            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
+            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange">
         </div>
 
         <div class="text-center">
@@ -851,6 +851,8 @@
 
                                 var balance1 = value.core_liquid_balance;
 
+                                var balance2 = value.core_liquid_balance;
+
                                 var cpu_proz = (cpu_used / cpu_max) * 100;
                                 cpu_proz = Number(cpu_proz).toFixed(1);
 
@@ -863,6 +865,10 @@
 
                                 if (document.getElementById('balance1')) {
                                     document.getElementById('balance1').innerHTML = "" + balance;
+                                }
+
+                                if (document.getElementById('balance2')) {
+                                    document.getElementById('balance2').innerHTML = "" + balance;
                                 }
 
                                 if (document.getElementById('mycpu')) {
@@ -950,6 +956,36 @@
                                 //document.getElementById('balance').innerHTML = "Your Balance: <span class='bold'>" + last + "</span>";
                                 if (document.getElementById('USDTBALANCE')) {
                                     document.getElementById('USDTBALANCE').innerHTML = "<span class='bold'>" + last + " USDT</span>";
+                                }
+
+
+                            } catch (err) {
+
+
+                            }
+
+
+                        });
+
+
+                        eosobject.getTableRows({
+                            "json": "true",
+                            "code": "btc.ptokens",
+                            "scope": scatter_account,
+                            "table": "accounts"
+                        }).then(function(value) {
+
+                            var wert = value.rows.length;
+
+                            try {
+                                var last = value.rows[0].balance;
+                                last = last.replace("pBTC", "");
+
+                                balance_token = last * 10000;
+
+                                //document.getElementById('balance').innerHTML = "Your Balance: <span class='bold'>" + last + "</span>";
+                                if (document.getElementById('PBTCBALANCE')) {
+                                    document.getElementById('PBTCBALANCE').innerHTML = "<span class='bold'>" + last + "</span>";
                                 }
 
 
@@ -1067,6 +1103,41 @@
 
                             buysvxeosBancorDiv.textContent = (buysvxeosBancor);
                             sellsvxeosBancorDiv.textContent = (sellsvxeosBancor);
+                         });
+
+
+                        eosobject.getTableRows({
+                            "json": "true",
+                            "code": "sovdexrelays",
+                            "scope": "PBTC",
+                            "table": "eospair"
+                        }).then(function(value) {
+      
+                            var eospbtcPrice = value.rows[0].price;
+                            const eospbtcCW = value.rows[0].cw;
+                            var eospbtcBalance = value.rows[0].connectorbal;
+                            var eospbtcOutstanding = value.rows[0].outstandingbal;
+                            var pbtcTransferAmount = document.getElementById('pbtc_transfer_amount').value;
+                            var eosTransferAmount = document.getElementById('eos_transfer_amount2').value;
+                            eospbtcBalance = parseFloat(eospbtcBalance);
+                            eospbtcOutstanding = parseFloat(eospbtcOutstanding);
+                            pbtcTransferAmount = parseFloat(pbtcTransferAmount);
+                            eosTransferAmount = parseFloat(eosTransferAmount);
+                            eospbtcPrice = parseFloat(eospbtcPrice).toFixed(8);   
+
+
+                            var buyeospbtcBancor = (-eospbtcOutstanding*(Math.pow((1-(pbtcTransferAmount /(eospbtcBalance + pbtcTransferAmount))), (eospbtcCW/100))-1)).toFixed(4);
+
+
+    
+                            var selleospbtcBancor = (-eospbtcBalance*(Math.pow(((1-(eosTransferAmount / (eospbtcOutstanding + eosTransferAmount)))), (1/(eospbtcCW/100)))-1)).toFixed(8);
+            
+                            EOSPBTCPRICE.innerText = ("EOS Price = " + eospbtcPrice + " pBTC");
+
+
+
+                            buyeospbtcBancorDiv.textContent = (buyeospbtcBancor);
+                            selleospbtcBancorDiv.textContent = (selleospbtcBancor);
                          });
 
 
@@ -1254,6 +1325,8 @@
                                     
                                     
                                     document.getElementById('svxDiscount').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</%span></span>";
+
+                                    document.getElementById('svxDiscount1').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</%span></span>";
 
 
                                     document.getElementById('svxDiscount10').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</%span></span>";
@@ -1490,8 +1563,35 @@
                     // format_eos_amount
 
 
-                     
+                    function format_btc_amount(amount) {
+
+                        betamount = amount + "";
+
+                        var n = betamount.indexOf(".");
+
+                        if (n == -1) {
+                            betamount = betamount + ".00000000";
+
+                            n = betamount.indexOf(".");
+                        }
+
+                        var l = betamount.length;
+                        diff = l - n - 1;
+
+                        amount2 = betamount;
+                        for (i = diff; i < 8; i++)
+                            amount2 += '0';
+
+                        amount2 = parseFloat(amount2).toFixed(8);
+
+                        return (amount2);
+
+                    }
                     // format_pow_amount
+
+
+                     
+                    // format_btc_amount
 
 
                     // SCATTER BEGIN ------------------------
@@ -2192,26 +2292,114 @@
 
                     }
 
+                    function buyEOSPBTC() {
+
+                        var transfer_amount = document.getElementById('pbtc_transfer_amount').value;
+                        alert("Exchange " + transfer_amount + " pBTC for EOS");
+                        transfer_amount = format_btc_amount(transfer_amount);
+                        transfer_amount = transfer_amount + " PBTC";
+
+                        eosobject.transaction({
+                            actions: [{
+                                account: 'btc.ptokens',
+                                //      name: 'admin2',
+                                name: 'transfer',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                             
+                                data: {
+                                    "from": scatter_account,
+                                    "to": 'sovdexrelays',
+                                    "quantity": transfer_amount,
+                                    "memo": 'EOS',
+                                }
+
+                            }]
+                        }).then(result => {
+                            
+                            console.log("Success!!!");
+
+                            alert('Success!');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            alert('Error: ' + err.error.details[0].message);
+
+                            return;
+
+                        });
 
 
-                   
+                    }
 
 
 
+                    function sellEOSPBTC() {
+                        
+                        var transfer_amount = document.getElementById('eos_transfer_amount2').value;
+                        alert("Exchange " + transfer_amount + " EOS for pBTC");
+                        transfer_amount = format_eos_amount(transfer_amount);
+                        transfer_amount = transfer_amount + " EOS";
 
+                        eosobject.transaction({
+                            actions: [{
+                                account: 'eosio.token',
+                                //      name: 'admin2',
+                                name: 'transfer',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                                //     data: {"from":scatter_account,"to":receiver_account,"quantity":betamount,"memo":memo}
+                                //      data: {"param": "createbet;;BIRD vs turtle;This is a description;Bird;bird;Turtle;turtle;43;123"}
+                                data: {
+                                    "from": scatter_account,
+                                    "to": 'sovdexrelays',
+                                    "quantity": transfer_amount,
+                                    "memo": 'PBTC',
+                                }
+
+                            }]
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            alert('Success!');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            //  nalert('<br><div class=\'checkmark_red\'></div>Error '+err.error.name+ '!<br><br>','white');
+                            alert('Error: ' + err.error.details[0].message);
+
+                            return;
+
+                        });
+
+                    }
 
                 </script>
-
-                
-
-        
-                
+   
         <!--this cointains the trading box and all it's info-->
         <div class="container border border-primary rounded bg-dark shadow">
         <br>
             <nav>
                 <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-EOS" role="tab" aria-controls="nav-EOS" aria-selected="true">SOV|EOS</a>
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-PBTC" role="tab" aria-controls="nav-PBTC" aria-selected="true">EOS|PBTC</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-EOS" role="tab" aria-controls="nav-EOS" aria-selected="true">SOV|EOS</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-USDT" role="tab" aria-controls="nav-USDT" aria-selected="false">SOV|USDT</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-SVXEOS" role="tab" aria-controls="nav-SVXEOS" aria-selected="false">SVX|EOS</a>
                 </div>
@@ -2220,9 +2408,47 @@
 
             <div class="tab-content" id="nav-tabContent">
 
-                <div class="tab-pane fade show active" id="nav-EOS" role="tabpanel" aria-labelledby="nav-EOS-tab">
+            <div class="tab-pane fade show active" id="nav-PBTC" role="tabpanel" aria-labelledby="nav-PBTC-tab">
 
             <h6 id='svxDiscount' class="text-center text-warning">...</h6>
+            <h6 class="text-center text-white">EOS/pBTC Trading Balance</h6>
+            <row class="d-flex justify-content-around">
+                <small id="PBTCBALANCE" class="col text-center text-light">...</small>
+                <small id= "balance2" class="col text-light text-center">...</small>
+            </row>  
+
+            <div class="row row-cols-2">
+                <div class="col text-center">
+                    <input class="text-center form-control mb-1" type='number' id='pbtc_transfer_amount' min="0" value= '0.0001' step=".00001">
+                    <button class="btn btn-success btn-lg btn-block shadow" onclick='buyEOSPBTC()'>SendpBTC<br>Buy EOS/pBTC</button>
+                    <small class="text-center text-white">Receive</small>
+                    <small class="text-center text-warning" id="buyeospbtcBancorDiv">...</small>
+                    <small class="text-center text-white">EOS before fees</small>
+                    <br>
+                    <br>
+                </div>
+
+                <div class="col text-center">
+                    <input class="text-center form-control mb-1" type='number' id='eos_transfer_amount2' min="0" value='1' step=".01">
+                    <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellEOSPBTC()'>SendEOS<br>Sell EOS/pBTC</button> 
+                    <small class="text-center text-white">Receive</small>
+                    <small class="text-center text-warning" id="selleospbtcBancorDiv">...</small>
+                    <small class="text-center text-white">pBTC before fees</small>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <br>
+
+        <div>
+            <p id="EOSPBTCPRICE" class="d-flex justify-content-center text-light">...</p>
+        </div>
+    </div>
+
+
+
+            <div class="tab-pane fade" id="nav-EOS" role="tabpanel" aria-labelledby="nav-EOS-tab">
+            <h6 id='svxDiscount1' class="text-center text-warning">...</h6>
             <h6 class="text-center text-white">SOV/EOS Trading Balance</h6>
             <row class="d-flex justify-content-around">
                 <small id="balance" class="col text-center text-light">...</small>
@@ -2231,7 +2457,7 @@
 
             <div class="row row-cols-2">
                 <div class="col text-center">
-                    <input class="text-center form-control mb-1" type='number' min="0" id='eos_transfer_amount'  value= '1' step=".01" oninput="this.value = Math.abs(this.value)">
+                    <input class="text-center form-control mb-1" type='number' id='eos_transfer_amount' min="0" value= '1' step=".01">
                     <button class="btn btn-success btn-lg btn-block shadow" onclick='buySOVEOS()'>SendEOS<br>Buy SOV/EOS</button>
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="buysoveosBancorDiv">...</small>
@@ -2241,7 +2467,7 @@
                 </div>
 
                 <div class="col text-center">
-                    <input class="text-center form-control mb-1" type='number' min="0" id='sov_transfer_amount' value='350' oninput="this.value = Math.abs(this.value)">
+                    <input class="text-center form-control mb-1" type='number' id='sov_transfer_amount' min="0" value='350'>
                     <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSOVEOS()'>SendSOV<br>Sell SOV/EOS</button> 
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="sellsoveosBancorDiv">...</small>
@@ -2267,7 +2493,7 @@
 
             <div class="row row-cols-2">
                 <div class="col text-center">
-                    <input class="text-center form-control mb-1" type='number' min="0" id='usdt_transfer_amount' value= '1' oninput="this.value = Math.abs(this.value)">
+                    <input class="text-center form-control mb-1" type='number' id='usdt_transfer_amount' min="0" value= '1'>
                     <button class="btn btn-success btn-lg btn-block shadow" onclick='buySOVUSDT()'>SendUSDT<br>Buy SOV/USDT</button>
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="buysovusdtBancorDiv">...</small>
@@ -2277,7 +2503,7 @@
                 </div>
 
                 <div class="col text-center">
-                    <input class="text-center form-control mb-1" type='number' min="0" id='sov_transfer_amount10' value='350' oninput="this.value = Math.abs(this.value)">
+                    <input class="text-center form-control mb-1" type='number' id='sov_transfer_amount10' min="0" value='350'>
                     <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSOVUSDT()'>SendSOV<br>Sell SOV/USDT</button> 
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="sellsovusdtBancorDiv">...</small>
@@ -2304,7 +2530,7 @@
 
             <div class="row row-cols-2">
                 <div class="col text-center">
-                    <input class="text-center form-control mb-1" type='number' min="0" id='eos_transfer_amount1'  value= '1' step=".01" oninput="this.value = Math.abs(this.value)">
+                    <input class="text-center form-control mb-1" type='number' id='eos_transfer_amount1' min="0" value= '1' step=".01">
                     <button class="btn btn-success btn-lg btn-block shadow" onclick='buySVXEOS()'>SendEOS<br>Buy SVX/EOS</button>
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="buysvxeosBancorDiv">...</small>
@@ -2314,7 +2540,7 @@
                 </div>
 
                 <div class="col text-center">
-                    <input class="text-center form-control mb-1" type='number' min="0" id='svx_transfer_amount' value='350' oninput="this.value = Math.abs(this.value)">
+                    <input class="text-center form-control mb-1" type='number' id='svx_transfer_amount' min="0" value='350'>
                     <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSVXEOS()'>SendSVX<br>Sell SVX/EOS</button> 
                     <small class="text-center text-white">Receive</small>
                     <small class="text-center text-warning" id="sellsvxeosBancorDiv">...</small>

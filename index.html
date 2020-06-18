@@ -408,7 +408,7 @@
 </style>
         <!--this is the div for the slider, the above css is for it's container-->
         <div class="slidecontainer" style='width:100%;'>
-            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange">
+            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
         </div>
 
         <div class="text-center">

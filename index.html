@@ -62,25 +62,6 @@
         <br>
         <!-- end of Balance Display -->
 
-        <!-- resources dropdown / input to purchase EOS resources with SOV -->
-        <div class="container bg-dark border border-primary rounded shadow"> 
-            <br>
-            <div class="input-group">
-                <input type="number" placeholder="1 SOV minimum" min="0" class="form-control" aria-label="Number input with dropdown button" id="sovresourcesInput">
-                <div class="input-group-prepend">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</button>                
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="rentCPUSOV()">Rent CPU</a>
-                        <a class="dropdown-item" onclick="rentNETSOV()">Rent NET</a>
-                        <a class="dropdown-item" onclick="buyRAMSOV()">Buy RAM</a>
-                        <a class="dropdown-item">Cancel</a>
-                    </div>
-                </div>
-            </div>
-            <br>
-        </div>
-        <br>
-        <!-- end of resources feature -->
 
         <!--This is the div / row set with the CPU and NET and SVX Node circles for user experience and feedback-->
         <div class="row">
@@ -129,11 +110,8 @@
         <div class="tab-pane fade show active" id="nav-STAKER" role="tabpanel" aria-labelledby="nav-STAKER-tab">
         <br>
 
-        
-
           <!-- SVX Node Requirement Information -->
         <h6 id='nodeRequirement' class="text-center">...</h6>
-        <br>
         <!-- End of SVX Node Requirement Information -->
 
 
@@ -168,15 +146,12 @@
                 <small> &nbsp;Stake SVX for mining bonus, fee discount, and rewards</small>
             </div>
         </div>  <!--end of staking / unstaking container-->
-        <br>
     </div>
 
         <div class="tab-pane fade" id="nav-TRADER" role="tabpanel" aria-labelledby="nav-TRADER-tab">
         <br>
 
         <h6 id='svxDiscount' class="text-center">...</h6>
-
-        <br>
 
              <!--this cointains the trading box and all it's info-->
         <div class="container border border-primary rounded bg-dark shadow">
@@ -369,32 +344,8 @@
 
         <div class="tab-pane fade" id="nav-MINER" role="tabpanel" aria-labelledby="nav-MINER-tab">
 
-
-
-
-
-
-
         <br>   
         <h6 id='svx_bonus' class="text-center">...</h6>
-
-         <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
-        <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
-            <svg viewbox="0, 0, 400, 10">
-                <rect id='rect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect2'  x="40" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect3'  x="80" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect4'  x="120" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect5'  x="160" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect6'  x="200" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect7'  x="240" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect8'  x="280" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect9'  x="320" y="0" width="38" height="10" fill='#cccccc' />
-                <rect id='rect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
-            </svg>
-        </div>
-        <br>
-        <!-- end of little blocks for miner feedback -->
 
         <!-- detailed miner information box -->
         <div class="container bg-dark border border-primary rounded shadow">  
@@ -420,13 +371,31 @@
         </div>
 
         <div class="text-center">
-            <small class="text-center text-primar">*all unburned SOV is refunded automatically</small>
+            <small class="text-center text-primar">Unburned SOV is refunded automatically</small>
         </div>
+        <br>
 
         <div class='d-flex mt-1'>
             <h6>Mine when single action reward is ≥</h6>
             <input type='number' min="0" step="0.01" class='text-center form-control ml-3' id='target_mining_rate' value='0'>
         </div>
+
+        <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+        <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
+            <svg viewbox="0, 0, 400, 10">
+                <rect id='rect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect2'  x="40" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect3'  x="80" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect4'  x="120" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect5'  x="160" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect6'  x="200" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect7'  x="240" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect8'  x="280" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect9'  x="320" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='rect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
+            </svg>
+        </div>
+        <!-- end of little blocks for miner feedback -->
 
         <div class="row">
             <div class="custom-control custom-checkbox m-4">
@@ -434,8 +403,9 @@
                 <label class="custom-control-label" for='checkbox-3' style='font-size:16px;'>Auto Mine</label>
             </div>
         
-        <button type="button" class="btn btn-dark btn-block border border-success col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mine X 1</button>  
+        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mine X 1</button>  
         </div>
+
 
         <div class="slidecontainer" style='width:100%;'>
             <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
@@ -452,6 +422,29 @@
     </div>
 </div>
 <br>
+
+<!-- resources dropdown / input to purchase EOS resources with SOV -->
+
+<h6 id='resourcesInfo' class="text-center">...</h6>
+        
+        <div class="container bg-dark border border-primary rounded shadow"> 
+            <br>
+            <div class="input-group">
+                <input type="number" placeholder="Enter SOV Amount" min="1" class="form-control" aria-label="Number input with dropdown button" id="sovresourcesInput">
+                <div class="dropup input-group-prepend">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</button>                
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" onclick="rentCPUSOV()">Rent CPU</a>
+                        <a class="dropdown-item" onclick="rentNETSOV()">Rent NET</a>
+                        <a class="dropdown-item" onclick="buyRAMSOV()">Buy RAM</a>
+                        <a class="dropdown-item">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+        <!-- end of resources feature -->
 
     <!--node changing button / input area-->
     <div class="input-group mb-2 shadow">

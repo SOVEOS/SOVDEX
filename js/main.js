@@ -1079,8 +1079,9 @@ var counter = 0;
 
                                     document.getElementById('nodeRequirement').innerHTML = "<span class='bold' style='font-size:14px;'>Stake 777k+ SVX for automatic node payouts</span>";                                   
                                     
-                                    
-                                    document.getElementById('svxDiscount').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</span>%</span>";                                  
+                                    document.getElementById('svxDiscount').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</span> %</span>";
+
+                                    document.getElementById('resourcesInfo').innerHTML = "<span class='bold' style='font-size:14px;'>Spend SOV to Rent CPU, NET, or buy RAM</span>";                                  
 
                                 }
 

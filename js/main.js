@@ -752,8 +752,8 @@ var counter = 0;
                             var soveosOutstanding = value.rows[0].outstandingbal;
                             var eosTransferAmount = document.getElementById('eos_transfer_amount').value;
                             var sovTransferAmount = document.getElementById('sov_transfer_amount').value;
-                            soveosBalance = parseInt(soveosBalance);
-                            soveosOutstanding = parseInt(soveosOutstanding);
+                            soveosBalance = parseFloat(soveosBalance);
+                            soveosOutstanding = parseFloat(soveosOutstanding);
                             eosTransferAmount = parseFloat(eosTransferAmount);
                             sovTransferAmount = parseFloat(sovTransferAmount);
                             soveosPrice = parseFloat(soveosPrice).toFixed(8);   
@@ -793,8 +793,8 @@ var counter = 0;
                             var sovusdtOutstanding = value.rows[0].outstandingbal;
                             var usdtTransferAmount = document.getElementById('usdt_transfer_amount').value;
                             var sovTransferAmount = document.getElementById('sov_transfer_amount10').value;
-                            sovusdtBalance = parseInt(sovusdtBalance);
-                            sovusdtOutstanding = parseInt(sovusdtOutstanding);
+                            sovusdtBalance = parseFloat(sovusdtBalance);
+                            sovusdtOutstanding = parseFloat(sovusdtOutstanding);
                             usdtTransferAmount = parseFloat(usdtTransferAmount);
                             sovTransferAmount = parseFloat(sovTransferAmount);
                             sovusdtPrice = parseFloat(sovusdtPrice).toFixed(8);   
@@ -831,8 +831,8 @@ var counter = 0;
                             var svxeosOutstanding = value.rows[0].outstandingbal;
                             var svxTransferAmount = document.getElementById('svx_transfer_amount').value;
                             var eosTransferAmount = document.getElementById('eos_transfer_amount1').value;
-                            svxeosBalance = parseInt(svxeosBalance);
-                            svxeosOutstanding = parseInt(svxeosOutstanding);
+                            svxeosBalance = parseFloat(svxeosBalance);
+                            svxeosOutstanding = parseFloat(svxeosOutstanding);
                             eosTransferAmount = parseFloat(eosTransferAmount);
                             svxTransferAmount = parseFloat(svxTransferAmount);
                             svxeosPrice = parseFloat(svxeosPrice).toFixed(8);   
@@ -868,8 +868,12 @@ var counter = 0;
                             const eospbtcCW = value.rows[0].cw;
                             var eospbtcBalance = value.rows[0].connectorbal;
                             var eospbtcOutstanding = value.rows[0].outstandingbal;
+                            
+
                             var pbtcTransferAmount = document.getElementById('pbtc_transfer_amount').value;
                             var eosTransferAmount = document.getElementById('eos_transfer_amount2').value;
+                            
+
                             eospbtcBalance = parseFloat(eospbtcBalance);
                             eospbtcOutstanding = parseFloat(eospbtcOutstanding);
                             pbtcTransferAmount = parseFloat(pbtcTransferAmount);

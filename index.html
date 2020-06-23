@@ -23,15 +23,27 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 
+
+
 <body>
     <!--contains the "header" with SOVDEX | BURN-MINER | TRADE-MINER, login button, and account name display on login-->
-    <div class="container-fluid bg-dark shadow"> 
+    <div class="container bg-dark text-light" style="max-width: 576px">
+    <nav>
+            <div class="nav nav-pills justify-content-end" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" href="https://soveos.github.io/SOVDEX/">EN</a>
+                <a class="nav-item nav-link" href="https://soveos.github.io/SOVDEX-CN/">中文</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid bg-dark shadow" style="max-width: 576px"> 
         <br> 
-        <h1 class="row d-flex justify-content-center text-white">SOVDEX</h1>
-        <img src="image\SVXLOGOtransparentII.png" class="mx-auto d-block" style="width: 200px; height: 200px;">   
+        <h1 class="row justify-content-center text-white">SOV<img src="image\SVXLOGOtransparentII.png" style="width: 50px; height: 50px;">DEX</h1>   
         <h5 class="row d-flex justify-content-center text-white">BURN-MINER | TRADE-MINER</h5>
         <br>
-        <button type="button" class="btn btn-primary btn-lg btn-block" id='buttontext' onclick='loginclick()'>LOGIN</button>
+        <div class="container" style="max-width: 576px">
+            <button type="button" class="btn btn-primary btn-lg btn-block" id='buttontext' onclick='loginclick()'>LOGIN</button>
+        </div>
         <br>
         <h4 id='accountname' class="text-center text-white">...</h4>
         <br>    
@@ -183,10 +195,11 @@
                             <small class="text-center text-white">EOS before fees</small>
                             <br>
                             <br>
+                            <br>
                                 <div>
                                     <p id="BUYEOSPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
-                                <br>
+                                
                         </div>
 
                         <div class="col text-center">
@@ -197,10 +210,11 @@
                             <small class="text-center text-white">pBTC before fees</small>
                             <br>
                             <br>
+                            <br>
                                 <div>
                                     <p id="SELLEOSPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
-                                <br>
+                                
                         </div>
                     </div>
                     <div>
@@ -223,9 +237,10 @@
                             <small class="text-center text-warning" id="buysoveosBancorDiv">...</small>
                             <small class="text-center text-white">SOV before fees</small>
                             <br>
+                            <br>
                             <small class="text-center text-white" id="buysoveosMiningRateDiv">...</small>
                             <br>
-                            <br>
+                            
                                 <div>
                                     <p id="BUYSOVEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
@@ -238,9 +253,10 @@
                             <small class="text-center text-warning" id="sellsoveosBancorDiv">...</small>
                             <small class="text-center text-white">EOS before fees</small>
                             <br>
+                            <br>
                             <small class="text-center text-white" id="sellsoveosMiningRateDiv">...</small>
                             <br>
-                            <br>
+                            
                             <div>
                                 <p id="SELLSOVEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                             </div>
@@ -267,9 +283,10 @@
                             <small class="text-center text-warning" id="buysovusdtBancorDiv">...</small>
                             <small class="text-center text-white">SOV before fees</small>
                             <br>
+                            <br>
                             <small class="text-center text-white" id="buysovusdtMiningRateDiv">...</small>
                             <br>
-                            <br>
+        
                             <div>
                                 <p id="BUYSOVUSDTAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                             </div>
@@ -282,9 +299,10 @@
                             <small class="text-center text-warning" id="sellsovusdtBancorDiv">...</small>
                             <small class="text-center text-white">USDT before fees</small>
                             <br>
+                            <br>
                             <small class="text-center text-white" id="sellsovusdtMiningRateDiv">...</small>
                             <br>
-                            <br>
+                            
                                 <div>
                                     <p id="SELLSOVUSDTAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
@@ -309,6 +327,7 @@
                             <small class="text-center text-warning" id="buysvxeosBancorDiv">...</small>
                             <small class="text-center text-white">SVX before fees</small>
                             <br>
+                            <br>
                             <br>                  
                                 <div>
                                     <p id="BUYSVXEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
@@ -323,13 +342,13 @@
                                 <small class="text-center text-white">EOS before fees</small>
                                 <br>
                                 <br>
+                                <br>
                                 <div>
                                     <p id="SELLSVXEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>                   
                             </div>
                         </div>
                         <div>
-                        <br>
                             <p id="SVXEOSPRICE" class="d-flex justify-content-center text-light">...</p>
                         </div>
                     </div>

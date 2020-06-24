@@ -1480,7 +1480,7 @@ var counter = 0;
                     };
                     // setStatus()
 
-                    ScatterJS.connect('svxminer', {
+                    ScatterJS.connect('SOVDEX', {
                         network
                     }).then(connected => {
                         if (!connected)

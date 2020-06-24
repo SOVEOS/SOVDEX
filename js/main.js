@@ -972,10 +972,11 @@ var counter = 0;
                                 last = last.replace("SVX", "");
 
                                 storebalance = value.rows[0].storebalance;
-                                storebalance = parseFloat(storebalance).toFixed(4)
+                                storebalance = parseFloat(storebalance).toFixed(4);
                                 svxpower = value.rows[0].svxpower;
                                 svxpower = parseFloat(svxpower).toFixed(4);
                                 unstaking = value.rows[0].unstaking;
+                                unstakingNumber = parseFloat(unstaking).toFixed(4);
                                 unstake_time = value.rows[0].unstake_time;
 
                                 var svxStoreBalance = parseFloat(storebalance).toFixed(4);
@@ -1033,7 +1034,7 @@ var counter = 0;
                                     document.getElementById('svx_unstaking_balance').value = unstaking;
                                 }
 
-                                if (document.getElementById('svx_unstake_time') && unstake_time > 1) {
+                                if (document.getElementById('svx_unstake_time') && unstakingNumber > 1) {
                                     timestring = timeConverter(unstake_time + 60 * 60 * 24);
 
                                     document.getElementById('svx_unstake_time').innerHTML = "<span class='bold'>(" + timestring + ")</span>";

@@ -27,26 +27,22 @@
 
 <body>
     <!--contains the "header" with SOVDEX | BURN-MINER | TRADE-MINER, login button, and account name display on login-->
-    <div class="container bg-dark text-light" style="max-width: 576px">
-    <nav>
+
+    <div class="container-fluid rounded bg-dark shadow"> 
+        <nav>
             <div class="nav nav-pills justify-content-end" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" href="https://soveos.github.io/SOVDEX/">EN</a>
                 <a class="nav-item nav-link" href="https://soveos.github.io/SOVDEX-CN/">中文</a>
             </div>
         </nav>
-    </div>
-
-    <div class="container-fluid bg-dark shadow" style="max-width: 576px"> 
-        <br> 
+        <br>
         <h1 class="row justify-content-center text-white">SOV<img src="image\SVXLOGOtransparentII.png" style="width: 50px; height: 50px;">DEX</h1>   
-        <h5 class="row d-flex justify-content-center text-white">BURN-MINER | TRADE-MINER</h5>
+        <h4 id='accountname' class="text-center text-white">...</h4>
         <br>
         <div class="container" style="max-width: 576px">
             <button type="button" class="btn btn-primary btn-lg btn-block" id='buttontext' onclick='loginclick()'>LOGIN</button>
         </div>
-        <br>
-        <h4 id='accountname' class="text-center text-white">...</h4>
-        <br>    
+        <br>   
     </div>
     <!-- end of "header"--> 
             
@@ -110,7 +106,7 @@
       
         
         <nav>
-            <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist">
+            <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-STAKER" role="tab" aria-controls="nav-STAKER" aria-selected="true">STAKE</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-TRADER" role="tab" aria-controls="nav-TRADER" aria-selected="false">TRADE</a>
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-MINER" role="tab" aria-controls="nav-MINER" aria-selected="false">MINE</a>
@@ -364,13 +360,22 @@
         <div class="tab-pane fade" id="nav-MINER" role="tabpanel" aria-labelledby="nav-MINER-tab">
 
         <br>   
+        <h6 id='mining_hint' class="text-center">...</h6>
+         <nav>
+            <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-BURN-MINER" role="tab" aria-controls="nav-BURN-MINER" aria-selected="true">BURN-MINER</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-CPU-MINER" role="tab" aria-controls="nav-CPU-MINER" aria-selected="false">CPU-MINER</a>
+            </div>
+        </nav>
+        <br>
+        <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-BURN-MINER" role="tabpanel" aria-labelledby="nav-BURN-MINER-tab">
         <h6 id='svx_bonus' class="text-center">...</h6>
 
         <!-- detailed miner information box -->
         <div class="container bg-dark border border-primary rounded shadow">  
             <p id='svxMiningRate' class="text-center text-white mt-3">...</p>
             <p id='totalSVXMiningRate' class="text-center text-white">...</p>
-            <p id='svxMiningMultiplier' class="text-center text-white">...</p>
             <p id='svxMiningBurn' class="text-center text-white">...</p>
         </div>
         <!-- end of detailed miner information box -->
@@ -381,25 +386,34 @@
             <p id='svxMiningCost' class="text-center text-white mt-3">...</p>
         </div>
         <!-- end of box for mining cost in sov -->
+
         <br>
 
-        <!--miner / autominer inputs and info-->
+          <!--miner / autominer trigger input-->
         <div class='d-flex mt-1'>
-            <h6>SOV sent per mining action:</h6>
-            <input type='number' min="150" class='text-center form-control ml-3' id='sov_burn_amount' value='150'>
+            <h6>Burn mine if single action reward is ≥</h6>
+            <input type='number' min="0" step="0.01" class='text-center form-control ml-3' id='target_mining_rate' value='0'>
+        </div>
+        <!--miner / autominer trigger input-->
+
+        <div class="row">
+            <div class="custom-control custom-checkbox m-4">
+                <input type='checkbox' class="custom-control-input" id='checkbox' onclick='switch_autominer(this)'>
+                <label class="custom-control-label" for='checkbox' style='font-size:16px;'>Auto</label>
+            </div>
+        
+        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Burn Mine X 1</button>  
+        </div>
+
+        <div class="slidecontainer" style='width:100%;'>
+            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
         </div>
 
         <div class="text-center">
-            <small class="text-center text-primar">Unburned SOV is refunded automatically</small>
-        </div>
-        <br>
-
-        <div class='d-flex mt-1'>
-            <h6>Mine when single action reward is ≥</h6>
-            <input type='number' min="0" step="0.01" class='text-center form-control ml-3' id='target_mining_rate' value='0'>
+            <small>Bundled burn mining actions per transaction</small>
         </div>
 
-        <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+          <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
         <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
             <svg viewbox="0, 0, 400, 10">
                 <rect id='rect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
@@ -414,31 +428,57 @@
                 <rect id='rect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
             </svg>
         </div>
+    </div>
         <!-- end of little blocks for miner feedback -->
 
-        <div class="row">
+        
+        <!-- end ofminer / autominer inputs and info-->
+
+        <div class="tab-pane fade" id="nav-CPU-MINER" role="tabpanel" aria-labelledby="nav-CPU-MINER-tab">
+
+         <div class="row">
             <div class="custom-control custom-checkbox m-4">
-                <input type='checkbox' class="custom-control-input" id='checkbox-3' onclick='switch_autominer(this)'>
-                <label class="custom-control-label" for='checkbox-3' style='font-size:16px;'>Auto Mine</label>
+                <input type='checkbox' class="custom-control-input" id='checkbox-1' onclick='switch_cpu_autominer(this)'>
+                <label class="custom-control-label" for='checkbox-1' style='font-size:16px;'>Auto</label>
             </div>
         
-        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Mine X 1</button>  
+        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_cpu_transaction_bundle' onclick='do_cpu_transaction_bundle()'>CPU Mine X 1</button>  
         </div>
-
-
-        <div class="slidecontainer" style='width:100%;'>
-            <input type="range" min="1" max="200" step="1.0" class="slider" value='1' id="myRange" oninput="showVal(this.value)" onchange="showVal(this.value)">
-        </div>
-
         <div class="text-center">
-            <small>Bundled mining actions per transaction</small>
+            <small>CPU mining does not receive staking bonuses</small>
         </div>
 
-        <div class="text-center">
-            <small>*SOV burns when transferred. Mine and trade responsibly</small>
+        <div class="cpuslidecontainer" style='width:100%;'>
+            <input type="range" min="1" max="10" step="1" class="cpuslider" value='1' id="myCPURange" oninput="showValCPU(this.value)" onchange="showValCPU(this.value)">
         </div>
-        <!-- end ofminer / autominer inputs and info-->
+
+         <div class="text-center">
+            <small>CPU mining actions x 100</small>
+        </div>
+
+          <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+        <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
+            <svg viewbox="0, 0, 400, 10">
+                <rect id='cpurect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect2'  x="40" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect3'  x="80" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect4'  x="120" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect5'  x="160" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect6'  x="200" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect7'  x="240" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect8'  x="280" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect9'  x="320" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='cpurect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
+            </svg>
+        </div>
+        <!-- end of little blocks for miner feedback -->
+
+
+
+
     </div>
+</div>
+</div>
 </div>
 <br>
 

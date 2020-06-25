@@ -161,10 +161,11 @@ function set_circle_element(elm, value) {
 }
 
 
-var counter = 0;
+                    var counter = 0;
                     var xtracounter = 0;
                     var initstatus = 0;
                     var automining = 0;
+                    var cpuAutoMining = 0;
 
                     /*
                     function doit()
@@ -175,6 +176,7 @@ var counter = 0;
                     */
 
                     var autominer_cnt = 0;
+                    var cpuAutoMiner_cnt = 0;
 
                     function switch_autominer(val) {
 
@@ -224,6 +226,11 @@ var counter = 0;
                             dotransaction_bundle();
                         }
 
+                        if (cpuAutoMining > 0) {
+
+                            do_cpu_transaction_bundle();
+                        }
+
                         time = setTimeout('app_thread()', 5500);
                     }
                     // function app_thread()
@@ -236,12 +243,8 @@ var counter = 0;
                         sov_burn_amount ...
                         */
 
-                        //   var sov_amount = "0.0001 EOS";
-                        var sov_amount = "100.0000 SOV";
-
-                        var sov_burn_amount = document.getElementById('sov_burn_amount').value;
-                        sov_burn_amount = format_eos_amount(sov_burn_amount);
-                        sov_amount = sov_burn_amount + " SOV";
+                        //   var sov_amount_memo = "0.0001 EOS";
+                        var sov_amount_memo = "150.0000 SOV";
 
                         var sov_memo = "mine SVX";
                         //   var sov_receive_account = "themintofeos";
@@ -260,7 +263,7 @@ var counter = 0;
                                                     data: {
                                                         "from": scatter_account,
                                                         "to": sov_receive_account,
-                                                        "quantity": sov_amount,
+                                                        "quantity": sov_amount_memo,
                                                         "memo": sov_memo
                                                     }
                         */
@@ -278,7 +281,7 @@ var counter = 0;
                                 data: {
                                     "from": scatter_account,
                                     "to": sov_receive_account,
-                                    "quantity": sov_amount,
+                                    "quantity": sov_amount_memo,
                                     "memo": sov_memo
                                 }
 
@@ -390,6 +393,8 @@ var counter = 0;
                            
                         });
 
+                        var sov_mine_send = 150;
+
                         var targetMiningRate = document.getElementById('target_mining_rate').value;
 
                         var bonus_percentage = 0;
@@ -408,7 +413,7 @@ var counter = 0;
                                 else bonus_percentage = 0;
 
             
-                                    var mining_multiplier_start = document.getElementById('sov_burn_amount').value;
+                                    var mining_multiplier_start = sov_mine_send;
                                     if (mining_multiplier_start < 150) mining_multiplier_start = 0;
                                     mining_multiplier_start = format_eos_amount(mining_multiplier_start);
                                     
@@ -418,11 +423,7 @@ var counter = 0;
                         var mining_rate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * mining_multiplier;
                                     
 
-                        var sov_amount = "100.0000 SOV";
-
-                        var sov_burn_amount = document.getElementById('sov_burn_amount').value;
-                        sov_burn_amount = format_eos_amount(sov_burn_amount);
-                        sov_amount = sov_burn_amount + " SOV";
+                        var sov_amount_memo = "150.0000 SOV";
 
                         var sov_memo = "mine SVX";
                         //   var sov_receive_account = "themintofeos";
@@ -442,7 +443,7 @@ var counter = 0;
                             data: {
                                 "from": scatter_account,
                                 "to": sov_receive_account,
-                                "quantity": sov_amount,
+                                "quantity": sov_amount_memo,
                                 "memo": sov_memo
                             }
                         };
@@ -491,6 +492,139 @@ var counter = 0;
                     }} // function dotransaction()
 
                     // Transaction END ------------------------
+
+
+function switch_cpu_autominer(val) {
+
+                        // alert(val.checked);
+
+                        if (val.checked) cpuAutoMining = 1;
+                        else cpuAutoMining = 0;
+
+                        //alert("automining:" + automining);
+
+                    } // switch_autominer
+
+function update_cpu_ticker() {
+                        cpuAutoMiner_cnt++;
+
+                        if (cpuAutoMiner_cnt == 11) cpuAutoMiner_cnt = 1;
+                        //---
+                        for (var i = 1; i <= 10; i++) {
+                            var therect = 'cpurect' + i;
+                            let f2 = document.getElementById(therect);
+                            f2.setAttribute('fill', "#cccccc");
+
+                        }
+
+                        var therect = 'cpurect' + cpuAutoMiner_cnt;
+                        let f3 = document.getElementById(therect);
+                        f3.setAttribute('fill', "#000000");
+                        //---        
+
+                    } // update_ticker
+
+
+                    // function app_thread()
+
+                    // Transaction BEGIN ------------------------
+function do_cpu_transaction() {
+
+
+                        eosobject.transaction({
+                            actions: [{
+                                //                            account: 'eosio.token',
+                                account: 'cpu2svxminer',
+                                //                            account: 'sovsovsov223',
+                                name: 'minesvx',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                                data: {
+                                    "user": scatter_account
+                                }
+
+                            }]
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            //alert('Success');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            //alert( 'Error:' + err.error.details[0].message );
+
+                            
+                            return;
+
+                        });
+
+                    } // function dotransaction()
+
+                    // Transaction END ------------------------
+
+                    // Transaction BEGIN ------------------------
+function do_cpu_transaction_bundle() {
+
+                    var myCPURange = document.getElementById('myCPURange').value;
+                        //alert("myRange: " + myRange);
+
+                        var action = {
+
+                            account: 'cpu2svxminer',
+                            name: 'minesvx',
+                            authorization: [{
+                                actor: scatter_account,
+                                permission: "active"
+                            }],
+                            data: {
+                                "user": scatter_account
+                            }
+                        };
+
+
+                        console.log("============================");
+                        console.log(action);
+
+                        //var actions = [ action, action ]; 
+                        var theactions = [];
+                        for (var i = 0; i < myCPURange; i++) {
+                            theactions[i] = action;
+                        }
+                        console.log(theactions);
+
+
+                        eosobject.transaction({
+                            actions: theactions
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            update_cpu_ticker();
+                            return;
+
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+                            return;
+
+                        });
+                        return (0);
+
+                    } // function dotransaction()
 
                     // DoInit BEGIN ------------------------
                     function doinit() {
@@ -1053,10 +1187,12 @@ var counter = 0;
                                     bonus_percentage = parseFloat(bonus_percentage).toFixed(2);
                                     //                           bonus_percentage = (svxpower / svx_supply) * 10;
 
-                                    document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Bonus for Staking SVX: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
+                                    document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Burn Mining Bonus for Staking SVX: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
 
                                 } else
                                     document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>...</span>";
+
+                                    document.getElementById('mining_hint').innerHTML = "<span class='bold' style='font-size:14px;'>Choose How to Mine SVX<span>";
 
                                 var feeDiscount = 0;
 
@@ -1091,7 +1227,8 @@ var counter = 0;
                                 }
 
 
-                                    var mining_multiplier_start = document.getElementById('sov_burn_amount').value;
+                                    var sov_mine_send = 150;
+                                    var mining_multiplier_start = sov_mine_send;
                                     if (mining_multiplier_start < 150) mining_multiplier_start = 0;
                                     mining_multiplier_start = format_eos_amount(mining_multiplier_start);
                                     
@@ -1160,17 +1297,18 @@ var counter = 0;
 
 
 
+                                    var sov_mine_send = 150;
                                     var myRange = document.getElementById('myRange').value;
-                                    var sovBurnAmount = (document.getElementById('sov_burn_amount').value * 0.014) * myRange;
+                                    var sovBurnAmount = (sov_mine_send * 0.014) * myRange;
                                         sovBurnAmount = sovBurnAmount.toFixed(1);
                                     var total_mining_rate = mining_rate * myRange;
                                         total_mining_rate = total_mining_rate.toFixed(4);
                                     var miningCost = (sovBurnAmount / total_mining_rate);
                                         miningCost = miningCost.toFixed(4);
 
-                                    document.getElementById('svxMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Reward per Single Mining Action: <span style='color:#00bb00'>" + mining_rate + "</span> SVX</span>";
+                                    document.getElementById('svxMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Reward per Single Burn Mining Action: <span style='color:#00bb00'>" + mining_rate + "</span> SVX</span>";
 
-                                    document.getElementById('totalSVXMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Total Reward per Transaction: <span style='color:#00bb00'>" + total_mining_rate + "</span> SVX</span>";
+                                    document.getElementById('totalSVXMiningRate').innerHTML = "<span class='bold' style='font-size:14px;'>Reward per Burn Mining Transaction: <span style='color:#00bb00'>" + total_mining_rate + "</span> SVX</span>";
 
                                     document.getElementById('sellsoveosMiningRateDiv').innerHTML = "<span class='bold' style='font-size:14px;'>Reward: <span style='color:#00bb00'>" + sellsoveosMiningRate + "</span>  SVX</span>";
 
@@ -1182,12 +1320,9 @@ var counter = 0;
 
             
 
+                                    document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>Total Burn per Burn Mining Transaction: <span style='color:red'> " + sovBurnAmount + "</span> SOV </span>";
 
-                                    document.getElementById('svxMiningMultiplier').innerHTML = "<span class='bold' style='font-size:14px;'>Mining Multiplier: <span style='color:orange'> " + mining_multiplier + "</span>";
-
-                                    document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>Total Burn per Transaction: <span style='color:red'> " + sovBurnAmount + "</span> SOV </span>";
-
-                                    document.getElementById('svxMiningCost').innerHTML = "<span class='bold' style='font-size:16px;'>Mining 1 SVX burns <span> " + miningCost + "</span> SOV</span>";
+                                    document.getElementById('svxMiningCost').innerHTML = "<span class='bold' style='font-size:16px;'>Burn Mining 1 SVX Burns <span style='color:#f0ad4e'> " + miningCost + "</span> SOV</span>";
 
                                     
 
@@ -1494,13 +1629,23 @@ var counter = 0;
 
                     dologin();
                     app_thread();
+                    
 
 // SCATTER END ---------------------------
 
 function showVal(val) {
 
 
-                        document.getElementById('dotransaction_bundle').innerHTML = "Mine X " + val;
+                        document.getElementById('dotransaction_bundle').innerHTML = "Burn Mine X " + val;
+
+                        
+                    } 
+
+function showValCPU(val) {
+
+
+
+                        document.getElementById('do_cpu_transaction_bundle').innerHTML = "CPU Mine X " + val;
                         
                     } 
 

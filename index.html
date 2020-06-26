@@ -363,8 +363,9 @@
         <h6 id='mining_hint' class="text-center">...</h6>
          <nav>
             <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-BURN-MINER" role="tab" aria-controls="nav-BURN-MINER" aria-selected="true">BURN-MINER</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-CPU-MINER" role="tab" aria-controls="nav-CPU-MINER" aria-selected="false">CPU-MINER</a>
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-BURN-MINER" role="tab" aria-controls="nav-BURN-MINER" aria-selected="true">BURNMINER</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-CPU-MINER" role="tab" aria-controls="nav-CPU-MINER" aria-selected="false">CPUMINER</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-SOV-MINER" role="tab" aria-controls="nav-SOV-MINER" aria-selected="false">SOVMINER</a>
             </div>
         </nav>
         <br>
@@ -469,6 +470,47 @@
                 <rect id='cpurect8'  x="280" y="0" width="38" height="10" fill='#cccccc' />
                 <rect id='cpurect9'  x="320" y="0" width="38" height="10" fill='#cccccc' />
                 <rect id='cpurect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
+            </svg>
+        </div>
+        <!-- end of little blocks for miner feedback -->
+
+    </div>
+
+    <div class="tab-pane fade" id="nav-SOV-MINER" role="tabpanel" aria-labelledby="nav-SOV-MINER-tab">
+
+         <div class="row">
+            <div class="custom-control custom-checkbox m-4">
+                <input type='checkbox' class="custom-control-input" id='checkbox-1' onclick='switch_sov_cpu_autominer(this)'>
+                <label class="custom-control-label" for='checkbox-1' style='font-size:16px;'>Auto</label>
+            </div>
+        
+        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_sov_cpu_transaction_bundle' onclick='do_sov_cpu_transaction_bundle()'>SOV/CPU Mine X 1</button>  
+        </div>
+        <div class="text-center">
+            <small>SOV/CPU mining does not receive staking bonuses</small>
+        </div>
+
+        <div class="sovcpuslidecontainer" style='width:100%;'>
+            <input type="range" min="1" max="10" step="1" class="sovcpuslider" value='1' id="mySOVCPURange" oninput="showValSOVCPU(this.value)" onchange="showValSOVCPU(this.value)">
+        </div>
+
+         <div class="text-center">
+            <small>SOV/CPU mining actions x 25</small>
+        </div>
+
+           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+        <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
+            <svg viewbox="0, 0, 400, 10">
+                <rect id='sovrect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect2'  x="40" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect3'  x="80" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect4'  x="120" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect5'  x="160" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect6'  x="200" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect7'  x="240" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect8'  x="280" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect9'  x="320" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='sovrect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
             </svg>
         </div>
         <!-- end of little blocks for miner feedback -->

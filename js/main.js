@@ -162,21 +162,13 @@ function set_circle_element(elm, value) {
 
 
                     var counter = 0;
-                    var xtracounter = 0;
                     var initstatus = 0;
                     var automining = 0;
                     var cpuAutoMining = 0;
-
-                    /*
-                    function doit()
-                    {
-                    xtracounter = 3;
-                    alert("T2");
-                    }
-                    */
-
+                    var sovcpuAutoMining = 0;
                     var autominer_cnt = 0;
                     var cpuAutoMiner_cnt = 0;
+                    var sovcpuAutoMiner_cnt = 0;
 
                     function switch_autominer(val) {
 
@@ -231,7 +223,12 @@ function set_circle_element(elm, value) {
                             do_cpu_transaction_bundle();
                         }
 
-                        time = setTimeout('app_thread()', 5500);
+                         if (sovcpuAutoMining > 0) {
+
+                            do_sov_cpu_transaction_bundle();
+                        }
+
+                        time = setTimeout('app_thread()', 3500);
                     }
                     // function app_thread()
 
@@ -625,6 +622,141 @@ function do_cpu_transaction_bundle() {
                         return (0);
 
                     } // function dotransaction()
+
+
+function switch_sov_cpu_autominer(val) {
+
+                        // alert(val.checked);
+
+                        if (val.checked) sovcpuAutoMining = 1;
+                        else sovcpuAutoMining = 0;
+
+                        //alert("automining:" + automining);
+
+                    } // switch_autominer
+
+function update_sov_cpu_ticker() {
+                        sovcpuAutoMiner_cnt++;
+
+                        if (sovcpuAutoMiner_cnt == 11) sovcpuAutoMiner_cnt = 1;
+                        //---
+                        for (var i = 1; i <= 10; i++) {
+                            var therect = 'sovrect' + i;
+                            let f2 = document.getElementById(therect);
+                            f2.setAttribute('fill', "#cccccc");
+
+                        }
+
+                        var therect = 'sovrect' + sovcpuAutoMiner_cnt;
+                        let f3 = document.getElementById(therect);
+                        f3.setAttribute('fill', "#000000");
+                        //---        
+
+                    } // update_ticker
+
+
+                    // function app_thread()
+
+                    // Transaction BEGIN ------------------------
+function do_sov_cpu_transaction() {
+
+
+                        eosobject.transaction({
+                            actions: [{
+                                //                            account: 'eosio.token',
+                                account: 'cpu2svxminer',
+                                //                            account: 'sovsovsov223',
+                                name: 'minesov',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                                data: {
+                                    "user": scatter_account
+                                }
+
+                            }]
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            //alert('Success');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            //alert( 'Error:' + err.error.details[0].message );
+
+                            
+                            return;
+
+                        });
+
+                    } // function dotransaction()
+
+                    // Transaction END ------------------------
+
+                    // Transaction BEGIN ------------------------
+function do_sov_cpu_transaction_bundle() {
+
+                    var mySOVCPURange = document.getElementById('mySOVCPURange').value;
+                        //alert("myRange: " + myRange);
+
+                        var action = {
+
+                            account: 'cpu2svxminer',
+                            name: 'minesov',
+                            authorization: [{
+                                actor: scatter_account,
+                                permission: "active"
+                            }],
+                            data: {
+                                "user": scatter_account
+                            }
+                        };
+
+
+                        console.log("============================");
+                        console.log(action);
+
+                        //var actions = [ action, action ]; 
+                        var theactions = [];
+                        for (var i = 0; i < mySOVCPURange; i++) {
+                            theactions[i] = action;
+                        }
+                        console.log(theactions);
+
+
+                        eosobject.transaction({
+                            actions: theactions
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            update_sov_cpu_ticker();
+                            return;
+
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+                            return;
+
+                        });
+                        return (0);
+
+                    } // function dotransaction()
+
+
 
                     // DoInit BEGIN ------------------------
                     function doinit() {
@@ -1646,6 +1778,14 @@ function showValCPU(val) {
 
 
                         document.getElementById('do_cpu_transaction_bundle').innerHTML = "CPU Mine X " + val;
+                        
+                    } 
+
+function showValSOVCPU(val) {
+
+
+
+                        document.getElementById('do_sov_cpu_transaction_bundle').innerHTML = "SOV/CPU Mine X " + val;
                         
                     } 
 

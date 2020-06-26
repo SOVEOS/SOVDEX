@@ -1324,7 +1324,7 @@ function do_sov_cpu_transaction_bundle() {
                                 } else
                                     document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>...</span>";
 
-                                    document.getElementById('mining_hint').innerHTML = "<span class='bold' style='font-size:14px;'>Choose How to Mine SVX<span>";
+                                    document.getElementById('mining_hint').innerHTML = "<span class='bold' style='font-size:14px;'>Choose How to Mine<span>";
 
                                 var feeDiscount = 0;
 

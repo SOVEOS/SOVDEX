@@ -1073,7 +1073,7 @@ function do_btc_cpu_transaction_bundle() {
                                     btc_mining_rate = parseFloat(btc_mining_rate).toFixed(8);
 
 
-                                document.getElementById('btcMiningRate').innerHTML = "<span class='bold' style='font-size:13px;'>Reward per Single Mining Action: <span style='color:#00bb00'>" + btc_mining_rate + "</span></span>";
+                                document.getElementById('btcMiningRate').innerHTML = "<span class='bold' style='font-size:13px;'>Reward per Mining Transaction: <span style='color:#00bb00'>" + btc_mining_rate + "</span></span>";
 
 
 

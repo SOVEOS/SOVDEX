@@ -170,6 +170,7 @@
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-EOS" role="tab" aria-controls="nav-EOS" aria-selected="true">SOV|EOS</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-USDT" role="tab" aria-controls="nav-USDT" aria-selected="false">SOV|USDT</a>
                     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-SVXEOS" role="tab" aria-controls="nav-SVXEOS" aria-selected="false">SVX|EOS</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-POWPBTC" role="tab" aria-controls="nav-POWPBTC" aria-selected="false">POW|PBTC</a>
                 </div>
             </nav>
             <br>
@@ -348,6 +349,51 @@
                             <p id="SVXEOSPRICE" class="d-flex justify-content-center text-light">...</p>
                         </div>
                     </div>
+
+
+                    <div class="tab-pane fade" id="nav-POWPBTC" role="tabpanel" aria-labelledby="nav-POWPBTC-tab">
+                    <h6 class="text-center text-white">POW/pBTC Trading Balance</h6>
+                    <row class="d-flex justify-content-around">
+                        <small id="PBTCBALANCE2" class="col text-center text-light">...</small>
+                        <small id= "POWBALANCE" class="col text-light text-center">...</small>
+                    </row>  
+                    <div class="row row-cols-2">
+                        <div class="col text-center">
+                            <input class="text-center form-control mb-1" type='number' id='pbtc_transfer_amount1' min="0" value= '.0001' step=".000001">
+                            <button class="btn btn-success btn-lg btn-block shadow" onclick='buyPOWPBTC()'>SendpBTC<br>Buy POW/PBTC</button>
+                            <small class="text-center text-white">Receive</small>
+                            <small class="text-center text-warning" id="buypowpbtcBancorDiv">...</small>
+                            <small class="text-center text-white">POW before fees</small>
+                            <br>
+                            <br>
+                            <br>                  
+                                <div>
+                                    <p id="BUYPOWPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                                </div>
+                            </div>
+
+                            <div class="col text-center">
+                                <input class="text-center form-control mb-1" type='number' id='pow_transfer_amount' min="0" value='1'>
+                                <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellPOWPBTC()'>SendPOW<br>Sell POW/pBTC</button> 
+                                <small class="text-center text-white">Receive</small>
+                                <small class="text-center text-warning" id="sellpowpbtcBancorDiv">...</small>
+                                <small class="text-center text-white">pBTC before fees</small>
+                                <br>
+                                <br>
+                                <br>
+                                <div>
+                                    <p id="SELLPOWPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
+                                </div>                   
+                            </div>
+                        </div>
+                        <div>
+                            <p id="POWPBTCPRICE" class="d-flex justify-content-center text-light">...</p>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
                 <div class="text-center text-warning">
                     <small> &nbsp;Small orders incur less slippage than large orders</small>
@@ -364,8 +410,7 @@
          <nav>
             <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-BURN-MINER" role="tab" aria-controls="nav-BURN-MINER" aria-selected="true">BURNMINER</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-CPU-MINER" role="tab" aria-controls="nav-CPU-MINER" aria-selected="false">CPUMINER</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-SOV-MINER" role="tab" aria-controls="nav-SOV-MINER" aria-selected="false">SOVMINER</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-CPU-MINER" role="tab" aria-controls="nav-CPU-MINER" aria-selected="false">CPUMINERS</a>
             </div>
         </nav>
         <br>
@@ -437,16 +482,20 @@
 
         <div class="tab-pane fade" id="nav-CPU-MINER" role="tabpanel" aria-labelledby="nav-CPU-MINER-tab">
 
+        <div class="text-center">
+        <small id="SVXCPUBALANCE" class="col text-center">...</small>
+        </div>
+
          <div class="row">
             <div class="custom-control custom-checkbox m-4">
                 <input type='checkbox' class="custom-control-input" id='checkbox-1' onclick='switch_cpu_autominer(this)'>
                 <label class="custom-control-label" for='checkbox-1' style='font-size:16px;'>Auto</label>
             </div>
         
-        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_cpu_transaction_bundle' onclick='do_cpu_transaction_bundle()'>CPU Mine X 1</button>  
+        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_cpu_transaction_bundle' onclick='do_cpu_transaction_bundle()'>SVX/CPU Mine X 1</button>  
         </div>
         <div class="text-center">
-            <small>CPU mining does not receive staking bonuses</small>
+            <small>SVX/CPU mining does not receive staking bonuses</small>
         </div>
 
         <div class="cpuslidecontainer" style='width:100%;'>
@@ -454,7 +503,7 @@
         </div>
 
          <div class="text-center">
-            <small>CPU mining actions x 25</small>
+            <small>CPU mining actions x 30</small>
         </div>
 
           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
@@ -473,18 +522,19 @@
             </svg>
         </div>
         <!-- end of little blocks for miner feedback -->
+        <br>
 
-    </div>
+         <div class="text-center">
+        <small id="SOVCPUBALANCE" class="col text-center">...</small>
+        </div>
 
-    <div class="tab-pane fade" id="nav-SOV-MINER" role="tabpanel" aria-labelledby="nav-SOV-MINER-tab">
-
-         <div class="row">
+        <div class="row">
             <div class="custom-control custom-checkbox m-4">
                 <input type='checkbox' class="custom-control-input" id='checkbox-2' onclick='switch_sov_cpu_autominer(this)'>
                 <label class="custom-control-label" for='checkbox-2' style='font-size:16px;'>Auto</label>
             </div>
         
-        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_sov_cpu_transaction_bundle' onclick='do_sov_cpu_transaction_bundle()'>SOV/CPU Mine X 1</button>  
+        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='do_sov_cpu_transaction_bundle' onclick='do_sov_cpu_transaction_bundle()'>SOV/CPU Mine X 1</button>  
         </div>
         <div class="text-center">
             <small>SOV/CPU mining does not receive staking bonuses</small>
@@ -495,7 +545,7 @@
         </div>
 
          <div class="text-center">
-            <small>SOV/CPU mining actions x 25</small>
+            <small>CPU mining actions x 30</small>
         </div>
 
            <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
@@ -513,12 +563,61 @@
                 <rect id='sovrect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
             </svg>
         </div>
-        <!-- end of little blocks for miner feedback -->
+        <br>
+
+        <div class="text-center">
+        <small id="PBTCBALANCE1" class="col text-center">...</small>
+        </div>
+
+        <div class="text-center">
+        <small id='btcMiningRate' class="col text-center">...</small>
+        </div>
+
+        <div class='d-flex mt-1'>
+            <small>Mine if reward is ≥</small>
+            <input type='number' min="0.00000001" step="0.00000001" class='text-center form-control ml-3' id='target_btcMining_rate' value='0.00000021'>
+        </div>
+
+        <div class="row">
+            <div class="custom-control custom-checkbox m-4">
+                <input type='checkbox' class="custom-control-input" id='checkbox-3' onclick='switch_btc_cpu_autominer(this)'>
+                <label class="custom-control-label" for='checkbox-3' style='font-size:16px;'>Auto</label>
+            </div>
+        
+        <button type="button" class="btn btn-warning btn-block border border-dark col m-3 shadow" id='do_btc_cpu_transaction_bundle' onclick='do_btc_cpu_transaction_bundle()'>BTC/CPU Mine X 1</button>  
+        </div>
+        <div class="text-center">
+            <small>BTC/CPU mining does not receive staking bonuses</small>
+        </div>
+
+        <div class="btccpuslidecontainer" style='width:100%;'>
+            <input type="range" min="1" max="10" step="1" class="btccpuslider" value='1' id="myBTCCPURange" oninput="showValBTCCPU(this.value)" onchange="showValBTCCPU(this.value)">
+        </div>
+
+        <div class="text-center">
+            <small>CPU mining actions x 30</small>
+        </div>
 
 
-
+           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+        <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
+            <svg viewbox="0, 0, 400, 10">
+                <rect id='btcrect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect2'  x="40" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect3'  x="80" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect4'  x="120" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect5'  x="160" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect6'  x="200" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect7'  x="240" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect8'  x="280" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect9'  x="320" y="0" width="38" height="10" fill='#cccccc' />
+                <rect id='btcrect10' x="360" y="0" width="38" height="10" fill='#cccccc' />
+            </svg>
+        </div>
 
     </div>
+
+    
 </div>
 </div>
 </div>

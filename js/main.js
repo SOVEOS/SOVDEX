@@ -849,12 +849,16 @@ function do_btc_cpu_transaction_bundle() {
 
 
                     var target_btcMiningRate = document.getElementById('target_btcMining_rate').value;
+                    console.log(target_btcMiningRate);
 
 
                     var btc_mining_rate1 = document.getElementById('btcMiningRate').textContent;
-                                    btc_mining_rate1 = btc_mining_rate1.slice(33,43);
+                                    btc_mining_rate1 = btc_mining_rate1.slice(33,43)/100000000;
+
                                     
                                     btc_mining_rate1 = parseFloat(btc_mining_rate1).toFixed(8);
+
+                    console.log(btc_mining_rate1);
                                     
                         
 
@@ -876,7 +880,7 @@ function do_btc_cpu_transaction_bundle() {
                             }
                         };
 
-                        if (btc_mining_rate1 > target_btcMiningRate) {
+                        if (btc_mining_rate1 >= target_btcMiningRate) {
 
 
 

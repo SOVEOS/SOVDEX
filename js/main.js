@@ -849,7 +849,6 @@ function do_btc_cpu_transaction_bundle() {
 
 
                     var target_btcMiningRate = document.getElementById('target_btcMining_rate').value;
-                    console.log(target_btcMiningRate);
 
 
                     var btc_mining_rate1 = document.getElementById('btcMiningRate').textContent;
@@ -858,12 +857,7 @@ function do_btc_cpu_transaction_bundle() {
                                     
                                     btc_mining_rate1 = parseFloat(btc_mining_rate1).toFixed(8);
 
-                    console.log(btc_mining_rate1);
-                                    
-                        
-
-                      
-
+  
                     var myBTCCPURange = document.getElementById('myBTCCPURange').value;
                         //alert("myRange: " + myRange);
 

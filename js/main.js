@@ -166,9 +166,11 @@ function set_circle_element(elm, value) {
                     var automining = 0;
                     var cpuAutoMining = 0;
                     var sovcpuAutoMining = 0;
+                    var btccpuAutoMining = 0;
                     var autominer_cnt = 0;
                     var cpuAutoMiner_cnt = 0;
                     var sovcpuAutoMiner_cnt = 0;
+                    var btccpuAutoMiner_cnt = 0;
 
                     function switch_autominer(val) {
 
@@ -226,6 +228,11 @@ function set_circle_element(elm, value) {
                          if (sovcpuAutoMining > 0) {
 
                             do_sov_cpu_transaction_bundle();
+                        }
+
+                        if (btccpuAutoMining > 0) {
+
+                            do_btc_cpu_transaction_bundle();
                         }
 
                         time = setTimeout('app_thread()', 3500);
@@ -758,6 +765,158 @@ function do_sov_cpu_transaction_bundle() {
 
 
 
+                    function switch_btc_cpu_autominer(val) {
+
+                        // alert(val.checked);
+
+                        if (val.checked) btccpuAutoMining = 1;
+                        else btccpuAutoMining = 0;
+
+                        //alert("automining:" + automining);
+
+                    } // switch_autominer
+
+function update_btc_cpu_ticker() {
+                        btccpuAutoMiner_cnt++;
+
+                        if (btccpuAutoMiner_cnt == 11) btccpuAutoMiner_cnt = 1;
+                        //---
+                        for (var i = 1; i <= 10; i++) {
+                            var therect = 'btcrect' + i;
+                            let f2 = document.getElementById(therect);
+                            f2.setAttribute('fill', "#cccccc");
+
+                        }
+
+                        var therect = 'btcrect' + btccpuAutoMiner_cnt;
+                        let f3 = document.getElementById(therect);
+                        f3.setAttribute('fill', "#000000");
+                        //---        
+
+                    } // update_ticker
+
+
+                    // function app_thread()
+
+                    // Transaction BEGIN ------------------------
+function do_btc_cpu_transaction() {
+
+
+                        eosobject.transaction({
+                            actions: [{
+                                //                            account: 'eosio.token',
+                                account: 'cpu2svxminer',
+                                //                            account: 'sovsovsov223',
+                                name: 'minebtc',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                                data: {
+                                    "user": scatter_account
+                                }
+
+                            }]
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            //alert('Success');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            //alert( 'Error:' + err.error.details[0].message );
+
+                            
+                            return;
+
+                        });
+
+                    } // function dotransaction()
+
+                    // Transaction END ------------------------
+
+                    // Transaction BEGIN ------------------------
+function do_btc_cpu_transaction_bundle() {
+
+
+
+                    var target_btcMiningRate = document.getElementById('target_btcMining_rate').value;
+
+
+                    var btc_mining_rate1 = document.getElementById('btcMiningRate').textContent;
+                                    btc_mining_rate1 = btc_mining_rate1.slice(33,43);
+                                    
+                                    btc_mining_rate1 = parseFloat(btc_mining_rate1).toFixed(8);
+                                    
+                        
+
+                      
+
+                    var myBTCCPURange = document.getElementById('myBTCCPURange').value;
+                        //alert("myRange: " + myRange);
+
+                        var action = {
+
+                            account: 'cpu2svxminer',
+                            name: 'minebtc',
+                            authorization: [{
+                                actor: scatter_account,
+                                permission: "active"
+                            }],
+                            data: {
+                                "user": scatter_account
+                            }
+                        };
+
+                        if (btc_mining_rate1 > target_btcMiningRate) {
+
+
+
+
+                        console.log("============================");
+                        console.log(action);
+
+                        //var actions = [ action, action ]; 
+                        var theactions = [];
+                        for (var i = 0; i < myBTCCPURange; i++) {
+                            theactions[i] = action;
+                        }
+                        console.log(theactions);
+
+
+                        eosobject.transaction({
+                            actions: theactions
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            update_btc_cpu_ticker();
+                            return;
+
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+                            return;
+
+                        });
+                        return (0);
+
+                    }} // function dotransaction()
+
+
+
                     // DoInit BEGIN ------------------------
                     function doinit() {
                         /*
@@ -894,6 +1053,37 @@ function do_sov_cpu_transaction_bundle() {
 
                         );
 
+                        eosobject.getTableRows({
+                            "json": "true",
+                            "code": "eosiopowcoin",
+                            "scope": "eosiopowcoin",
+                            "table": "accounts"
+                        }).then(function(value) {
+                                //console.log("Table stat: ");
+                                //console.log(value);
+
+                                var pow_mining_supply = value.rows[0].balance;
+                                    pow_mining_supply = parseFloat(pow_mining_supply);
+
+                                var powpbtcPrice = document.getElementById('POWPBTCPRICE').textContent;
+                                    powpbtcPrice = powpbtcPrice.slice(12,22);
+                                    powpbtcPrice = parseFloat(powpbtcPrice).toFixed(8);
+
+                                var btc_mining_rate = (((pow_mining_supply / 40000)*powpbtcPrice)*31) - 0.00000001;
+                                    btc_mining_rate = parseFloat(btc_mining_rate).toFixed(8);
+
+
+                                document.getElementById('btcMiningRate').innerHTML = "<span class='bold' style='font-size:13px;'>Reward per Single Mining Action: <span style='color:#00bb00'>" + btc_mining_rate + "</span></span>";
+
+
+
+                            } // value
+
+                        );
+                        
+
+                        
+
                         /*
                         sov_balance svx_balance
                         */
@@ -927,6 +1117,10 @@ function do_sov_cpu_transaction_bundle() {
 
                                 if (document.getElementById('SOVUSDTBALANCE')) {
                                     document.getElementById('SOVUSDTBALANCE').innerHTML = "<span class='bold'>" + last + " SOV</span>";
+                                }
+
+                                if (document.getElementById('SOVCPUBALANCE')) {
+                                    document.getElementById('SOVCPUBALANCE').innerHTML = "<span class='bold'>" + last + " SOV</span>";
                                 }
 
                                 
@@ -991,6 +1185,45 @@ function do_sov_cpu_transaction_bundle() {
                                 if (document.getElementById('PBTCBALANCE')) {
                                     document.getElementById('PBTCBALANCE').innerHTML = "<span class='bold'>" + last + "</span>";
                                 }
+
+                                if (document.getElementById('PBTCBALANCE1')) {
+                                    document.getElementById('PBTCBALANCE1').innerHTML = "<span class='bold'>Balance " + last + "</span>";
+                                }
+
+                                if (document.getElementById('PBTCBALANCE2')) {
+                                    document.getElementById('PBTCBALANCE2').innerHTML = "<span class='bold'>" + last + "</span>";
+                                }
+
+
+                            } catch (err) {
+
+
+                            }
+
+
+                        });
+
+
+                        eosobject.getTableRows({
+                            "json": "true",
+                            "code": "eosiopowcoin",
+                            "scope": scatter_account,
+                            "table": "accounts"
+                        }).then(function(value) {
+
+                            var wert = value.rows.length;
+
+                            try {
+                                var last = value.rows[0].balance;
+                                last = last.replace("POW", "");
+
+                                balance_token = last * 10000;
+
+                                //document.getElementById('balance').innerHTML = "Your Balance: <span class='bold'>" + last + "</span>";
+                                if (document.getElementById('POWBALANCE')) {
+                                    document.getElementById('POWBALANCE').innerHTML = "<span class='bold'>" + last + "POW</span>";
+                                }
+
 
 
                             } catch (err) {
@@ -1166,6 +1399,49 @@ function do_sov_cpu_transaction_bundle() {
                          });
 
 
+                        eosobject.getTableRows({
+                            "json": "true",
+                            "code": "sovdexrelays",
+                            "scope": "PBTC",
+                            "table": "powpair"
+                        }).then(function(value) {
+      
+                            var powpbtcPrice = value.rows[0].price;
+                            const powpbtcCW = value.rows[0].cw;
+                            var powpbtcBalance = value.rows[0].connectorbal;
+                            var powpbtcOutstanding = value.rows[0].outstandingbal;
+                            
+
+                            var pbtcTransferAmount = document.getElementById('pbtc_transfer_amount1').value;
+                            var powTransferAmount = document.getElementById('pow_transfer_amount').value;
+                            
+
+                            powpbtcBalance = parseFloat(powpbtcBalance);
+                            powpbtcOutstanding = parseFloat(powpbtcOutstanding);
+                            pbtcTransferAmount = parseFloat(pbtcTransferAmount);
+                            powTransferAmount = parseFloat(powTransferAmount);
+                            powpbtcPrice = parseFloat(powpbtcPrice).toFixed(8);   
+
+
+                            var buypowpbtcBancor = (-powpbtcOutstanding*(Math.pow((1-(pbtcTransferAmount /(powpbtcBalance + pbtcTransferAmount))), (powpbtcCW/100))-1)).toFixed(8);
+
+                            var sellpowpbtcBancor = (-powpbtcBalance*(Math.pow(((1-(powTransferAmount / (powpbtcOutstanding + powTransferAmount)))), (1/(powpbtcCW/100)))-1)).toFixed(8);
+
+                            var buypowpbtcAvgPrice = (pbtcTransferAmount / buypowpbtcBancor).toFixed(8);
+                            var sellpowpbtcAvgPrice = (sellpowpbtcBancor / powTransferAmount).toFixed(8);
+
+                            buypowpbtcBancorDiv.textContent = (buypowpbtcBancor);
+                            sellpowpbtcBancorDiv.textContent = (sellpowpbtcBancor);
+
+                            BUYPOWPBTCAVGPRICE.innerText = ("Price with slippage = " + buypowpbtcAvgPrice + " pBTC");
+                            SELLPOWPBTCAVGPRICE.innerText = ("Price with slippage = " + sellpowpbtcAvgPrice + " pBTC");
+            
+                            POWPBTCPRICE.innerText = ("POW Price = " + powpbtcPrice + " pBTC");
+
+
+                         });
+
+
 
      
 
@@ -1271,6 +1547,10 @@ function do_sov_cpu_transaction_bundle() {
 
                                 if (document.getElementById('SVXBALANCE1')) {
                                      document.getElementById('SVXBALANCE1').innerHTML = "<span class='bold'>" + svxUserLiquidBalance + " SVX</span>";
+                                }
+
+                                if (document.getElementById('SVXCPUBALANCE')) {
+                                     document.getElementById('SVXCPUBALANCE').innerHTML = "<span class='bold'>" + svxUserBalance + " SVX</span>";
                                 }
 
                                  if (document.getElementById('mynode')) {
@@ -1777,7 +2057,7 @@ function showValCPU(val) {
 
 
 
-                        document.getElementById('do_cpu_transaction_bundle').innerHTML = "CPU Mine X " + val;
+                        document.getElementById('do_cpu_transaction_bundle').innerHTML = "SVX/CPU Mine X " + val;
                         
                     } 
 
@@ -1786,6 +2066,14 @@ function showValSOVCPU(val) {
 
 
                         document.getElementById('do_sov_cpu_transaction_bundle').innerHTML = "SOV/CPU Mine X " + val;
+                        
+                    } 
+
+function showValBTCCPU(val) {
+
+
+
+                        document.getElementById('do_btc_cpu_transaction_bundle').innerHTML = "BTC/CPU Mine X " + val;
                         
                     } 
 
@@ -2385,6 +2673,107 @@ function showValSOVCPU(val) {
                         eosobject.transaction({
                             actions: [{
                                 account: 'eosio.token',
+                                //      name: 'admin2',
+                                name: 'transfer',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                                //     data: {"from":scatter_account,"to":receiver_account,"quantity":betamount,"memo":memo}
+                                //      data: {"param": "createbet;;BIRD vs turtle;This is a description;Bird;bird;Turtle;turtle;43;123"}
+                                data: {
+                                    "from": scatter_account,
+                                    "to": 'sovdexrelays',
+                                    "quantity": transfer_amount,
+                                    "memo": 'PBTC',
+                                }
+
+                            }]
+                        }).then(result => {
+                            // If Success
+
+                            console.log("Success!!!");
+
+                            alert('Success!');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+                            // Error details
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            //  nalert('<br><div class=\'checkmark_red\'></div>Error '+err.error.name+ '!<br><br>','white');
+                            alert('Error: ' + err.error.details[0].message);
+
+                            return;
+
+                        });
+
+                    }
+
+
+
+                    function buyPOWPBTC() {
+
+                        var transfer_amount = document.getElementById('pbtc_transfer_amount1').value;
+                        alert("Exchange " + transfer_amount + " pBTC for POW");
+                        transfer_amount = format_btc_amount(transfer_amount);
+                        transfer_amount = transfer_amount + " PBTC";
+
+                        eosobject.transaction({
+                            actions: [{
+                                account: 'btc.ptokens',
+                                //      name: 'admin2',
+                                name: 'transfer',
+                                authorization: [{
+                                    actor: scatter_account,
+                                    permission: "active"
+                                }],
+                             
+                                data: {
+                                    "from": scatter_account,
+                                    "to": 'sovdexrelays',
+                                    "quantity": transfer_amount,
+                                    "memo": 'POW',
+                                }
+
+                            }]
+                        }).then(result => {
+                            
+                            console.log("Success!!!");
+
+                            alert('Success!');
+
+                            return;
+                        }).catch(error => {
+                            console.log("jsonerr: " + error);
+
+                            err = JSON.parse(error);
+                            console.log("Error Transaction " + err);
+
+                            alert('Error: ' + err.error.details[0].message);
+
+                            return;
+
+                        });
+
+
+                    }
+
+
+
+                    function sellPOWPBTC() {
+                        
+                        var transfer_amount = document.getElementById('pow_transfer_amount').value;
+                        alert("Exchange " + transfer_amount + " POW for pBTC");
+                        transfer_amount = format_btc_amount(transfer_amount);
+                        transfer_amount = transfer_amount + " POW";
+
+                        eosobject.transaction({
+                            actions: [{
+                                account: 'eosiopowcoin',
                                 //      name: 'admin2',
                                 name: 'transfer',
                                 authorization: [{

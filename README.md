@@ -6,7 +6,7 @@
 
 You can also join our for more information and to have fun with the rest of the people involved in our projects. 
 
-![image](docs/localhost_8080.png)
+<img src="docs/localhost_8080.png" style="box-shadow: 0 0 20px rgba(0,0,0,.05)">
 
 ## For users 🖖
 
@@ -51,3 +51,7 @@ $ cd server && yarn run build
 <a href="https://github.com/marcius-studio">
 <img src="https://raw.githubusercontent.com/marcius-studio/storage/master/badge-marcius-studio.svg" height="60">
 </a>   
+
+## Licence
+
+[MIT](http://opensource.org/licenses/MIT)

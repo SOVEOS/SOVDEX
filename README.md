@@ -28,22 +28,19 @@ Feel free to contribute!
 Required [Node.js](https://nodejs.org/en/)
 
 ```sh
-$ cd client && yarn
-$ cd server && yarn
+$ yarn
 ```
 
 ### Run 
 
 ```sh
-$ cd client && yarn run serve
-$ cd server && yarn run start
+$ yarn run serve
 ```
 
 ### Build
 
 ```sh
-$ cd client && yarn run build
-$ cd server && yarn run build
+$ yarn run build
 ```
 
 ## Contributors

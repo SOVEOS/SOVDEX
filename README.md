@@ -6,14 +6,14 @@
 
 You can also join our for more information and to have fun with the rest of the people involved in our projects. 
 
-<img src="docs/localhost_8080.png" style="box-shadow: 0 0 20px rgba(0,0,0,.05)">
+![image](docs/localhost_8080.png)
 
 ## For users 🖖
 
 First you need to follow a few steps:
 
 * Install [TokenPocket](https://www.tokenpocket.pro/en/) => Auth => set Private key
-* [Open webapp](https://soveos.github.io/SOVDEX/) => press button "Login"
+* [Open webapp](https://soveos.github.io/SOVDEX/) => press button "Sign in"
 
 ## For developers 😎
 

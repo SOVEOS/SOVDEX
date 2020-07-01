@@ -8,6 +8,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@marcius-studio/marcius-css": "0.0.1",
     "@marcius-studio/vue-notice": "0.1.0",
     "@scatterjs/core": "2.7.53",
     "@scatterjs/eosjs": "1.5.36",

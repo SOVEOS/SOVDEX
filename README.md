@@ -6,11 +6,13 @@
 
 You can also join our for more information and to have fun with the rest of the people involved in our projects. 
 
+![image](docs/localhost_8080.png)
+
 ## For users 🖖
 
-First, you need to follow a few steps.
+First you need to follow a few steps:
 
-* Install [TokenPocket](https://www.tokenpocket.pro/en/) => auth => set private key
+* Install [TokenPocket](https://www.tokenpocket.pro/en/) => Auth => set Private key
 * [Open webapp](https://soveos.github.io/SOVDEX/) => press button "Login"
 
 ## For developers 😎
@@ -19,7 +21,7 @@ To organize app, we use solutions:
 
 * [eosjs v16](https://github.com/EOSIO/eosjs) 
 * [ScatterJS](https://github.com/GetScatter/scatter-js) - like MetaMask. Help to interact with blockchain
-* [TokenPocket](https://www.tokenpocket.pro/en/) - multi-tokens wallet. Using for auth
+* [TokenPocket](https://www.tokenpocket.pro/en/) - DApp multi-tokens wallet
 
 Feel free to contribute!
 

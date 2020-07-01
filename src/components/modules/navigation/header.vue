@@ -5,8 +5,8 @@
                 <div class="unit-section">
                     <div class="tile tile-list" style="line-height: 20px;">
                         <div class="tile-section tile-icon">
-                            <figure class="icon">
-                                 <!--img src="image\logo.png" height="40px"-->
+                            <figure class="icon" style="background-color: transparent;">
+                                 <img src="image\logo.svg" height="40px">
                             </figure>
                         </div>
                         <div class="tile-section">

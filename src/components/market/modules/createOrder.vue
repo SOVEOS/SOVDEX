@@ -136,20 +136,20 @@
             },
             async getBalance() {
                 const eos = await this.eos.getAccount(this.scatter.name)
-                    .then((res) => parseFloat(res.core_liquid_balance.replace('EOS', '')))
+                    .then((res) => parseFloat(res.core_liquid_balance))
 
                 const sov = await this.eos.getTableRows(this.params('sovmintofeos'))
-                    .then((res) => parseFloat(res.rows[0].balance.replace('SOV', '')))
+                    .then((res) => parseFloat(res.rows[0].balance))
 
                 const svx = await this.eos.getTableRows(this.params('svxmintofeos'))
-                    .then((res) => parseFloat(res.rows[0].balance.replace('SVX', '')))
+                    .then((res) => parseFloat(res.rows[0].balance))
 
                 const pbtc = await this.eos.getTableRows(this.params('btc.ptokens'))
-                    .then((res) => parseFloat(res.rows[0].balance.replace('PBTC', '')))
+                    .then((res) => parseFloat(res.rows[0].balance))
 
                 /* ERROR  TypeError: Cannot read property 'balance' of undefined
                 const usdt = await this.eos.getTableRows(this.params('tethertether'))
-                    .then((res) => parseFloat(res.rows[0].balance.replace('USDT', '')))
+                    .then((res) => parseFloat(res.rows[0].balance))
                  */
 
                 this.balance = { eos, sov, svx, pbtc }

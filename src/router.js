@@ -14,7 +14,6 @@ const router = new VueRouter({
     base: process.env.BASE_URL || '/',
 })
 
-
 router.beforeEach((to, from, next) => {
 	next()
 	if (!to.meta.title) document.title = `${to.meta.name}`

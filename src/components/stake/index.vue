@@ -141,8 +141,8 @@
                     "scope": this.scatter.name,
                     "table": "accounts"
                 }).then(res => {
-                    const userBalance = parseFloat(res.rows[0].balance.replace('SVX', ''))
-                    const storeBalance = parseFloat(res.rows[0].storebalance.replace('SVX', ''))
+                    const userBalance = parseFloat(res.rows[0].balance)
+                    const storeBalance = parseFloat(res.rows[0].storebalance)
 
                     this.balance = userBalance - storeBalance
                     this.stakedBalance = storeBalance

@@ -93,7 +93,7 @@
                     "table": "accounts"
                 }).then(res => {
                     if (res) {
-                        const svxPower = parseFloat(res.rows[0].svxpower.replace('SVX', ''))
+                        const svxPower = parseFloat(res.rows[0].svxpower)
 
                         const node = (svxPower / 777000) * 100
                         this.node.value = Math.floor(node)

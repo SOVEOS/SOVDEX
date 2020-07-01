@@ -1,0 +1,55 @@
+<template>
+    <div class="header flex-centered bg-secondary hide-sm">
+        <div class="container grid-xl">
+            <div class="unit">
+                <div class="unit-section">
+                    <div class="tile tile-list" style="line-height: 20px;">
+                        <div class="tile-section tile-icon">
+                            <figure class="icon">
+                                 <!--img src="image\logo.png" height="40px"-->
+                            </figure>
+                        </div>
+                        <div class="tile-section">
+                            <div class="text-bold">SOVDEX</div>
+                            <div class="text-sm text-secondary" v-if="$store.getters.isAuth">
+                                @{{$store.state.blockchain.scatter.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="unit-section">
+                    <router-link v-if="$store.getters.isAuth" v-for="(i, idx) in schema" :to="{name: i.route}" :key="idx"
+                        class="link link-padding" :class="{'active' : i.route == $route.name}">{{i.name}}</router-link>
+                    <span v-if="$store.getters.isAuth" class="link link-padding material-icons"
+                        @click="$bus.$emit('settings')">settings</span>
+                    <auth class="ml" />
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import auth from '../../user/auth'
+
+    export default {
+        data: () => ({
+            schema: [
+                {
+                    name: 'Stake',
+                    route: 'stake'
+                },
+                {
+                    name: 'Exchange',
+                    route: 'market'
+                },
+                {
+                    name: 'Mine',
+                    route: 'mine'
+                }
+            ]
+        }),
+        components: {
+            auth
+        }
+    }
+</script>

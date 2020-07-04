@@ -1597,12 +1597,12 @@ function do_btc_cpu_transaction_bundle() {
                                     bonus_percentage = parseFloat(bonus_percentage).toFixed(2);
                                     //                           bonus_percentage = (svxpower / svx_supply) * 10;
 
-                                    document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Burn Mining Bonus for Staking SVX: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
+                                } 
 
-                                } else
-                                    document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>...</span>";
+                                 document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Burn Mining Bonus for Staking SVX: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
 
                                     document.getElementById('mining_hint').innerHTML = "<span class='bold' style='font-size:14px;'>Choose How to Mine<span>";
+
 
                                 var feeDiscount = 0;
 
@@ -1627,14 +1627,15 @@ function do_btc_cpu_transaction_bundle() {
                                     else if (feeDiscount < 75) feeDiscount = "70";
                                     else if (feeDiscount < 80) feeDiscount = "75";
                                     else if (feeDiscount >= 80) feeDiscount = "75";
-
-                                    document.getElementById('nodeRequirement').innerHTML = "<span class='bold' style='font-size:14px;'>Stake 777k+ SVX for automatic node payouts</span>";                                   
-                                    
-                                    document.getElementById('svxDiscount').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</span> %</span>";
-
-                                    document.getElementById('resourcesInfo').innerHTML = "<span class='bold' style='font-size:14px;'>Spend SOV to Rent CPU, NET, or buy RAM</span>";                                  
+                                                                      
 
                                 }
+
+                                document.getElementById('svxDiscount').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</span> %</span>";
+
+                                 document.getElementById('nodeRequirement').innerHTML = "<span class='bold' style='font-size:14px;'>Stake 777k+ SVX for automatic node payouts</span>"; 
+
+                                 document.getElementById('resourcesInfo').innerHTML = "<span class='bold' style='font-size:14px;'>Spend SOV to Rent CPU, NET, or buy RAM</span>";
 
 
                                     var sov_mine_send = 150;

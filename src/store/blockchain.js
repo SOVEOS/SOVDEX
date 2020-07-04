@@ -8,15 +8,15 @@ export default {
         isConnected: false
     },
     getters: {
-        isAuth: (state) => !!state.scatter && state.eos,
+        isAuth: (state) => !!state.scatter,
         isConnected: (state) => state.isConnected,
     },
     mutations: {
+        setScatter(state, payload) { // account
+            state.scatter = payload
+        },
         setEos(state, payload) {
             state.eos = { ...state.eos, ...payload }
-        },
-        setScatter(state, payload) {
-            state.scatter = payload
         },
         setHost(state, payload) {
             state.host = payload

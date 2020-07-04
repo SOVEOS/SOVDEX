@@ -13,5 +13,5 @@ export default new Vuex.Store({
         // user,
         blockchain,
     },
-    //plugins: [vuexLocal.plugin],
+    plugins: [vuexLocal.plugin],
 })

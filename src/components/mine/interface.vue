@@ -41,7 +41,7 @@
     export default {
         data: () => ({
             targetMiningRate: 0,
-            quantity: 150,
+            quantity: 150, // default value
             range: 1,
             isAuto: false,
 
@@ -59,12 +59,13 @@
             }),
             total() {
                 return {
-                    miningRate: parseFloat((this.miningRate * this.range).toFixed(4)),
-                    burn: parseFloat(((this.quantity * 0.014) * this.range).toFixed(2)),
+                    miningRate: parseFloat((this.miningRate * this.range).toFixed(4)) || 0,
+                    burn: parseFloat(((this.quantity * 0.014) * this.range).toFixed(2)) || 0,
                 }
             },
             miningCost() {
-                return (this.total.burn / this.total.miningRate).toFixed(4)
+                const cost = (this.total.burn / this.total.miningRate).toFixed(4)
+                return cost == Infinity ? 0 : cost
             }
         },
         watch: {
@@ -85,7 +86,6 @@
         },
         mounted() {
             if (this.scatter) this.getData()
-
             this.polling = setInterval(() => this.getData(), 1000)
         },
         beforeDestroy() {
@@ -117,19 +117,20 @@
                         "table": "accounts"
                     })
 
-                    const svxPower = res.rows[0].svxpower
+                    if (svxMiningSupply, svxSupply, res) {
+                        const svxPower = res.rows[0].svxpower
 
-                    let bonusPercentage = (parseFloat(svxPower) / parseFloat(svxSupply)) * 10000
-                    bonusPercentage = bonusPercentage > 50 ? 50 : 0
+                        let bonusPercentage = (parseFloat(svxPower) / parseFloat(svxSupply)) * 10000
+                        bonusPercentage = bonusPercentage > 50 ? 50 : 0
 
-                    let miningRate = (svxMiningSupply / 20000) * (1 + (bonusPercentage / 100)) * 1 // mining_multiplier
-                    miningRate = this.miningRate = miningRate.toFixed(4)
+                        let miningRate = (svxMiningSupply / 20000) * (1 + (bonusPercentage / 100)) * 1 // mining_multiplier
+                        miningRate = this.miningRate = miningRate.toFixed(4)
 
-                    // set values
-                    this.miningRate = miningRate
-                    this.miningBonus = bonusPercentage
+                        // set values
+                        this.miningRate = miningRate
+                        this.miningBonus = bonusPercentage
+                    }
                 }
-
             },
             submit() {
                 if (this.miningRate > this.targetMiningRate)

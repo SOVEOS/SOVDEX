@@ -18,10 +18,17 @@
         props: {
             symbol: Boolean
         },
+        data: () => ({
+            network: null
+        }),
         watch: {
             host(val) {
                 // if host change
                 if (val) this.init()
+            },
+            '$route.name'(val) {
+                // update scatter & eos on each route
+                this.init()
             },
         },
         computed: {
@@ -30,12 +37,6 @@
             },
             host() {
                 return this.$store.state.blockchain.host
-            },
-            _class() {
-                if (this.symbol) {
-                    return this.isAuth ? 'text-warning' : ''
-                }
-                return this.isAuth ? 'btn btn-warning' : 'btn btn-primary'
             },
             eos: {
                 get() {
@@ -52,16 +53,18 @@
                 set(val) {
                     this.$store.commit('setScatter', val)
                 }
-            }
+            },
+            _class() {
+                if (this.symbol) {
+                    return this.isAuth ? 'text-warning' : ''
+                }
+                return this.isAuth ? 'btn btn-warning' : 'btn btn-primary'
+            },
         },
         mounted() {
             // if not auth already
-            if (!this.scatter) {
-                this.init()
-                this.$bus.$on('signin', () => this.auth())
-            }
-
-            //setInterval(()=> this.checkStatus(), 5000)
+            this.init()
+            this.$bus.$on('signin', () => this.auth())
         },
         methods: {
             init() {
@@ -83,7 +86,7 @@
                             return false
                         }
 
-                        this.eos = ScatterJS.scatter.eos(network, Eos) // set EOS
+                        this.eos = ScatterJS.eos(network, Eos) // set EOS
                         this.$store.commit('setConnectStatus')
 
                     }).catch(() => {
@@ -112,6 +115,7 @@
                             return false
                         }
 
+                        this.eos = ScatterJS.eos(this.network, Eos)
                         this.scatter = ScatterJS.account('eos')
 
                     }).catch(err => console.log(err))

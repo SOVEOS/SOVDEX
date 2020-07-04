@@ -144,8 +144,8 @@
                     const userBalance = parseFloat(res.rows[0].balance)
                     const storeBalance = parseFloat(res.rows[0].storebalance)
 
-                    this.balance = userBalance - storeBalance
-                    this.stakedBalance = storeBalance
+                    this.balance = Math.round(userBalance - storeBalance)
+                    this.stakedBalance = Math.round(storeBalance)
                 })
 
             },

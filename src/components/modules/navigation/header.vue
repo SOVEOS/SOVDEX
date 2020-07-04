@@ -6,7 +6,7 @@
                     <div class="tile tile-list" style="line-height: 20px;">
                         <div class="tile-section tile-icon">
                             <figure class="icon" style="background-color: transparent;">
-                                 <img src="image\logo.svg" height="40px">
+                                <img src="image\logo.svg" height="40px">
                             </figure>
                         </div>
                         <div class="tile-section">
@@ -17,8 +17,9 @@
                     </div>
                 </div>
                 <div class="unit-section">
-                    <router-link v-if="$store.getters.isAuth" v-for="(i, idx) in schema" :to="{name: i.route}" :key="idx"
-                        class="link link-padding" :class="{'active' : i.route == $route.name}">{{i.name}}</router-link>
+                    <router-link v-if="$store.getters.isAuth" v-for="(i,idx) in schema" :to="i.route"
+                        :key="idx" class="link link-padding" :class="{'active' : i.route.name == $route.name}">{{i.name}}
+                    </router-link>
                     <span v-if="$store.getters.isAuth" class="link link-padding material-icons"
                         @click="$bus.$emit('settings')">settings</span>
                     <auth class="ml" />
@@ -36,15 +37,15 @@
             schema: [
                 {
                     name: 'Stake',
-                    route: 'stake'
+                    route: { name: 'stake' }
                 },
                 {
                     name: 'Exchange',
-                    route: 'market'
+                    route: { name: 'market', params: { symbol: 'soveos' } }
                 },
                 {
                     name: 'Mine',
-                    route: 'mine'
+                    route: { name: 'mine' }
                 }
             ]
         }),

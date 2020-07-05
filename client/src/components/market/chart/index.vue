@@ -6,9 +6,7 @@
                     <span class="text-sm text-secondary p-absolute" v-html="legend" style="line-height: 15px;"></span>
                 </div>
                 <div class="unit-section">
-                    <button class="btn btn-sm" :class="[interval == i.data ? 'btn-primary' : 'btn-link' ]"
-                        v-for="i in intervals" @click="interval = i.data">{{i.name}}</button>
-
+                    <intervals v-model="interval" />
                 </div>
             </div>
         </div>
@@ -23,13 +21,18 @@
 
     // mixins
     import dataProvider from './mixins/dataProvider'
-    import volume from './mixins/volume'
-    import intervals from './mixins/intervals'
+    //
     import legend from './mixins/legend'
 
+    // import volume from './mixins/volume'
+
+    // components
+    import intervals from './intervals'
+
     export default {
-        mixins: [dataProvider, volume, intervals, legend],
+        mixins: [dataProvider, legend], // volume, 
         data: () => ({
+            interval: '5m',
             chart: null,
             series: null,
         }),
@@ -108,5 +111,8 @@
                 if (this.series) this.series.update(val)
             }
         },
+        components: {
+            intervals
+        }
     }
 </script>

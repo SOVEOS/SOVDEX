@@ -1,7 +1,7 @@
 <template>
-    <div class="content-padding">
+    <div class="content-padding width100">
         <div class="form-group mb05">
-            <input type="number" min="30" :max="balance[pair.base]" step="1" class="form-input" v-model="amount">
+            <input type="number" min="40" :max="balance[pair.base]" step="1" class="form-input" v-model="amount">
             <label><span class="text-uppercase">{{pair.base}}</span> amount</label>
         </div>
         <div class="text-sm text-secondary mb05">{{eosCount}} EOS</div>
@@ -11,7 +11,7 @@
                     Buy <span class="text-uppercase">{{pair.base}}</span>
                 </button>
                 <div class="text-sm text-secondary"><b>{{balance[pair.quote] || 0}}</b> {{pair.quote}}</div>
-                
+
             </div>
             <div class="column col-12 col-sm-6">
                 <button :disabled="$v.amount.$invalid" class="btn btn-primary btn-block btn-error" @click="sell">
@@ -39,14 +39,18 @@
                     base: 'svx',
                     quote: 'eos'
                 },
-                eospbtc: {
-                    base: 'eos',
-                    quote: 'pbtc'
-                },
                 sovusdt: {
                     base: 'sov',
                     quote: 'usdt'
                 },
+                eospbtc: {
+                    base: 'eos',
+                    quote: 'pbtc'
+                },
+                powpbtc: {
+                    base: 'pow',
+                    quote: 'pbtc'
+                }
             },
             accountSchema: {
                 soveos: {
@@ -56,6 +60,18 @@
                 svxeos: {
                     buy: 'eosio.token',
                     sell: 'svxmintofeos',
+                },
+                sovusdt: {
+                    buy: 'tethertether',
+                    sell: 'sovmintofeos',
+                },
+                eospbtc: {
+                    buy: 'btc.ptokens',
+                    sell: 'eosio.token',
+                },
+                powpbtc: {
+                    buy: 'btc.ptokens',
+                    sell: 'eosiopowcoin',
                 },
             },
             balance: {
@@ -92,8 +108,6 @@
                 this.getBalance()
                 this.getRate()
             }, 1000)
-
-
         },
         methods: {
             buy() {
@@ -139,20 +153,19 @@
                     .then((res) => parseFloat(res.core_liquid_balance))
 
                 const sov = await this.eos.getTableRows(this.params('sovmintofeos'))
-                    .then((res) => parseFloat(res.rows[0].balance))
+                    .then((res) => this.updBalance(res))
 
                 const svx = await this.eos.getTableRows(this.params('svxmintofeos'))
-                    .then((res) => parseFloat(res.rows[0].balance))
+                    .then((res) => this.updBalance(res))
 
                 const pbtc = await this.eos.getTableRows(this.params('btc.ptokens'))
-                    .then((res) => parseFloat(res.rows[0].balance))
+                    .then((res) => this.updBalance(res))
 
-                /* ERROR  TypeError: Cannot read property 'balance' of undefined
                 const usdt = await this.eos.getTableRows(this.params('tethertether'))
-                    .then((res) => parseFloat(res.rows[0].balance))
-                 */
+                    .then((res) => this.updBalance(res))
 
-                this.balance = { eos, sov, svx, pbtc }
+
+                this.balance = { eos, sov, svx, pbtc, usdt }
             },
             getRate() {
                 this.eos.getTableRows({
@@ -166,6 +179,9 @@
             },
             params(code) {
                 return { "json": "true", code, "scope": this.scatter.name, "table": "accounts" }
+            },
+            updBalance({ rows }) {
+                return (rows && rows[0]) ? parseFloat(rows[0].balance) : 0
             }
         },
         validations() {

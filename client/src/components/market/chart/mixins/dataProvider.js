@@ -2,12 +2,9 @@ import axios from 'axios'
 
 export default {
     data: () => ({
+        host: process.env.NODE_ENV == 'production' ? 'http://api.sovdex.io' : 'http://localhost:3000',
         data: [],
         streamData: {},
-        schema: {
-            'soveos': 'sovmintofeos-sov-eos',
-            'svxeos': 'svxmintofeos-svx-eos',
-        },
 
         polling: null
     }),
@@ -18,7 +15,7 @@ export default {
     },
     computed: {
         symbol() {
-            return this.schema[this.$route.params.symbol] || this.schema['soveos']
+            return this.$route.params.symbol
         }
     },
     mounted() {
@@ -28,7 +25,7 @@ export default {
         init(params) {
             this.getData(params)
                 .then(({ data }) => {
-                    this.data = data.data.map(i => this.updateKline(i))
+                    this.data = data.map(i => this.updateKline(i))
                 })
                 .then(() => {
                     if (this.polling) clearInterval(this.polling)
@@ -47,9 +44,12 @@ export default {
                     console.log('[chart] steam data', kline)
                 })
         },
-        request({ symbol = 'sovmintofeos-sov-eos', interval = '1hour', limit = '300' }) {
-            // https://github.com/newdex/api-docs/blob/master/api/REST_api_reference.md
-            return axios.get(`https://api.newdex.io/v1/candles?symbol=${symbol}&time_frame=${interval}&size=${limit}`)
+        request({ symbol = 'soveos', interval = '5m', limit = '300' }) {
+            return axios({
+                method: 'get',
+                url: this.host,
+                params: { symbol, interval, limit }
+            })
                 .then(res => res)
                 .catch(error => {
                     // this.$notice.error(error)
@@ -58,14 +58,8 @@ export default {
         },
         updateKline(val) {
             return {
-                time: val[0],
-
-                open: val[1],
-                close: val[2],
-                high: val[3],
-                low: val[4],
-
-                volume: val[5],
+                time: val.openTime / 1000,
+                ...val
             }
         }
     },

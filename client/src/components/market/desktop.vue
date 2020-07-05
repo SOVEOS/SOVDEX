@@ -3,9 +3,9 @@
 		<div class="market-chart">
 			<chart :symbol="symbol" />
 		</div>
-		<div class="p-relative content" style="width: 200px;">
-			<div class="content-header content-padding">
-				<markets />
+		<div class="p-relative content" style="width: 250px;">
+			<div class="content-header">
+				<markets style="padding: 7px 0 5px 0;" />
 			</div>
 			<div class="content-body flex-centered">
 				<createOrder :symbol="symbol" />

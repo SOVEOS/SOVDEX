@@ -77,7 +77,7 @@
         },
         mounted() {
             this.getBalance()
-            this.polling = setInterval(() => this.getBalance(), 1000)
+            this.polling = setInterval(() => this.getBalance(), 1000 * 60)
         },
         beforeDestroy() {
             if (this.polling) clearInterval(this.polling)

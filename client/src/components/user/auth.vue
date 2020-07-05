@@ -94,15 +94,6 @@
                     })
 
             },
-            checkStatus() {
-                try {
-                    ScatterJS.connect('sovdex', { network: this.network })
-                    this.$store.commit('setConnectStatus')
-                }
-                catch {
-                    this.$store.commit('setConnectStatus', false)
-                }
-            },
             auth() {
                 this.isAuth ? this.logout() : this.login()
             },
@@ -121,11 +112,9 @@
                     }).catch(err => console.log(err))
             },
             logout() {
+                this.$store.commit('logout')
                 return ScatterJS.logout()
-                    .then(res => {
-                        this.$store.commit('logout')
-                        console.log('[auth] Sign out')
-                    })
+                    .then(res => console.log('[auth] Sign out'))
             }
         }
     }

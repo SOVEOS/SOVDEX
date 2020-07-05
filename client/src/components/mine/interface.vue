@@ -86,7 +86,7 @@
         },
         mounted() {
             if (this.scatter) this.getData()
-            this.polling = setInterval(() => this.getData(), 1000)
+            this.polling = setInterval(() => this.getData(), 1000 * 60)
         },
         beforeDestroy() {
             // clear if component destroy

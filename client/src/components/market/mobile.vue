@@ -5,7 +5,7 @@
             <chart :symbol="symbol" />
         </div>
         <div class="content-footer">
-            <markets class="container" />
+            <markets />
             <createOrder :symbol="symbol" />
         </div>
     </div>

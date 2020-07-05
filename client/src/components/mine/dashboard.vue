@@ -61,7 +61,7 @@
 
                 return '#ff5555'
             },
-            setNodeColor(value){
+            setNodeColor(value) {
                 if (value > 25 && value <= 50) return '#ffaa00'
                 if (value > 50 && value <= 75) return '#5bc0de'
                 if (value > 75 && value <= 99) return '#0275d8'

@@ -1,6 +1,6 @@
 # SOVDEX
 
-[Telegram community @eossov](https://t.me/eossov)
+[Telegram community @eossov](https://t.me/eossov) | [Server docs](server/README.md)
 
 **SOVDEX** is an algorithmic instant liquidity exchange and SVX miner combined into one. Based on EOS blockchain.
 
@@ -19,29 +19,34 @@ First you need to follow a few steps:
 
 To organize app, we use solutions:
 
-* [eosjs v16](https://github.com/EOSIO/eosjs) 
-* [ScatterJS](https://github.com/GetScatter/scatter-js) - like MetaMask. Help to interact with blockchain
-* [TokenPocket](https://www.tokenpocket.pro/en/) - DApp multi-tokens wallet
+* [EosJs v16](https://github.com/EOSIO/eosjs) - blockchain interaction
+* [ScatterJs](https://github.com/GetScatter/scatter-js) - dapp interaction
+* [TokenPocket](https://www.tokenpocket.pro/en/) - dapp multi-tokens wallet
 
 Feel free to contribute!
 
 Required [Node.js](https://nodejs.org/en/)
 
-```sh
-$ yarn
+```node
+$ cd client && yarn
+$ cd server && yarn
 ```
 
-### Run 
+### Run
 
-```sh
-$ yarn run serve
+```node
+$ cd client && yarn run serve
+$ cd server && yarn run start
 ```
 
 ### Build
 
-```sh
-$ yarn run build
+```node
+$ cd client && yarn run build
+$ cd server && yarn run build
 ```
+
+Build folder `dist`
 
 ## Contributors
 

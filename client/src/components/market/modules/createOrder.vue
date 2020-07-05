@@ -4,7 +4,7 @@
             <input type="number" min="40" :max="balance[pair.base]" step="1" class="form-input" v-model="amount">
             <label><span class="text-uppercase">{{pair.base}}</span> amount</label>
         </div>
-        <div class="text-sm text-secondary mb05">{{eosCount}} EOS</div>
+        <div class="text-sm text-secondary mb05">{{priceEquivalent}} {{pair.quote}}</div>
         <div class="columns mb05">
             <div class="column col-12 col-sm-6">
                 <button :disabled="$v.amount.$invalid" class="btn btn-primary btn-block btn-success" @click="buy">
@@ -81,7 +81,13 @@
                 pbtc: 0,
                 usdt: 0
             },
-            eosPrice: 0,
+
+            price: {
+                eos: 0,
+                usdt: 0,
+                pbtc: 0
+            },
+
 
             polling: null,
         }),
@@ -94,8 +100,8 @@
                 const symbol = this.$route.params.symbol
                 return this.schema[symbol]
             },
-            eosCount() {
-                return parseFloat((this.eosPrice * this.amount).toFixed(6))
+            priceEquivalent() {
+                return parseFloat((this.price[this.pair.quote] * this.amount).toFixed(6))
             }
         },
         mounted() {
@@ -112,7 +118,7 @@
         methods: {
             buy() {
                 // EX: sov/eos => memo: SOV, quantity: EOS
-                const quantity = this.$options.filters.eosAmountFormat(this.eosCount, this.pair.quote)
+                const quantity = this.$options.filters.eosAmountFormat(this.priceEquivalent, this.pair.quote)
                 this.submit(this.pair.base, quantity, 'buy')
             },
             sell() {
@@ -168,14 +174,24 @@
                 this.balance = { eos, sov, svx, pbtc, usdt }
             },
             getRate() {
-                this.eos.getTableRows({
-                    "json": "true",
-                    "code": "sovdexrelays",
-                    "scope": "EOS",
-                    "table": "pair"
-                }).then((res) => {
-                    this.eosPrice = parseFloat(parseFloat(res.rows[0].price).toFixed(8))
-                })
+
+                // EOS
+                this.eos.getTableRows({ "code": "sovdexrelays", "scope": "EOS", "table": "pair", "json": true })
+                    .then((res) => {
+                        this.price.eos = parseFloat(res.rows[0].price)
+                    })
+
+                // USDT
+                this.eos.getTableRows({ "code": "sovdexrelays", "scope": "USDT", "table": "pair", "json": true })
+                    .then((res) => {
+                        this.price.usdt = parseFloat(res.rows[0].price)
+                    })
+
+                // PBTC
+                this.eos.getTableRows({ "code": "sovdexrelays", "scope": "PBTC", "table": "eospair", "json": true })
+                    .then((res) => {
+                        this.price.pbtc = parseFloat(res.rows[0].price)
+                    })
             },
             params(code) {
                 return { "json": "true", code, "scope": this.scatter.name, "table": "accounts" }

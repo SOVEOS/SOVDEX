@@ -13,7 +13,10 @@ Vue.use(Donut)
 
 
 // filters
-Vue.filter('eosAmountFormat', (val, symbol = 'SVX') => parseFloat(val).toFixed(4) + ` ${symbol.toUpperCase()}`)
+Vue.filter('eosAmountFormat', (val, symbol = 'SVX') => {
+    let decimalPlaces = (symbol == 'pbtc') ? 8 : 4
+    return parseFloat(val).toFixed(decimalPlaces) + ` ${symbol.toUpperCase()}`
+})
 
 
 // Global bus event

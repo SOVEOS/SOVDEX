@@ -43,7 +43,7 @@
             },
         },
         mounted() {
-            this.getData()
+            // this.getData()
             this.polling = setInterval(() => this.getData(), 1000)
         },
         beforeDestroy() {

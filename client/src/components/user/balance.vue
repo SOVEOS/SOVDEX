@@ -28,8 +28,13 @@
             eos: state => state.blockchain.eos,
             scatter: state => state.blockchain.scatter,
         }),
+        watch: {
+            scatter(val) {
+                if (val) this.init()
+            }
+        },
         mounted() {
-            this.init()
+            // this.init()
             this.polling = setInterval(() => this.init(), 1000)
         },
         beforeDestroy() {
@@ -37,8 +42,8 @@
         },
         methods: {
             init() {
-                    this.getSOV()
-                    this.getSVX()
+                this.getSOV()
+                this.getSVX()
             },
             getSOV() {
                 this.eos.getTableRows({

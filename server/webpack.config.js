@@ -11,14 +11,18 @@ module.exports = {
 		path: path.resolve(__dirname, './dist'),
 		filename: '[name].js',
 	},
-	plugins: [
-		new webpack.DefinePlugin({
-			'process.env': {
-				NODE_ENV: '"production"',
-			},
-		}),
-		new webpack.LoaderOptionsPlugin({
-			minimize: true,
-		}),
-	]
+	module: {
+		rules: [
+			{
+				test: /\.m?js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
+				}
+			}
+		]
+	},
 }

@@ -1,10 +1,11 @@
-import { CronJob } from 'cron'
+const CronJob = require('cron').CronJob
 
-import { setSymbolData, pairs } from './db/helper'
+import { saveTick, deleteTicks, pairs } from '../api/queries'
 
-// tick every minute
-var job = new CronJob('0 */1 * * * *', () => {
-   pairs.forEach(i => setSymbolData(i))
-})
+// Save price every minute
+new CronJob('0 */1 * * * *', () => {
+   pairs.forEach(i => saveTick(i))
+}).start()
 
-job.start()
+// Delete extra values ​​in the database every 1h = 60m
+new CronJob('0 */60 * * * *', () => deleteTicks()).start()

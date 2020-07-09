@@ -1,10 +1,13 @@
 <template>
     <div class="content-padding width100">
+        <!--Input-->
         <div class="form-group mb05">
-            <input type="number" min="40" :max="balance[pair.base]" step="1" class="form-input" v-model="amount">
+            <input type="number" :min="minimalAmount" :max="balance[pair.base]" :step="step" class="form-input"
+                v-model="amount">
             <label><span class="text-uppercase">{{pair.base}}</span> amount</label>
         </div>
         <div class="text-sm text-secondary mb05">{{priceEquivalent}} {{pair.quote}}</div>
+        <!--buttons-->
         <div class="columns mb05">
             <div class="column col-12 col-sm-6">
                 <button :disabled="$v.amount.$invalid" class="btn btn-primary btn-block btn-success" @click="buy">
@@ -29,7 +32,7 @@
 
     export default {
         data: () => ({
-            amount: 40,
+            amount: 0,
             schema: {
                 soveos: {
                     base: 'sov',
@@ -91,6 +94,15 @@
 
             polling: null,
         }),
+        watch: {
+            scatter(val) {
+                if (val) {
+                    this.getBalance()
+                    this.getRate()
+                }
+
+            }
+        },
         computed: {
             ...mapState({
                 eos: state => state.blockchain.eos,
@@ -102,14 +114,15 @@
             },
             priceEquivalent() {
                 return parseFloat((this.price[this.pair.quote] * this.amount).toFixed(6))
+            },
+            minimalAmount() {
+                return (this.pair.base == 'sov' || this.pair.base == 'svx') ? 40 : 0
+            },
+            step() {
+                return (this.pair.base == 'sov' || this.pair.base == 'svx') ? 1 : 0.0001
             }
         },
         mounted() {
-            if (this.scatter) {
-                this.getBalance()
-                this.getRate()
-            }
-
             this.polling = setInterval(() => {
                 this.getBalance()
                 this.getRate()
@@ -147,10 +160,10 @@
                             }
                         }]
                     })
-                        .then(() => this.$notice.success(`You <b>${side} ${this.amount}</b>`))
+                        .then(() => this.$notice.success(`You <b>${side} ${this.amount} ${this.pair.base}</b>`))
                         .catch(error => {
                             console.error(error)
-                            //  this.$notice.error(res.error.details[0].message)
+                            this.$notice.error('Order error')
                         })
                 }
             },
@@ -174,7 +187,6 @@
                 this.balance = { eos, sov, svx, pbtc, usdt }
             },
             getRate() {
-
                 // EOS
                 this.eos.getTableRows({ "code": "sovdexrelays", "scope": "EOS", "table": "pair", "json": true })
                     .then((res) => {
@@ -204,7 +216,7 @@
             return {
                 amount: {
                     required,
-                    between: between(40, this.balance[this.pair.base]),
+                    // between: between(0, this.balance[this.pair.base])
                 },
             }
         },

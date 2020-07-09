@@ -14,12 +14,15 @@
 
     ScatterJS.plugins(new ScatterEOS())
 
+    import reconnect from './reconnect'
+
     export default {
+        mixins: [reconnect],
         props: {
             symbol: Boolean
         },
         data: () => ({
-            network: null
+            network: null,
         }),
         watch: {
             host(val) {
@@ -38,6 +41,7 @@
             host() {
                 return this.$store.state.blockchain.host
             },
+
             eos: {
                 get() {
                     return this.$store.state.blockchain.eos
@@ -116,6 +120,6 @@
                 return ScatterJS.logout()
                     .then(res => console.log('[auth] Sign out'))
             }
-        }
+        },
     }
 </script>

@@ -21,9 +21,7 @@
 
     // mixins
     import dataProvider from './mixins/dataProvider'
-    //
     import legend from './mixins/legend'
-
     // import volume from './mixins/volume'
 
     // components

@@ -1,16 +1,17 @@
-// Require the framework and instantiate it
-const server = require('fastify')({
-	logger: false
-})
+import Koa from 'koa'
+import cors from '@koa/cors'
+import router from './router'
 
+const app = new Koa()
+
+import './config'
+import './db'
 import './modules/cron'
 
-const cors = require('cors')
-server.use(cors())
+app.use(cors())
+app.use(router.routes()).use(router.allowedMethods())
 
-server.register(import('./modules/endpoint'), {})
-
-server.listen(3000, (err, address) => {
-    if (err) throw err
-    console.log('🚀 Server ready at http://localhost:3000')
+app.listen(3000, (err) => {
+  if (err) throw err
+  console.log('🚀 Server ready at http://localhost:3000')
 })

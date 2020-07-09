@@ -1,7 +1,7 @@
 import timestring from 'timestring'
 import moment from 'moment'
 
-import { getData } from './helper'
+import { ticks } from '../api/queries'
 
 export default class Candles {
     constructor(data) {
@@ -11,13 +11,17 @@ export default class Candles {
 
     async init({ symbol, interval, limit }) {
 
-        const data = await getData(symbol)
+        const data = await ticks(symbol)
         const sessions = this.sessions(interval, limit)
         const candles = this.candles(data, sessions)
 
         return candles || []
     }
 
+    /**
+    ** Sessions - interval with limit count, default 300
+    * @returns {array} => [{ openTime:Timestamp, closeTime:Timestamp}]
+    */
 
     sessions(interval, limit) {
         const session = timestring(interval) * 1000 // length of session
@@ -37,7 +41,13 @@ export default class Candles {
 
     }
 
+    /**
+     ** Candles - build candles from raw data
+     * @returns {array} => [{ openTime:Timestamp, closeTime:Timestamp, open:Number, high:Number, low:Number, close:Number}]
+     */
+
     candles(data, sessions) {
+
         const range = sessions.map(i => ({ ...i, range: this.range(data, i) })).filter(i => i.range.length > 0)
 
         const candles = range.reduce((result, item) => {
@@ -49,10 +59,23 @@ export default class Candles {
         return candles
     }
 
+    /**
+    ** Range of ticks
+    * from - index of element
+    * to - from + count of bars for exist interval (this.minutes)
+    * @returns {array} => [{symbol:String, price:Number, time:Timestamp}]
+    */
+
     range(data, { openTime, closeTime }) {
-        const from = data.findIndex(i => openTime <= i.time && closeTime >= i.time)
-        return (from >= 0) ? data.slice(from, this.minutes) : []
+        const from = data.findIndex(i => openTime <= i.time && closeTime > i.time)
+        const to = from + this.minutes
+        return (from >= 0) ? data.slice(from, to) : []
     }
+
+    /**
+     ** Candle
+     * @returns {object} => {open:Number, high:Number, low:Number, close:Number}
+     */
 
     сandle(val) {
         return {

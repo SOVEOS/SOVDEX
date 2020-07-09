@@ -69,6 +69,9 @@
             }
         },
         watch: {
+            scatter(val) {
+                if (val) this.getData()
+            },
             isAuto(val) {
                 if (val) {
                     this.submit() // init
@@ -85,8 +88,8 @@
             },
         },
         mounted() {
-            if (this.scatter) this.getData()
-            this.polling = setInterval(() => this.getData(), 1000 * 60)
+            //if (this.scatter) this.getData()
+            this.polling = setInterval(() => this.getData(), 1000)
         },
         beforeDestroy() {
             // clear if component destroy

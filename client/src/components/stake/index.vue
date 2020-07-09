@@ -32,6 +32,7 @@
                 </div>
 
                 <div class="text-sm text-secondary mt05">Staked {{stakedBalance}} SVX</div>
+                <div class="text-sm text-secondary" v-if="discount >= 5">Discount {{discount}}%</div>
 
             </div>
 
@@ -45,7 +46,10 @@
     import { mapState } from 'vuex'
     import { required, between } from "vuelidate/lib/validators"
 
+    import discount from './discount'
+
     export default {
+        mixins: [discount],
         data: () => ({
             stakeCount: 0,
             unstakeCount: 0,
@@ -54,10 +58,12 @@
 
             polling: null,
         }),
-        computed: mapState({
-            eos: state => state.blockchain.eos,
-            scatter: state => state.blockchain.scatter,
-        }),
+        computed: {
+            ...mapState({
+                eos: state => state.blockchain.eos,
+                scatter: state => state.blockchain.scatter,
+            }),
+        },
         watch: {
             scatter(val) {
                 if (val) this.getBalance()
@@ -76,11 +82,11 @@
             }
         },
         mounted() {
-            this.getBalance()
-            this.polling = setInterval(() => this.getBalance(), 1000 * 60)
-        },
-        beforeDestroy() {
-            if (this.polling) clearInterval(this.polling)
+           // this.getBalance()
+            this.polling = setInterval(() => {
+                this.getBalance()
+                this.getFeeDiscount() // from mixin
+            }, 1000)
         },
         methods: {
             stake() {
@@ -146,6 +152,7 @@
 
                     this.balance = Math.round(userBalance - storeBalance)
                     this.stakedBalance = Math.round(storeBalance)
+
                 })
 
             },
@@ -154,6 +161,9 @@
                 this.unstakeCount = 0
             }
 
-        }
+        },
+        beforeDestroy() {
+            if (this.polling) clearInterval(this.polling)
+        },
     }
 </script>

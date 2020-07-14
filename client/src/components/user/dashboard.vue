@@ -30,9 +30,9 @@
 
     export default {
         data: () => ({
-            cpu: { value: 10, label: 'CPU', color: '#5490f1' },
-            node: { value: 90, label: 'SVX node', color: '#5490f1' },
-            net: { value: 70, label: 'NET', color: '#5490f1' },
+            cpu: { value: 0, label: 'CPU', color: '#5490f1' },
+            node: { value: 0, label: 'SVX node', color: '#5490f1' },
+            net: { value: 0, label: 'NET', color: '#5490f1' },
 
 
             settings: {

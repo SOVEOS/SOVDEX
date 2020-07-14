@@ -35,7 +35,7 @@ const schema = {
     }
 }
 
-const limit = 200000
+const limit = 100000
 
 const request = (data) => axios({ method: 'post', url: 'http://api.cypherglass.com/v1/chain/get_table_rows', data })
 

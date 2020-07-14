@@ -3,17 +3,24 @@ export default {
         price: {
             eos: 0,
             usdt: 0,
-            pbtc: 0
+            pbtc: 0,
+            pow: 0,
+            svx: 0,
         },
         bancor: {}
     }),
     computed: {
         bancorPrice() {
             const symbol = this.$route.params.symbol
+            const buyAmount = this.buyAmount
+            const sellAmount = this.sellAmount
 
-            if (this.bancor[this.pair.quote]) {
-                const bancor = this.getBancor(this.bancor[this.pair.quote], this.buyAmount, this.sellAmount)
-                return bancor
+            if (symbol == 'svxeos') {
+                return this.getBancor(this.bancor['svx'], buyAmount, sellAmount)
+            } else if (symbol == 'powpbtc') {
+                return this.getBancor(this.bancor['pow'], buyAmount, sellAmount)
+            } else if (this.bancor[this.pair.quote]) {
+                return this.getBancor(this.bancor[this.pair.quote], buyAmount, sellAmount)
             }
 
             return { buy: 0, sell: 0 }
@@ -38,6 +45,7 @@ export default {
 
             Promise.all([eosPromise, usdtPromise, pbtcPrimise, powPromise, svxPromise]).then(res => {
                 this.price = { eos: res[0].price, usdt: res[1].price, pbtc: res[2].price, pow: res[3].price, svx: res[4].price }
+
                 this.bancor = {
                     eos: res[0].bancor,
                     usdt: res[1].bancor,

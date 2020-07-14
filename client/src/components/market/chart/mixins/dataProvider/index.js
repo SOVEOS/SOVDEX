@@ -29,9 +29,6 @@ export default {
                 })
             }
         },
-        streamData(val) {
-            if (this.series) this.series.update(val)
-        }
     },
     computed: {
         symbol() {

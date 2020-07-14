@@ -42,6 +42,14 @@ export default {
                 this.clearPolling()
                 this.polling = setInterval(() => this.getStreamData(), 1000)
             }
+        },
+        streamData: {
+            handler(val) {
+                if (this.series) {
+                    this.series.update(val)
+                }
+            },
+            deep: true,
         }
     },
     computed: {

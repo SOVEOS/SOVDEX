@@ -12,13 +12,10 @@
     </div>
 </template>
 <script>
-    import dashboard from './dashboard'
-    import tinterface from './interface'
-
+    import tinterface from './modules/interface'
 
     export default {
         components: {
-            dashboard,
             tinterface,
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <div :class="_class" @click="auth" :disabled="!$store.getters.isConnected">
-        <span class="material-icons">{{isAuth ? 'exit_to_app' : 'fingerprint'}}</span>
+        <span class="material-icons">power_settings_new</span>
         <span class="ml05" v-if="!symbol">Sign {{isAuth ? 'out' : 'in'}}</span>
     </div>
 </template>

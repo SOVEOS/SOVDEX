@@ -16,7 +16,7 @@
             </div>
             <div class="column col-4">
                 <button class="btn btn-primary btn-sm btn-block" @click="submit('Buy RAM')"
-                    :disabled="$v.quantity.$invalid">Rent RAM</button>
+                    :disabled="$v.quantity.$invalid">Buy RAM</button>
             </div>
         </div>
     </div>

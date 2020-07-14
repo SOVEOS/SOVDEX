@@ -1,24 +1,28 @@
 <template>
     <div class="content-padding width100">
-        <!--Input-->
-        <div class="form-group mb05">
-            <input type="number" :min="minimalAmount" :max="balance[pair.base]" :step="step" class="form-input"
-                v-model="amount">
-            <label><span class="text-uppercase">{{pair.base}}</span> amount</label>
-        </div>
-        <div class="text-sm text-secondary mb05">{{priceEquivalent}} {{pair.quote}}</div>
-        <!--buttons-->
         <div class="columns mb05">
             <div class="column col-12 col-sm-6">
-                <button :disabled="$v.amount.$invalid" class="btn btn-primary btn-block btn-success" @click="buy">
+                <div class="form-group form-action mb05">
+                    <input type="number" min="0" :max="balance[pair.quote]" :step="step(pair.quote)" class="form-input"
+                        v-model="buyAmount">
+                    <span class="action text-uppercase text-secondary">{{pair.quote}}</span>
+                </div>
+
+                <button class="btn btn-primary btn-block btn-success btn-lg" @click="buy">
                     Buy <span class="text-uppercase">{{pair.base}}</span>
+                    <div class="text-normal">{{cutBancor(bancorPrice.buy, pair.base)}} {{pair.base}}</div>
                 </button>
                 <div class="text-sm text-secondary"><b>{{balance[pair.quote] || 0}}</b> {{pair.quote}}</div>
-
             </div>
             <div class="column col-12 col-sm-6">
-                <button :disabled="$v.amount.$invalid" class="btn btn-primary btn-block btn-error" @click="sell">
+                <div class="form-group form-action mb05">
+                    <input type="number" min="0" :max="balance[pair.base]" :step="step(pair.base)" class="form-input"
+                        v-model="sellAmount">
+                    <span class="action text-uppercase text-secondary">{{pair.base}}</span>
+                </div>
+                <button class="btn btn-primary btn-block btn-error btn-lg" @click="sell">
                     Sell <span class="text-uppercase">{{pair.base}}</span>
+                    <div class="text-normal">{{cutBancor(bancorPrice.sell, pair.quote)}} {{pair.quote}}</div>
                 </button>
                 <div class="text-sm text-secondary"><b>{{balance[pair.base] || 0}}</b> {{pair.base}}</div>
             </div>
@@ -28,11 +32,16 @@
 
 <script>
     import { mapState } from 'vuex'
-    import { required, between } from "vuelidate/lib/validators"
+
+    // mixins
+    import balance from './mixins/balance'
+    import prices from './mixins/prices'
 
     export default {
+        mixins: [balance, prices],
         data: () => ({
-            amount: 0,
+            buyAmount: 0,
+            sellAmount: 0,
             schema: {
                 soveos: {
                     base: 'sov',
@@ -77,20 +86,6 @@
                     sell: 'eosiopowcoin',
                 },
             },
-            balance: {
-                eos: 0,
-                sov: 0,
-                svx: 0,
-                pbtc: 0,
-                usdt: 0
-            },
-
-            price: {
-                eos: 0,
-                usdt: 0,
-                pbtc: 0
-            },
-
 
             polling: null,
         }),
@@ -100,7 +95,6 @@
                     this.getBalance()
                     this.getRate()
                 }
-
             }
         },
         computed: {
@@ -112,15 +106,6 @@
                 const symbol = this.$route.params.symbol
                 return this.schema[symbol]
             },
-            priceEquivalent() {
-                return parseFloat((this.price[this.pair.quote] * this.amount).toFixed(6))
-            },
-            minimalAmount() {
-                return (this.pair.base == 'sov' || this.pair.base == 'svx') ? 40 : 0
-            },
-            step() {
-                return (this.pair.base == 'sov' || this.pair.base == 'svx') ? 1 : 0.0001
-            }
         },
         mounted() {
             this.polling = setInterval(() => {
@@ -131,19 +116,21 @@
         methods: {
             buy() {
                 // EX: sov/eos => memo: SOV, quantity: EOS
-                const quantity = this.$options.filters.eosAmountFormat(this.priceEquivalent, this.pair.quote)
+                const quantity = this.$options.filters.eosAmountFormat(this.buyAmount, this.pair.quote)
                 this.submit(this.pair.base, quantity, 'buy')
             },
             sell() {
                 // EX: sov/eos => memo: EOS, quantity: SOV
-                const quantity = this.$options.filters.eosAmountFormat(this.amount, this.pair.base)
+                const quantity = this.$options.filters.eosAmountFormat(this.sellAmount, this.pair.base)
                 this.submit(this.pair.quote, quantity, 'sell')
             },
             submit(currency, quantity, side) {
 
                 const account = this.accountSchema[this.$route.params.symbol][side]
+                const amount = (side == 'buy') ? this.buyAmount : this.sellAmount
 
-                if (confirm(`You really want to ${side} ${this.amount} ${this.pair.base.toUpperCase()}?`)) {
+
+                if (confirm(`You really want to ${side} ${amount} ${this.pair.base.toUpperCase()}?`)) {
                     this.eos.transaction({
                         actions: [{
                             account,
@@ -160,65 +147,25 @@
                             }
                         }]
                     })
-                        .then(() => this.$notice.success(`You <b>${side} ${this.amount} ${this.pair.base}</b>`))
+                        .then(() => {
+                            this.$notice.success(`You <b>${side} ${amount} ${this.pair.base}</b>`)
+                            this.getBalance()
+
+                            this.$bus.$emit('updateChartData')
+                        })
                         .catch(error => {
                             console.error(error)
                             this.$notice.error('Order error')
                         })
                 }
             },
-            async getBalance() {
-                const eos = await this.eos.getAccount(this.scatter.name)
-                    .then((res) => parseFloat(res.core_liquid_balance))
+            step(pair) {
+                if (pair == 'pbtc') return 0.0001
+                if (pair == 'eos' || pair == 'usdt') return 0.01
+                if (pair == 'pow') return 0.1
 
-                const sov = await this.eos.getTableRows(this.params('sovmintofeos'))
-                    .then((res) => this.updBalance(res))
-
-                const svx = await this.eos.getTableRows(this.params('svxmintofeos'))
-                    .then((res) => this.updBalance(res))
-
-                const pbtc = await this.eos.getTableRows(this.params('btc.ptokens'))
-                    .then((res) => this.updBalance(res))
-
-                const usdt = await this.eos.getTableRows(this.params('tethertether'))
-                    .then((res) => this.updBalance(res))
-
-
-                this.balance = { eos, sov, svx, pbtc, usdt }
+                return 1
             },
-            getRate() {
-                // EOS
-                this.eos.getTableRows({ "code": "sovdexrelays", "scope": "EOS", "table": "pair", "json": true })
-                    .then((res) => {
-                        this.price.eos = parseFloat(res.rows[0].price)
-                    })
-
-                // USDT
-                this.eos.getTableRows({ "code": "sovdexrelays", "scope": "USDT", "table": "pair", "json": true })
-                    .then((res) => {
-                        this.price.usdt = parseFloat(res.rows[0].price)
-                    })
-
-                // PBTC
-                this.eos.getTableRows({ "code": "sovdexrelays", "scope": "PBTC", "table": "eospair", "json": true })
-                    .then((res) => {
-                        this.price.pbtc = parseFloat(res.rows[0].price)
-                    })
-            },
-            params(code) {
-                return { "json": "true", code, "scope": this.scatter.name, "table": "accounts" }
-            },
-            updBalance({ rows }) {
-                return (rows && rows[0]) ? parseFloat(rows[0].balance) : 0
-            }
-        },
-        validations() {
-            return {
-                amount: {
-                    required,
-                    // between: between(0, this.balance[this.pair.base])
-                },
-            }
         },
         beforeDestroy() {
             if (this.polling) clearInterval(this.polling)

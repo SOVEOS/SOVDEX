@@ -1,9 +1,9 @@
-const CronJob = require('cron').CronJob
+import { CronJob } from 'cron'
 
 import { saveTick, deleteTicks, pairs } from '../api/queries'
 
 // Save price every minute
-new CronJob('0 */1 * * * *', () => {
+new CronJob('0 */3 * * * *', () => {
    pairs.forEach(i => saveTick(i))
 }).start()
 

@@ -2,10 +2,10 @@
     <div class="section">
         <div class="section-item section-item-filled">
             <div class="columns text-center">
-                <div class="column col-6">
+                <div class="column col-6 col-sm-12">
                     <span class="text-semibold">{{sov}}</span> <span class="text-secondary">SOV</span>
                 </div>
-                <div class="column col-6">
+                <div class="column col-6 col-sm-12">
                     <span class="text-semibold">{{svx}}</span> <span class="text-secondary">SVX</span>
                 </div>
             </div>
@@ -30,42 +30,36 @@
         }),
         watch: {
             scatter(val) {
-                if (val) this.init()
+                if (val) this.getBalance()
             }
         },
         mounted() {
-            // this.init()
-            this.polling = setInterval(() => this.init(), 1000)
+            this.polling = setInterval(() => this.getBalance(), 1000)
         },
         beforeDestroy() {
             if (this.polling) clearInterval(this.polling)
         },
         methods: {
-            init() {
-                this.getSOV()
-                this.getSVX()
-            },
-            getSOV() {
-                this.eos.getTableRows({
+            getBalance() {
+                const sovBalancePrimise = this.eos.getTableRows({
                     "json": "true",
                     "code": "sovmintofeos",
                     "scope": this.scatter.name,
                     "table": "accounts"
-                }).then(res => {
-                    this.sov = parseFloat(res.rows[0].balance)
-                })
-            },
-            getSVX() {
-                this.eos.getTableRows({
+                }).then(res => parseFloat(res.rows[0].balance))
+
+                const svxBalancePrimise = this.eos.getTableRows({
                     "json": "true",
                     "code": "svxmintofeos",
                     "scope": this.scatter.name,
                     "table": "accounts"
-                }).then(res => {
-                    this.svx = parseFloat(res.rows[0].balance)
+                }).then(res => parseFloat(res.rows[0].balance))
+
+                Promise.all([sovBalancePrimise, svxBalancePrimise]).then(res => {
+                    this.sov = res[0] || 0
+                    this.svx = res[1] || 0
                 })
             },
-
         }
     }
 </script>

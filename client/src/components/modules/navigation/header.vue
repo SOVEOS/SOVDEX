@@ -21,7 +21,7 @@
                         :key="idx" class="link link-padding" :class="{'active' : i.route.name == $route.name}">{{i.name}}
                     </router-link>
                     <span v-if="$store.getters.isAuth" class="link link-padding material-icons"
-                        @click="$bus.$emit('settings')">settings</span>
+                        @click="$bus.$emit('settings')">settings_input_antenna</span>
                     <auth class="ml" />
                 </div>
             </div>

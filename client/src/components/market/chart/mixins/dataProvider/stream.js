@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const schema = {
     soveos: {
         "code": "sovdexrelays",
@@ -42,22 +40,27 @@ export default {
         data(val) {
             if (val && val.length > 0) {
                 this.clearPolling()
-                this.polling = setInterval(() => this.getStreamData(), 1000 * 5) // 5s upd
+                this.polling = setInterval(() => this.getStreamData(), 1000)
             }
         }
     },
+    computed: {
+        eos() {
+            return this.$store.state.blockchain.eos
+        }
+    },
     methods: {
-        getStreamData(symbol) {
-            const data = schema[symbol]
-            return axios({ method: 'post', url: 'http://api.cypherglass.com/v1/chain/get_table_rows', data })
-                .then(({ data }) => {
-                    if (data.rows[0]) {
-                        const price = parseFloat(parseFloat(data.rows[0].price).toFixed(8))
-                        this.streamData = this.updateKline(price)
+        getStreamData() {
+            this.eos.getTableRows(schema[this.symbol])
+                .then(({ rows }) => {
+                    if (rows[0]) {
+                        const price = parseFloat(parseFloat(rows[0].price).toFixed(8))
+                        this.streamData = this.updateCandle(price)
+                        console.log('[stream]', this.streamData)
                     }
                 })
         },
-        updateKline(price) {
+        updateCandle(price) {
             let lastCandle = this.data.slice(-1)[0]
             lastCandle.close = price
 
@@ -67,6 +70,8 @@ export default {
             if (this.polling) {
                 clearInterval(this.polling)
                 this.polling = null
+
+                console.log('[stream] cleared')
             }
         }
     },

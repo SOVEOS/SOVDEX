@@ -1,7 +1,6 @@
 lines (68 sloc)  1.8 KB
-  
 <template>
-	<div class="bottom-navigation show-sm">
+	<div class="bottom-navigation show-sm" v-if="$store.getters.isAuth">
 
 		<div class="container grid-xs height100">
 			<div class="unit">
@@ -12,7 +11,7 @@ lines (68 sloc)  1.8 KB
                 </router-link>
 
                 <div class="unit-section bottom-navigation-item" @click="$bus.$emit('settings')">
-                    <span class="material-icons">settings</span>
+                    <span class="material-icons">settings_input_antenna</span>
                     <!--span class="bottom-navigation-label" >Settings</span-->
                  </div>
 
@@ -35,17 +34,17 @@ lines (68 sloc)  1.8 KB
                 {
                     name: 'Stake',
                     route: {name: 'stake'},
-                    icon: 'account_balance_wallet'
+                    icon: 'account_balance'
                 },
                 {
                     name: 'Exchange',
                     route: {name: 'market', params: {symbol: 'soveos'}},
-                    icon: 'cached'
+                    icon: 'trending_up'
                 },
                 {
                     name: 'Mine',
                     route: {name: 'mine'},
-                    icon: 'monetization_on'
+                    icon: 'whatshot'
                 }
             ]
         }),

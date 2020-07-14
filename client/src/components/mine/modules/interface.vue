@@ -2,13 +2,14 @@
     <div class="section">
         <div class="section-item section-item-filled">
             <div class="toast mb">
-                <div class="mb05"> Burn Mining <span class="text-primary">1 SVX</span> Burns <span
+                <div class="mb05">Mining <span class="text-primary">1 SVX</span> Burns <span
                         class="text-warning text-semibold">{{miningCost}} SOV</span></div>
                 <ul class="text-sm">
-                    <li>Reward per mining action: <span class="text-primary">{{miningRate}}</span> SVX</li>
-                    <li>Reward per mining transaction: <span class="text-primary">{{total.miningRate}}</span> SVX</li>
-                    <li>Total Burn per mining transaction: <span class="text-error">{{total.burn}}</span> SOV</li>
-                    <li>Bonus for staking SVX: <span class="text-success">{{bonus}}%</span></li>
+                    <li>Reward per action: <span class="text-primary">{{miningRate}}</span> SVX</li>
+                    <li>Reward per transaction: <span class="text-primary">{{total.miningRate}}</span> SVX</li>
+                    <li>Total Burn per ransaction: <span class="text-error">{{total.burn}}</span> SOV</li>
+                    <li>Bonus for staking SVX: <span
+                            :class="[miningBonus >= 50 ? 'text-success' : 'text-warning']">{{miningBonus}}%</span></li>
                 </ul>
             </div>
             <div class="form-group mb05">
@@ -29,14 +30,17 @@
                 <span class="text-secondary text-sm ml05">Auto mine</span>
             </label>
 
-        </div>
+            <bars :isAuto="isAuto" />
 
+        </div>
         <div class="text-sm text-secondary text-center">Bundled burn mining actions per transaction</div>
     </div>
 </template>
 
 <script>
     import { mapState } from 'vuex'
+
+    import bars from './bars'
 
     export default {
         data: () => ({
@@ -47,7 +51,7 @@
 
             // statistic
             miningRate: 0,
-            bonus: 0,
+            miningBonus: 0,
 
             pollingIsAuto: null,
             polling: null,
@@ -88,52 +92,46 @@
             },
         },
         mounted() {
-            //if (this.scatter) this.getData()
             this.polling = setInterval(() => this.getData(), 1000)
         },
-        beforeDestroy() {
-            // clear if component destroy
-            if (this.polling) clearInterval(this.polling)
-        },
         methods: {
-            async getData() {
-                if (this.scatter && this.eos) {
-                    const svxMiningSupply = await this.eos.getTableRows({
-                        "json": "true",
-                        "code": "svxmintofeos",
-                        "scope": "svxmintofeos",
-                        "table": "accounts"
-                    }).then(res => parseFloat(res.rows[0].balance))
+            getData() {
+                const svxMiningSupplyPromise = this.eos.getTableRows({
+                    "json": "true",
+                    "code": "svxmintofeos",
+                    "scope": "svxmintofeos",
+                    "table": "accounts"
+                })
 
-                    const svxSupply = await this.eos.getTableRows({
-                        "json": "true",
-                        "code": "svxmintofeos",
-                        "scope": "SVX",
-                        "table": "stat"
-                    }).then(res => parseFloat(res.rows[0].supply))
+                const svxSupplyPromise = this.eos.getTableRows({
+                    "json": "true",
+                    "code": "svxmintofeos",
+                    "scope": "SVX",
+                    "table": "stat"
+                })
 
-                    // user account
-                    const res = await this.eos.getTableRows({
-                        "json": "true",
-                        "code": "svxmintofeos",
-                        "scope": this.scatter.name,
-                        "table": "accounts"
-                    })
+                const svxPowerPromise = this.eos.getTableRows({
+                    "json": "true",
+                    "code": "svxmintofeos",
+                    "scope": this.scatter.name,
+                    "table": "accounts"
+                })
 
-                    if (svxMiningSupply, svxSupply, res) {
-                        const svxPower = res.rows[0].svxpower
+                Promise.all([svxMiningSupplyPromise, svxSupplyPromise, svxPowerPromise])
+                    .then(res => {
+                        const svxMiningSupply = parseFloat(res[0].rows[0].balance)
+                        const svxSupply = parseFloat(res[1].rows[0].supply)
+                        const svxPower = parseFloat(res[2].rows[0].svxpower)
 
-                        let bonusPercentage = (parseFloat(svxPower) / parseFloat(svxSupply)) * 10000
-                        bonusPercentage = bonusPercentage > 50 ? 50 : 0
+                        let bonusPercentage = (svxPower / svxSupply) * 10000
+                        bonusPercentage = bonusPercentage > 50 ? 50 : Math.floor(parseFloat(bonusPercentage).toFixed(2))
 
                         let miningRate = (svxMiningSupply / 20000) * (1 + (bonusPercentage / 100)) * 1 // mining_multiplier
-                        miningRate = this.miningRate = miningRate.toFixed(4)
 
                         // set values
-                        this.miningRate = miningRate
+                        this.miningRate = parseFloat(miningRate.toFixed(4))
                         this.miningBonus = bonusPercentage
-                    }
-                }
+                    })
             },
             submit() {
                 if (this.miningRate > this.targetMiningRate)
@@ -156,9 +154,18 @@
                     }).then(() => {
                         console.log('[mine] Success')
                         if (!this.isAuto) this.$notice.success('Mine success')
+
+                        this.$bus.$emit('tick')
                     }).catch(error => console.error(error))
             }
         },
+        beforeDestroy() {
+            // clear if component destroy
+            if (this.polling) clearInterval(this.polling)
+        },
+        components: {
+            bars
+        }
     }
 </script>
 

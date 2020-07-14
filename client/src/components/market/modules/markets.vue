@@ -1,6 +1,6 @@
 <template>
-	<div class="columns col-gapless col-oneline" >
-		<div class="column col-4 col-sm-3" v-for="(i,idx) in markets" :key="idx" >
+	<div class="columns col-gapless col-oneline" ref="markets">
+		<div class="column col-4 col-sm-3" v-for="(i,idx) in markets" :key="idx">
 			<router-link class="btn btn-sm btn-block" :to="{name: 'market', params:{ symbol: i.symbol }}"
 				v-html="i.name" tag="button" style="height: 30px;"
 				:class="[i.symbol == $route.params.symbol ? 'btn-primary' : 'btn-link' ]" />
@@ -30,11 +30,14 @@
 					symbol: 'eospbtc'
 				},
 				{
-					name: 'eos/pbtc',
+					name: 'pow/pbtc',
 					symbol: 'powpbtc'
 				},
 			],
 		}),
+		mounted() {
+			document.querySelector('.btn-primary').scrollIntoView()
+		}
 	}
 </script>
 
@@ -52,7 +55,7 @@
 		}
 	}
 
-/*
+	/*
 	@media only screen and (min-width: 600px) {
 		.columns.col-oneline {
 			overflow: hidden;
@@ -60,6 +63,4 @@
 		}
 		}
 */
-
-	
 </style>

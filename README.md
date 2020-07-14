@@ -20,8 +20,8 @@ First you need to follow a few steps:
 To organize app, we use solutions:
 
 * [EosJs v16](https://github.com/EOSIO/eosjs) - blockchain interaction
-* [ScatterJs](https://github.com/GetScatter/scatter-js) - dapp interaction
-* [TokenPocket](https://www.tokenpocket.pro/en/) - dapp multi-tokens wallet
+* [ScatterJs](https://github.com/GetScatter/scatter-js) - wallet interaction
+* [TokenPocket](https://www.tokenpocket.pro/en/) - mlti-tokens wallet
 
 Feel free to contribute!
 

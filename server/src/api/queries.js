@@ -35,7 +35,7 @@ const schema = {
     }
 }
 
-const limit = 50000
+const limit = 100000
 
 const request = (data) => axios({ method: 'post', url: 'http://api.cypherglass.com/v1/chain/get_table_rows', data })
 
@@ -60,6 +60,6 @@ export const saveTick = async (symbol) => {
 }
 
 export const deleteTicks = () => {
-    const timeLine = Date.now() - (1000 * 60 * limit)
+    const timeLine = Date.now() - (1000 * 60 * 3 * limit)
     return tickModel.deleteMany({ time: { $lte: timeLine } })
 }

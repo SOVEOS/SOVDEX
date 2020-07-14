@@ -2,6 +2,7 @@
     <div class="container container-padding grid-xs">
 
         <balance />
+        <dashboard />
 
         <div class="section">
             <div class="section-item section-item-filled">

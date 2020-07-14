@@ -5,12 +5,32 @@ import stream from './stream'
 export default {
     mixins: [stream],
     data: () => ({
-        host: process.env.NODE_ENV == 'production' ? 'http://api.sovdex.io' : 'http://localhost:3000',
+        host: 'https://api.sovdex.io',// process.env.NODE_ENV == 'production' ? 'https://api.sovdex.io' : 'http://localhost:3000',
         data: [],
+        isDataLoaded: false,
     }),
     watch: {
         interval(interval) {
             this.getData({ symbol: this.symbol, interval })
+        },
+        series(val) {
+            if (this.data.length > 0) this.series.setData(this.data)
+        },
+        data(val) {
+            if (val.length > 0 && this.series) {
+                this.series.setData(val)
+
+                // if not set, chart will be empty
+                this.chart.applyOptions({
+                    priceScale: {
+                        borderVisible: false,
+                        autoScale: false,
+                    },
+                })
+            }
+        },
+        streamData(val) {
+            if (this.series) this.series.update(val)
         }
     },
     computed: {
@@ -20,11 +40,16 @@ export default {
     },
     mounted() {
         this.getData({ symbol: this.symbol })
+
+        this.$bus.$on('updateChartData', () => this.getData({ symbol: this.symbol }))
     },
     methods: {
         getData(params) {
             this.request(params).then(({ data }) => {
-                if (data.length > 0) this.data = this.updateCandles(data)
+                if (data.length > 0) {
+                    this.data = this.updateCandles(data)
+                    this.isDataLoaded = true // disable preloader
+                }
             })
         },
         updateCandles(data) {

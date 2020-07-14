@@ -39,9 +39,7 @@ export default {
         }
     },
     mounted() {
-        this.getData({ symbol: this.symbol })
-
-        this.$bus.$on('updateChartData', () => this.getData({ symbol: this.symbol }))
+        this.getData({ symbol: this.symbol, interval: this.interval })
     },
     methods: {
         getData(params) {

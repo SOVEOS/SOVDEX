@@ -5,7 +5,7 @@ import { ticks } from '../api/queries'
 
 export default class Candles {
     constructor(data) {
-        this.minutes = timestring(data.interval) / 60 * 3 // get count of minutes
+        this.minutes = timestring(data.interval) / 60 // get count of minutes
         return this.init(data)
     }
 

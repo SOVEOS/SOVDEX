@@ -30,12 +30,20 @@ export default {
             const pbtcPrimise = this.eos.getTableRows({ "code": "sovdexrelays", "scope": "PBTC", "table": "eospair", "json": true })
                 .then((res) => this.updateResponse(res))
 
-            Promise.all([eosPromise, usdtPromise, pbtcPrimise]).then(res => {
-                this.price = { eos: res[0].price, usdt: res[1].price, pbtc: res[2].price }
+            const powPromise = this.eos.getTableRows({ "code": "sovdexrelays", "scope": "PBTC", "table": "powpair", "json": true })
+                .then((res) => this.updateResponse(res))
+
+            const svxPromise = this.eos.getTableRows({ "code": "sovdexrelays", "scope": "EOS", "table": "svxpair", "json": true })
+                .then((res) => this.updateResponse(res))
+
+            Promise.all([eosPromise, usdtPromise, pbtcPrimise, powPromise, svxPromise]).then(res => {
+                this.price = { eos: res[0].price, usdt: res[1].price, pbtc: res[2].price, pow: res[3].price, svx: res[4].price }
                 this.bancor = {
                     eos: res[0].bancor,
                     usdt: res[1].bancor,
                     pbtc: res[2].bancor,
+                    pow: res[3].bancor,
+                    svx: res[4].bancor,
                 }
             })
         },

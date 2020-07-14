@@ -3,7 +3,7 @@ import { CronJob } from 'cron'
 import { saveTick, deleteTicks, pairs } from '../api/queries'
 
 // Save price every minute
-new CronJob('0 */3 * * * *', () => {
+new CronJob('0 */1 * * * *', () => {
    pairs.forEach(i => saveTick(i))
 }).start()
 

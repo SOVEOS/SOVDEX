@@ -12,7 +12,7 @@ Generates OHLC data from blockchain tick.
 2. Save tick every 3 minutes as `{symbol:'soveos', price:0.0004, time:1593880500000}`
 3. Build OHLC candles using minute ticks in [candle.js](src/modules/candles.js)
    1. Build sessions `[{ openTime:Timestamp, closeTime:Timestamp}]`
-   2. Fill sesstion with range of ticks `[{symbol:String, price:Number, time:Timestamp}, ... ]`
+   2. Fill session with range of ticks `[{symbol:String, price:Number, time:Timestamp}, ... ]`
    3. Create candle from range data `{open:Number, high:Number, low:Number, close:Number}` for every session
 4. With long-term accumulation, auto-removes excess data from database every `1h`
 

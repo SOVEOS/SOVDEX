@@ -49,6 +49,10 @@ export default {
             return this.$store.state.blockchain.eos
         }
     },
+    mounted() {
+        // update after createOrder success
+        this.$bus.$on('updateChartData', () => this.getStreamData())
+    },
     methods: {
         getStreamData() {
             this.eos.getTableRows(schema[this.symbol])
@@ -56,7 +60,7 @@ export default {
                     if (rows[0]) {
                         const price = parseFloat(parseFloat(rows[0].price).toFixed(8))
                         this.streamData = this.updateCandle(price)
-                        console.log('[stream]', this.streamData)
+                        console.log('[stream]', this.streamData, price)
                     }
                 })
         },

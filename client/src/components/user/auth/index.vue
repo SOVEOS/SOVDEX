@@ -8,8 +8,8 @@
 <script>
     // https://get-scatter.com/developers/api
     // https://github.com/GetScatter/scatter-js
-    import ScatterJS from '@scatterjs/core'
-    import ScatterEOS from '@scatterjs/eosjs'
+    // import ScatterJS from '@scatterjs/core'
+    // import ScatterEOS from '@scatterjs/eosjs'
     import Eos from 'eosjs'
 
     ScatterJS.plugins(new ScatterEOS())

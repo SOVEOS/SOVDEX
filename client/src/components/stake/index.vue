@@ -91,6 +91,9 @@
         },
         methods: {
             stake() {
+
+            if (confirm(`Stake ${this.stakeCount} SVX?`))
+
                 this.eos.transaction({
                     actions: [{
                         account: 'svxmintofeos',
@@ -117,6 +120,7 @@
                     })
             },
             unstake() {
+                if (confirm(`Un-Stake ${this.unstakeCount} SVX?`))
                 this.eos.transaction({
                     actions: [{
                         account: 'svxmintofeos',

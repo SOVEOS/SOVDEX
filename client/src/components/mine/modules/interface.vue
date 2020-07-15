@@ -65,6 +65,7 @@
                 return {
                     miningRate: parseFloat((this.miningRate * this.range).toFixed(4)) || 0,
                     burn: parseFloat(((this.quantity * 0.014) * this.range).toFixed(2)) || 0,
+                    quantity: parseFloat((this.quantity * this.range).toFixed(4)) || 0,
                 }
             },
             miningCost() {
@@ -134,6 +135,8 @@
                     })
             },
             submit() {
+                const quantity = this.$options.filters.eosAmountFormat(this.total.quantity, 'SOV')
+
                 if (this.miningRate > this.targetMiningRate)
                     this.eos.transaction({
                         actions: [{
@@ -146,7 +149,7 @@
                             data: {
                                 "from": this.scatter.name,
                                 "to": 'sovdexrelays',
-                                "quantity": this.$options.filters.eosAmountFormat(this.quantity, 'SOV'),
+                                quantity,
                                 "memo": 'mine SVX'
                             }
 

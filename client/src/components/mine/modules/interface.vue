@@ -33,7 +33,7 @@
             <bars :isAuto="isAuto" />
 
         </div>
-        <div class="text-sm text-secondary text-center">Bundled burn mining actions per transaction</div>
+        <div class="text-sm text-secondary text-center">Bundled mining actions per transaction</div>
     </div>
 </template>
 
@@ -45,7 +45,7 @@
     export default {
         data: () => ({
             targetMiningRate: 0,
-            quantity: 150, // default value
+            quantity: 150,
             range: 1,
             isAuto: false,
 
@@ -65,7 +65,6 @@
                 return {
                     miningRate: parseFloat((this.miningRate * this.range).toFixed(4)) || 0,
                     burn: parseFloat(((this.quantity * 0.014) * this.range).toFixed(2)) || 0,
-                    quantity: parseFloat((this.quantity * this.range).toFixed(4)) || 0,
                 }
             },
             miningCost() {
@@ -135,11 +134,9 @@
                     })
             },
             submit() {
-                const quantity = this.$options.filters.eosAmountFormat(this.total.quantity, 'SOV')
+                const myRange = this.range
+                const action = {
 
-                if (this.miningRate > this.targetMiningRate)
-                    this.eos.transaction({
-                        actions: [{
                             account: 'sovmintofeos',
                             name: 'transfer',
                             authorization: [{
@@ -149,12 +146,26 @@
                             data: {
                                 "from": this.scatter.name,
                                 "to": 'sovdexrelays',
-                                quantity,
+                                "quantity": '150.0000 SOV',
                                 "memo": 'mine SVX'
                             }
+                        }
 
-                        }]
-                    }).then(() => {
+
+                if (this.miningRate > this.targetMiningRate)
+
+                console.log("======================")
+                console.log(action)
+
+                var theactions = []
+                for (var i =0; i < myRange; i++) {
+                    theactions[i] = action
+                }
+                console.log(theactions)
+
+                    this.eos.transaction({
+                        actions: theactions
+                        }).then(() => {
                         console.log('[mine] Success')
                         if (!this.isAuto) this.$notice.success('Mine success')
 

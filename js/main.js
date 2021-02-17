@@ -1713,7 +1713,7 @@ function do_btc_cpu_transaction_bundle() {
 
                                     var sov_mine_send = 105.0000;
                                     var myRange = document.getElementById('myRange').value;
-                                    var sovBurnAmount = (sov_mine_send * 0.01) * myRange;
+                                    var sovBurnAmount = (sov_mine_send * 0.02) * myRange;
                                         sovBurnAmount = sovBurnAmount.toFixed(1);
                                     var total_mining_rate = mining_rate * myRange;
                                         total_mining_rate = total_mining_rate.toFixed(4);

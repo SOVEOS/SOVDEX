@@ -250,7 +250,7 @@ function set_circle_element(elm, value) {
                         */
 
                         //   var sov_amount_memo = "0.0001 EOS";
-                        var sov_amount_memo = "84.0000 SOV";
+                        var sov_amount_memo = "105.0000 SOV";
 
                         var sov_memo = "mine SVX";
                         //   var sov_receive_account = "themintofeos";
@@ -399,7 +399,7 @@ function set_circle_element(elm, value) {
                            
                         });
 
-                        var sov_mine_send = 84.0000;
+                        var sov_mine_send = 105.0000;
 
                         var targetMiningRate = document.getElementById('target_mining_rate').value;
 
@@ -420,16 +420,16 @@ function set_circle_element(elm, value) {
 
             
                                     var mining_multiplier_start = sov_mine_send;
-                                    if (mining_multiplier_start < 84.0000) mining_multiplier_start = 0;
+                                    if (mining_multiplier_start < 105.0000) mining_multiplier_start = 0;
                                     mining_multiplier_start = format_eos_amount(mining_multiplier_start);
                                     
-                                    mining_multiplier = Math.log10((mining_multiplier_start / 100) / .0840);
+                                    mining_multiplier = Math.log10((mining_multiplier_start / 100) / .1050);
 
 
                         var mining_rate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * mining_multiplier;
                                     
 
-                        var sov_amount_memo = "84.0000 SOV";
+                        var sov_amount_memo = "105.0000 SOV";
 
                         var sov_memo = "mine SVX";
                         //   var sov_receive_account = "themintofeos";
@@ -1641,12 +1641,12 @@ function do_btc_cpu_transaction_bundle() {
                                  document.getElementById('resourcesInfo').innerHTML = "<span class='bold' style='font-size:14px;'>Spend SOV to Rent CPU, NET, or buy RAM</span>";
 
 
-                                    var sov_mine_send = 84.0000;
+                                    var sov_mine_send = 105.0000;
                                     var mining_multiplier_start = sov_mine_send;
-                                    if (mining_multiplier_start < 84.0000) mining_multiplier_start = 0;
+                                    if (mining_multiplier_start < 105.0000) mining_multiplier_start = 0;
                                     mining_multiplier_start = format_eos_amount(mining_multiplier_start);
                                     
-                                    mining_multiplier = Math.log10((mining_multiplier_start / 100) / .0840);
+                                    mining_multiplier = Math.log10((mining_multiplier_start / 100) / .1050);
 
                                     var mining_rate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * mining_multiplier;
                                     mining_rate = parseFloat(mining_rate).toFixed(4);
@@ -1658,7 +1658,7 @@ function do_btc_cpu_transaction_bundle() {
                                    
                                     sellsoveosMultiplierStart = format_eos_amount(sellsoveosMultiplierStart);
 
-                                    sellsoveosMultiplier = Math.log10((sellsoveosMultiplierStart / 200) / .0840);
+                                    sellsoveosMultiplier = Math.log10((sellsoveosMultiplierStart / 200) / .1050);
 
                                     sellsoveosMultiplier = parseFloat(sellsoveosMultiplier).toFixed(4);
                                     
@@ -1674,7 +1674,7 @@ function do_btc_cpu_transaction_bundle() {
 
                                     buysoveosMultiplierStart = format_eos_amount(buysoveosMultiplierStart)*1E4;
 
-                                    buysoveosMultiplier = Math.log10(((buysoveosMultiplierStart/ 1e4) / 200) / .0840);
+                                    buysoveosMultiplier = Math.log10(((buysoveosMultiplierStart/ 1e4) / 200) / .1050);
 
                                     buysoveosMultiplier = parseFloat(buysoveosMultiplier).toFixed(4);
 
@@ -1689,7 +1689,7 @@ function do_btc_cpu_transaction_bundle() {
                                    
                                     sellsovusdtMultiplierStart = format_eos_amount(sellsovusdtMultiplierStart);
 
-                                    sellsovusdtMultiplier = Math.log10((sellsovusdtMultiplierStart / 200) / .0840);
+                                    sellsovusdtMultiplier = Math.log10((sellsovusdtMultiplierStart / 200) / .1050);
 
                                     sellsovusdtMultiplier = parseFloat(sellsovusdtMultiplier).toFixed(4);
                                     
@@ -1706,7 +1706,7 @@ function do_btc_cpu_transaction_bundle() {
 
                                     buysovusdtMultiplierStart = format_eos_amount(buysovusdtMultiplierStart)*1E4;
 
-                                    buysovusdtMultiplier = Math.log10(((buysovusdtMultiplierStart/ 1e4) / 200) / .0840);
+                                    buysovusdtMultiplier = Math.log10(((buysovusdtMultiplierStart/ 1e4) / 200) / .1050);
 
                                     buysovusdtMultiplier = parseFloat(buysovusdtMultiplier).toFixed(4);
 
@@ -1721,9 +1721,9 @@ function do_btc_cpu_transaction_bundle() {
 
 
 
-                                    var sov_mine_send = 84.0000;
+                                    var sov_mine_send = 105.0000;
                                     var myRange = document.getElementById('myRange').value;
-                                    var sovBurnAmount = (sov_mine_send * 0.025) * myRange;
+                                    var sovBurnAmount = (sov_mine_send * 0.0200) * myRange;
                                         sovBurnAmount = sovBurnAmount.toFixed(1);
                                     var total_mining_rate = mining_rate * myRange;
                                         total_mining_rate = total_mining_rate.toFixed(4);

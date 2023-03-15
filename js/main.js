@@ -30,7 +30,7 @@ function set_circle_element(elm, value) {
 
     var buffer = "";
 
-    // 
+    //
 
     var cx = 200;
     var cy = 200;
@@ -68,7 +68,7 @@ function set_circle_element(elm, value) {
         // ---
         /*
         circle2
-        */            
+        */
         let f3 = document.getElementById(elm);
 
         if (value >= 0 && value < 25)
@@ -88,7 +88,7 @@ function set_circle_element(elm, value) {
 
         var buffer = "";
 
-        // 
+        //
 
         var cx = 200;
         var cy = 200;
@@ -200,22 +200,22 @@ function set_circle_element(elm, value) {
                         var therect = 'rect' + autominer_cnt;
                         let f3 = document.getElementById(therect);
                         f3.setAttribute('fill', "#000000");
-                        //---        
+                        //---
 
                     } // update_ticker
 
                     function app_thread() {
                         counter++;
 
-                        // show buttons 
+                        // show buttons
                         if (scatter_account != undefined && scatter_account != "") {
                             document.getElementById('doinit').style.background = "#00C851";
-                            
+
                         }
 
                         if (automining > 0) {
 
-                            //  
+                            //
 
                             //       dotransaction();
                             // ACTIVATE
@@ -309,7 +309,7 @@ function set_circle_element(elm, value) {
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            
+
                             return;
 
                         });
@@ -363,12 +363,12 @@ function set_circle_element(elm, value) {
                             "scope": scatter_account,
                             "table": "accounts"
                         }).then(function(value) {
-                         
 
-                            
+
+
                                 var svxUserBalance = value.rows[0].balance;
                                 svxUserBalance = parseFloat(svxUserBalance).toFixed(4);
-                                
+
 
                                 var last = value.rows[0].balance;
                                 last = last.replace("SVX", "");
@@ -381,22 +381,22 @@ function set_circle_element(elm, value) {
                                 var svxStoreBalance = parseFloat(storebalance).toFixed(4);
                                 var svxUserLiquidBalance = svxUserBalance - svxStoreBalance;
                                     svxUserLiquidBalance - parseFloat(svxUserBalance).toFixed(4);
-                               
+
 
                                 var svxPowerAmount = parseFloat(svxpower).toFixed(4);
 
 
-                                //         document.getElementById('debug').innerHTML = "+ " + last;     
-                         
+                                //         document.getElementById('debug').innerHTML = "+ " + last;
 
-                                
+
+
                             //---
 
                             /*  var storebalance = value.rows[0].storebalance;
                             var unstaking = value.rows[0].unstaking;
                             var unstake_time = value.rows[0].unstake_time;
                             */
-                           
+
                         });
 
                         var sov_mine_send = 105.0000;
@@ -418,16 +418,16 @@ function set_circle_element(elm, value) {
 
                                 else bonus_percentage = 0;
 
-            
+
                                     var mining_multiplier_start = sov_mine_send;
                                     if (mining_multiplier_start < 105.0000) mining_multiplier_start = 0;
                                     mining_multiplier_start = format_eos_amount(mining_multiplier_start);
-                                    
+
                                     mining_multiplier = Math.log10((mining_multiplier_start / 100) / .1050);
 
 
                         var mining_rate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * mining_multiplier;
-                                    
+
 
                         var sov_amount_memo = "105.0000 SOV";
 
@@ -460,7 +460,7 @@ function set_circle_element(elm, value) {
                         console.log("============================");
                         console.log(action);
 
-                        //var actions = [ action, action ]; 
+                        //var actions = [ action, action ];
                         var theactions = [];
                         for (var i = 0; i < myRange; i++) {
                             theactions[i] = action;
@@ -489,7 +489,7 @@ function set_circle_element(elm, value) {
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            
+
                             return;
 
                         });
@@ -527,7 +527,7 @@ function update_cpu_ticker() {
                         var therect = 'cpurect' + cpuAutoMiner_cnt;
                         let f3 = document.getElementById(therect);
                         f3.setAttribute('fill', "#000000");
-                        //---        
+                        //---
 
                     } // update_ticker
 
@@ -570,7 +570,7 @@ function do_cpu_transaction() {
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            
+
                             return;
 
                         });
@@ -602,7 +602,7 @@ function do_cpu_transaction_bundle() {
                         console.log("============================");
                         console.log(action);
 
-                        //var actions = [ action, action ]; 
+                        //var actions = [ action, action ];
                         var theactions = [];
                         for (var i = 0; i < myCPURange; i++) {
                             theactions[i] = action;
@@ -660,7 +660,7 @@ function update_sov_cpu_ticker() {
                         var therect = 'sovrect' + sovcpuAutoMiner_cnt;
                         let f3 = document.getElementById(therect);
                         f3.setAttribute('fill', "#000000");
-                        //---        
+                        //---
 
                     } // update_ticker
 
@@ -703,7 +703,7 @@ function do_sov_cpu_transaction() {
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            
+
                             return;
 
                         });
@@ -735,7 +735,7 @@ function do_sov_cpu_transaction_bundle() {
                         console.log("============================");
                         console.log(action);
 
-                        //var actions = [ action, action ]; 
+                        //var actions = [ action, action ];
                         var theactions = [];
                         for (var i = 0; i < mySOVCPURange; i++) {
                             theactions[i] = action;
@@ -794,7 +794,7 @@ function update_btc_cpu_ticker() {
                         var therect = 'btcrect' + btccpuAutoMiner_cnt;
                         let f3 = document.getElementById(therect);
                         f3.setAttribute('fill', "#000000");
-                        //---        
+                        //---
 
                     } // update_ticker
 
@@ -837,7 +837,7 @@ function do_btc_cpu_transaction() {
 
                             //alert( 'Error:' + err.error.details[0].message );
 
-                            
+
                             return;
 
                         });
@@ -857,10 +857,10 @@ function do_btc_cpu_transaction_bundle() {
                     var btc_mining_rate1 = document.getElementById('btcMiningRate').textContent;
                                     btc_mining_rate1 = btc_mining_rate1.slice(33,43)/100000000;
 
-                                    
+
                                     btc_mining_rate1 = parseFloat(btc_mining_rate1).toFixed(8);
 
-  
+
                     var myBTCCPURange = document.getElementById('myBTCCPURange').value;
                         //alert("myRange: " + myRange);
 
@@ -885,7 +885,7 @@ function do_btc_cpu_transaction_bundle() {
                         console.log("============================");
                         console.log(action);
 
-                        //var actions = [ action, action ]; 
+                        //var actions = [ action, action ];
                         var theactions = [];
                         for (var i = 0; i < myBTCCPURange; i++) {
                             theactions[i] = action;
@@ -921,7 +921,7 @@ function do_btc_cpu_transaction_bundle() {
                     // DoInit BEGIN ------------------------
                     function doinit() {
                         /*
-                        svxmintofeos    
+                        svxmintofeos
                         svxmintofeos - open
                         letsjustdoit active
                         owner: letsjustdoit
@@ -944,7 +944,7 @@ function do_btc_cpu_transaction_bundle() {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                               
+
                                 data: {
                                     "user": scatter_account,
                                 }
@@ -968,7 +968,7 @@ function do_btc_cpu_transaction_bundle() {
 
                             alert('-----Error:' + err.error.details[0].message);
 
-                            //nalert('<br><div class=\'checkmark_red\'></div>Error' + err.error.name +'<br><br>','white');  
+                            //nalert('<br><div class=\'checkmark_red\'></div>Error' + err.error.name +'<br><br>','white');
                             return;
 
                         });
@@ -1070,6 +1070,7 @@ function do_btc_cpu_transaction_bundle() {
                                     powpbtcPrice = powpbtcPrice.slice(12,22);
                                     powpbtcPrice = parseFloat(powpbtcPrice).toFixed(8);
 
+
                                 var btc_mining_rate = (((pow_mining_supply / 40000)*powpbtcPrice)*31) - 0.00000001;
                                     btc_mining_rate = parseFloat(btc_mining_rate).toFixed(8);
 
@@ -1081,9 +1082,9 @@ function do_btc_cpu_transaction_bundle() {
                             } // value
 
                         );
-                        
 
-                        
+
+
 
                         /*
                         sov_balance svx_balance
@@ -1124,7 +1125,7 @@ function do_btc_cpu_transaction_bundle() {
                                     document.getElementById('SOVCPUBALANCE').innerHTML = "<span class='bold'>" + last + " SOV</span>";
                                 }
 
-                                
+
 
 
                             } catch (err) {
@@ -1236,16 +1237,16 @@ function do_btc_cpu_transaction_bundle() {
                         });
 
 
-                    
 
-               
+
+
                         eosobject.getTableRows({
                             "json": "true",
                             "code": "sovdexrelays",
                             "scope": "EOS",
                             "table": "pair"
                         }).then(function(value) {
-      
+
                             var soveosPrice = value.rows[0].price;
                             const soveosCW = value.rows[0].cw;
                             var soveosBalance = value.rows[0].connectorbal;
@@ -1256,7 +1257,7 @@ function do_btc_cpu_transaction_bundle() {
                             soveosOutstanding = parseFloat(soveosOutstanding);
                             eosTransferAmount = parseFloat(eosTransferAmount);
                             sovTransferAmount = parseFloat(sovTransferAmount);
-                            soveosPrice = parseFloat(soveosPrice).toFixed(8);   
+                            soveosPrice = parseFloat(soveosPrice).toFixed(8);
 
 
                             var buysoveosBancor = (-soveosOutstanding*(Math.pow((1-(eosTransferAmount /(soveosBalance + eosTransferAmount))), (soveosCW/100))-1)).toFixed(4);
@@ -1271,12 +1272,12 @@ function do_btc_cpu_transaction_bundle() {
 
                             BUYSOVEOSAVGPRICE.innerText = ("Price with slippage = " + buysoveosAvgPrice + " EOS");
                             SELLSOVEOSAVGPRICE.innerText = ("Price with slippage = " + sellsoveosAvgPrice + " EOS");
-            
+
                             SOVEOSPRICE.innerText = ("SOV Price = " + soveosPrice + " EOS");
 
 
 
-                            
+
                          });
 
 
@@ -1286,7 +1287,7 @@ function do_btc_cpu_transaction_bundle() {
                             "scope": "USDT",
                             "table": "pair"
                         }).then(function(value) {
-      
+
                             var sovusdtPrice = value.rows[0].price;
                             const sovusdtCW = value.rows[0].cw;
                             var sovusdtBalance = value.rows[0].connectorbal;
@@ -1297,7 +1298,7 @@ function do_btc_cpu_transaction_bundle() {
                             sovusdtOutstanding = parseFloat(sovusdtOutstanding);
                             usdtTransferAmount = parseFloat(usdtTransferAmount);
                             sovTransferAmount = parseFloat(sovTransferAmount);
-                            sovusdtPrice = parseFloat(sovusdtPrice).toFixed(8);   
+                            sovusdtPrice = parseFloat(sovusdtPrice).toFixed(8);
 
 
                             var buysovusdtBancor = (-sovusdtOutstanding*(Math.pow((1-(usdtTransferAmount /(sovusdtBalance + usdtTransferAmount))), (sovusdtCW/100))-1)).toFixed(4);
@@ -1312,9 +1313,9 @@ function do_btc_cpu_transaction_bundle() {
 
                             BUYSOVUSDTAVGPRICE.innerText = ("Price with slippage = " + buysovusdtAvgPrice + " USDT");
                             SELLSOVUSDTAVGPRICE.innerText = ("Price with slippage = " + sellsovusdtAvgPrice + " USDT");
-            
+
                             SOVUSDTPRICE.innerText = ("SOV Price = " + sovusdtPrice + " USDT");
-                            
+
                          });
 
 
@@ -1324,7 +1325,7 @@ function do_btc_cpu_transaction_bundle() {
                             "scope": "EOS",
                             "table": "svxpair"
                         }).then(function(value) {
-      
+
                             var svxeosPrice = value.rows[0].price;
                             const svxeosCW = value.rows[0].cw;
                             var svxeosBalance = value.rows[0].connectorbal;
@@ -1335,7 +1336,7 @@ function do_btc_cpu_transaction_bundle() {
                             svxeosOutstanding = parseFloat(svxeosOutstanding);
                             eosTransferAmount = parseFloat(eosTransferAmount);
                             svxTransferAmount = parseFloat(svxTransferAmount);
-                            svxeosPrice = parseFloat(svxeosPrice).toFixed(8);   
+                            svxeosPrice = parseFloat(svxeosPrice).toFixed(8);
 
 
                             var buysvxeosBancor = (-svxeosOutstanding*(Math.pow((1-(eosTransferAmount /(svxeosBalance + eosTransferAmount))), (svxeosCW/100))-1)).toFixed(4);
@@ -1351,7 +1352,7 @@ function do_btc_cpu_transaction_bundle() {
 
                             BUYSVXEOSAVGPRICE.innerText = ("Price with slippage = " + buysvxeosAvgPrice + " EOS");
                             SELLSVXEOSAVGPRICE.innerText = ("Price with slippage = " + sellsvxeosAvgPrice + " EOS");
-            
+
                             SVXEOSPRICE.innerText = ("SVX Price = " + svxeosPrice + " EOS");
 
                          });
@@ -1363,22 +1364,22 @@ function do_btc_cpu_transaction_bundle() {
                             "scope": "PBTC",
                             "table": "eospair"
                         }).then(function(value) {
-      
+
                             var eospbtcPrice = value.rows[0].price;
                             const eospbtcCW = value.rows[0].cw;
                             var eospbtcBalance = value.rows[0].connectorbal;
                             var eospbtcOutstanding = value.rows[0].outstandingbal;
-                            
+
 
                             var pbtcTransferAmount = document.getElementById('pbtc_transfer_amount').value;
                             var eosTransferAmount = document.getElementById('eos_transfer_amount2').value;
-                            
+
 
                             eospbtcBalance = parseFloat(eospbtcBalance);
                             eospbtcOutstanding = parseFloat(eospbtcOutstanding);
                             pbtcTransferAmount = parseFloat(pbtcTransferAmount);
                             eosTransferAmount = parseFloat(eosTransferAmount);
-                            eospbtcPrice = parseFloat(eospbtcPrice).toFixed(8);   
+                            eospbtcPrice = parseFloat(eospbtcPrice).toFixed(8);
 
 
                             var buyeospbtcBancor = (-eospbtcOutstanding*(Math.pow((1-(pbtcTransferAmount /(eospbtcBalance + pbtcTransferAmount))), (eospbtcCW/100))-1)).toFixed(4);
@@ -1393,7 +1394,7 @@ function do_btc_cpu_transaction_bundle() {
 
                             BUYEOSPBTCAVGPRICE.innerText = ("Price with slippage = " + buyeospbtcAvgPrice + " pbtc");
                             SELLEOSPBTCAVGPRICE.innerText = ("Price with slippage = " + selleospbtcAvgPrice + " pBTC");
-            
+
                             EOSPBTCPRICE.innerText = ("EOS Price = " + eospbtcPrice + " pBTC");
 
 
@@ -1406,22 +1407,22 @@ function do_btc_cpu_transaction_bundle() {
                             "scope": "PBTC",
                             "table": "powpair"
                         }).then(function(value) {
-      
+
                             var powpbtcPrice = value.rows[0].price;
                             const powpbtcCW = value.rows[0].cw;
                             var powpbtcBalance = value.rows[0].connectorbal;
                             var powpbtcOutstanding = value.rows[0].outstandingbal;
-                            
+
 
                             var pbtcTransferAmount = document.getElementById('pbtc_transfer_amount1').value;
                             var powTransferAmount = document.getElementById('pow_transfer_amount').value;
-                            
+
 
                             powpbtcBalance = parseFloat(powpbtcBalance);
                             powpbtcOutstanding = parseFloat(powpbtcOutstanding);
                             pbtcTransferAmount = parseFloat(pbtcTransferAmount);
                             powTransferAmount = parseFloat(powTransferAmount);
-                            powpbtcPrice = parseFloat(powpbtcPrice).toFixed(8);   
+                            powpbtcPrice = parseFloat(powpbtcPrice).toFixed(8);
 
 
                             var buypowpbtcBancor = (-powpbtcOutstanding*(Math.pow((1-(pbtcTransferAmount /(powpbtcBalance + pbtcTransferAmount))), (powpbtcCW/100))-1)).toFixed(8);
@@ -1436,7 +1437,7 @@ function do_btc_cpu_transaction_bundle() {
 
                             BUYPOWPBTCAVGPRICE.innerText = ("Price with slippage = " + buypowpbtcAvgPrice + " pBTC");
                             SELLPOWPBTCAVGPRICE.innerText = ("Price with slippage = " + sellpowpbtcAvgPrice + " pBTC");
-            
+
                             POWPBTCPRICE.innerText = ("POW Price = " + powpbtcPrice + " pBTC");
 
 
@@ -1444,7 +1445,7 @@ function do_btc_cpu_transaction_bundle() {
 
 
 
-     
+
 
 
                         /*
@@ -1500,16 +1501,16 @@ function do_btc_cpu_transaction_bundle() {
                             "scope": scatter_account,
                             "table": "accounts"
                         }).then(function(value) {
-                         
+
 
                             var wert = value.rows.length;
-                            
+
                             //---
 
                             try {
                                 var svxUserBalance = value.rows[0].balance;
                                     svxUserBalance = parseFloat(svxUserBalance).toFixed(4);
-                                
+
 
                                 var last = value.rows[0].balance;
                                 last = last.replace("SVX", "");
@@ -1526,7 +1527,7 @@ function do_btc_cpu_transaction_bundle() {
                                 var svxUserLiquidBalance = svxUserBalance - svxStoreBalance;
                                     svxUserLiquidBalance = parseFloat(svxUserLiquidBalance).toFixed(4);
                                 var svxUserLiquidBalanceMax = Math.floor(svxUserLiquidBalance);
-                               
+
 
                                 var svxPowerAmount = parseFloat(svxpower).toFixed(4);
                                 var svxMaxUnstake = Math.floor(svxStoreBalance);
@@ -1534,7 +1535,7 @@ function do_btc_cpu_transaction_bundle() {
                                 var node_proz = (svxStoreBalance / 777000) * 100;
                                     node_proz = Number(node_proz).toFixed(1);
 
-                                
+
                                // document.getElementById("svx_to_stake").value = stakingSlider.value;
                                 //document.getElementById("svx_to_unstake").value = unstakingSlider.value;
                                // document.getElementById("stakingSlider").max = svxUserLiquidBalance;
@@ -1565,7 +1566,7 @@ function do_btc_cpu_transaction_bundle() {
 
 
 
-                                //         document.getElementById('debug').innerHTML = "+ " + last;     
+                                //         document.getElementById('debug').innerHTML = "+ " + last;
                                 initstatus = 1;
 
                                 // Disable init-button
@@ -1600,7 +1601,7 @@ function do_btc_cpu_transaction_bundle() {
                                     bonus_percentage = parseFloat(bonus_percentage).toFixed(2);
                                     //                           bonus_percentage = (svxpower / svx_supply) * 10;
 
-                                } 
+                                }
 
                                  document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:14px;'>Burn Mining Bonus for Staking SVX: <span style='color:#00bb00'>" + bonus_percentage + "</span> %</span>";
 
@@ -1630,13 +1631,13 @@ function do_btc_cpu_transaction_bundle() {
                                     else if (feeDiscount < 75) feeDiscount = "70";
                                     else if (feeDiscount < 80) feeDiscount = "75";
                                     else if (feeDiscount >= 80) feeDiscount = "75";
-                                                                      
+
 
                                 }
 
                                 document.getElementById('svxDiscount').innerHTML = "<span class='bold' style='font-size:14px;'>Your trading fee discount for staking SVX: <span style='color:#00bb00'>" + feeDiscount + "</span> %</span>";
 
-                                 document.getElementById('nodeRequirement').innerHTML = "<span class='bold' style='font-size:14px;'>Stake 777k+ SVX for automatic node payouts</span>"; 
+                                 document.getElementById('nodeRequirement').innerHTML = "<span class='bold' style='font-size:14px;'>Stake 777k+ SVX for automatic node payouts</span>";
 
                                  document.getElementById('resourcesInfo').innerHTML = "<span class='bold' style='font-size:14px;'>Spend SOV to Rent CPU, NET, or buy RAM</span>";
 
@@ -1645,7 +1646,7 @@ function do_btc_cpu_transaction_bundle() {
                                     var mining_multiplier_start = sov_mine_send;
                                     if (mining_multiplier_start < 105.0000) mining_multiplier_start = 0;
                                     mining_multiplier_start = format_eos_amount(mining_multiplier_start);
-                                    
+
                                     mining_multiplier = Math.log10((mining_multiplier_start / 100) / .1050);
 
                                     var mining_rate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * mining_multiplier;
@@ -1655,13 +1656,13 @@ function do_btc_cpu_transaction_bundle() {
 
 
                                     var sellsoveosMultiplierStart = document.getElementById('sov_transfer_amount').value;
-                                   
+
                                     sellsoveosMultiplierStart = format_eos_amount(sellsoveosMultiplierStart);
 
                                     sellsoveosMultiplier = Math.log10((sellsoveosMultiplierStart / 200) / .1050);
 
                                     sellsoveosMultiplier = parseFloat(sellsoveosMultiplier).toFixed(4);
-                                    
+
                                     var sellsoveosMiningRate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * sellsoveosMultiplier;
 
                                     if (sellsoveosMiningRate < (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100))) sellsoveosMiningRate = 0;
@@ -1679,20 +1680,20 @@ function do_btc_cpu_transaction_bundle() {
                                     buysoveosMultiplier = parseFloat(buysoveosMultiplier).toFixed(4);
 
                                     if (buysoveosMultiplier < 1) buysoveosMultiplier = 0;
-                                    
+
 
                                     var buysoveosMiningRate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * buysoveosMultiplier;
                                     buysoveosMiningRate = parseFloat(buysoveosMiningRate).toFixed(4);
 
 
                                     var sellsovusdtMultiplierStart = document.getElementById('sov_transfer_amount10').value;
-                                   
+
                                     sellsovusdtMultiplierStart = format_eos_amount(sellsovusdtMultiplierStart);
 
                                     sellsovusdtMultiplier = Math.log10((sellsovusdtMultiplierStart / 200) / .1050);
 
                                     sellsovusdtMultiplier = parseFloat(sellsovusdtMultiplier).toFixed(4);
-                                    
+
                                     var sellsovusdtMiningRate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * sellsovusdtMultiplier;
 
                                     if (sellsovusdtMiningRate < (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100))) sellsovusdtMiningRate = 0;
@@ -1711,7 +1712,7 @@ function do_btc_cpu_transaction_bundle() {
                                     buysovusdtMultiplier = parseFloat(buysovusdtMultiplier).toFixed(4);
 
                                     if (buysovusdtMultiplier < 1) buysovusdtMultiplier = 0;
-                                    
+
 
                                     var buysovusdtMiningRate = (svx_mining_supply / 20000) * (1 + (bonus_percentage / 100)) * buysovusdtMultiplier;
                                     buysovusdtMiningRate = parseFloat(buysovusdtMiningRate).toFixed(4);
@@ -1742,13 +1743,13 @@ function do_btc_cpu_transaction_bundle() {
 
                                     document.getElementById('buysovusdtMiningRateDiv').innerHTML = "<span class='bold' style='font-size:14px;'>Reward: <span style='color:#00bb00'>" + buysovusdtMiningRate + "</span>  SVX</span>";
 
-            
+
 
                                     document.getElementById('svxMiningBurn').innerHTML = "<span class='bold' style='font-size:14px;'>Total Burn per Burn Mining Transaction: <span style='color:red'> " + sovBurnAmount + "</span> SOV </span>";
 
                                     document.getElementById('svxMiningCost').innerHTML = "<span class='bold' style='font-size:16px;'>Burn Mining 1 SVX Burns <span style='color:#f0ad4e'> " + miningCost + "</span> SOV</span>";
 
-                                    
+
 
 
                                 //                        document.getElementById('svx_bonus').innerHTML = "<span class='bold' style='font-size:16px;'>SVX Supply " + svx_supply + " svxpower: "+svxpower+"  bonus_percentage:"+bonus_percentage+"</span>";
@@ -1756,7 +1757,7 @@ function do_btc_cpu_transaction_bundle() {
                             } catch (err) {
 
                                 initstatus = 0;
-                                //                                      document.getElementById('debug').innerHTML = "ERROR " ;   
+                                //                                      document.getElementById('debug').innerHTML = "ERROR " ;
 
                                 document.getElementById('doinit').style.visibility = "visible";
                                 document.getElementById('dotransaction_bundle').style.visibility = "hidden";
@@ -1769,7 +1770,7 @@ function do_btc_cpu_transaction_bundle() {
                             var unstake_time = value.rows[0].unstake_time;
                             */
                             balance_token = last * 10000;
-                            
+
                             //document.getElementById('balance').innerHTML = "Your Balance: <span class='bold'>" + last + "</span>";
                             if (document.getElementById('svx_balance')) {
                                 document.getElementById('svx_balance').innerHTML = "<span class='bold'>" + last + " SVX</span>";
@@ -1802,7 +1803,7 @@ function do_btc_cpu_transaction_bundle() {
                             "scope": "SOV",
                             "table": "stat"
                         }).then(function(value) {
-                                
+
                                 sov_supply = value.rows[0].supply;
 
                                 document.getElementById('tabledata').innerHTML = sov_supply;
@@ -1818,7 +1819,7 @@ function do_btc_cpu_transaction_bundle() {
                     function change_node_click() {
                         var node = document.getElementById('scatter_host').value;
 
-                           
+
                         scatter_host = node;
 
                         const network = ScatterJS.Network.fromJson({
@@ -1840,7 +1841,7 @@ function do_btc_cpu_transaction_bundle() {
                             eosobject = scatter.eos(network, Eos);
 
                             scatter.addEventHandler((event, payload) => {
-                                
+
                                 //alert("Jau");
                             });
                         });
@@ -1901,7 +1902,7 @@ function do_btc_cpu_transaction_bundle() {
                     // format_pow_amount
 
 
-                     
+
                     // format_btc_amount
 
 
@@ -1914,7 +1915,7 @@ function do_btc_cpu_transaction_bundle() {
                     ScatterJS.plugins(new ScatterEOS());
 
                     //var scatter_host = 'eos.greymass.com';
-                    var scatter_host = 'api.main.alohaeos.com';
+                    var scatter_host = 'eos.api.eosnation.io';
                     /*
                                 const network = ScatterJS.Network.fromJson({
                                     blockchain: 'eos',
@@ -2053,7 +2054,7 @@ function do_btc_cpu_transaction_bundle() {
 
                     dologin();
                     app_thread();
-                    
+
 
 // SCATTER END ---------------------------
 
@@ -2062,32 +2063,32 @@ function showVal(val) {
 
                         document.getElementById('dotransaction_bundle').innerHTML = "Burn Mine X " + val;
 
-                        
-                    } 
+
+                    }
 
 function showValCPU(val) {
 
 
 
                         document.getElementById('do_cpu_transaction_bundle').innerHTML = "SVX/CPU Mine X " + val;
-                        
-                    } 
+
+                    }
 
 function showValSOVCPU(val) {
 
 
 
                         document.getElementById('do_sov_cpu_transaction_bundle').innerHTML = "SOV/CPU Mine X " + val;
-                        
-                    } 
+
+                    }
 
 function showValBTCCPU(val) {
 
 
 
                         document.getElementById('do_btc_cpu_transaction_bundle').innerHTML = "BTC/CPU Mine X " + val;
-                        
-                    } 
+
+                    }
 
 
                     function svx_to_stake_action() {
@@ -2136,7 +2137,7 @@ function showValBTCCPU(val) {
 
                         });
 
-                        
+
                     } // svx_to_stake_action
 
                     function svx_to_unstake_action() {
@@ -2186,7 +2187,7 @@ function showValBTCCPU(val) {
                         });
 
 
-                    } 
+                    }
 
 
                      function rentCPUSOV() {
@@ -2205,7 +2206,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovresources',
@@ -2215,7 +2216,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2234,7 +2235,7 @@ function showValBTCCPU(val) {
                         });
 
 
-                    } 
+                    }
 
                     function rentNETSOV() {
 
@@ -2252,7 +2253,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovresources',
@@ -2262,7 +2263,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2281,7 +2282,7 @@ function showValBTCCPU(val) {
                         });
 
 
-                    } 
+                    }
 
                     function buyRAMSOV() {
 
@@ -2299,7 +2300,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovresources',
@@ -2309,7 +2310,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2328,7 +2329,7 @@ function showValBTCCPU(val) {
                         });
 
 
-                    } 
+                    }
 
 
                     function buySOVEOS() {
@@ -2347,7 +2348,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovdexrelays',
@@ -2357,7 +2358,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2376,10 +2377,10 @@ function showValBTCCPU(val) {
                         });
 
 
-                    } 
+                    }
 
                     function sellSOVEOS() {
-                        
+
                         var transfer_amount = document.getElementById('sov_transfer_amount').value;
                         alert("Exchange " + transfer_amount + " SOV for EOS");
                         transfer_amount = format_eos_amount(transfer_amount);
@@ -2426,7 +2427,7 @@ function showValBTCCPU(val) {
 
                         });
 
-                    } 
+                    }
 
 
 
@@ -2446,7 +2447,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovdexrelays',
@@ -2456,7 +2457,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2475,10 +2476,10 @@ function showValBTCCPU(val) {
                         });
 
 
-                    } 
+                    }
 
                     function sellSVXEOS() {
-                        
+
                         var transfer_amount = document.getElementById('svx_transfer_amount').value;
                         alert("Exchange " + transfer_amount + " SVX for EOS");
                         transfer_amount = format_eos_amount(transfer_amount);
@@ -2543,7 +2544,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovdexrelays',
@@ -2553,7 +2554,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2577,7 +2578,7 @@ function showValBTCCPU(val) {
 
 
                     function sellSOVUSDT() {
-                        
+
                         var transfer_amount = document.getElementById('sov_transfer_amount10').value;
                         alert("Exchange " + transfer_amount + " SOV for USDT");
                         transfer_amount = format_eos_amount(transfer_amount);
@@ -2642,7 +2643,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovdexrelays',
@@ -2652,7 +2653,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2676,7 +2677,7 @@ function showValBTCCPU(val) {
 
 
                     function sellEOSPBTC() {
-                        
+
                         var transfer_amount = document.getElementById('eos_transfer_amount2').value;
                         alert("Exchange " + transfer_amount + " EOS for pBTC");
                         transfer_amount = format_eos_amount(transfer_amount);
@@ -2743,7 +2744,7 @@ function showValBTCCPU(val) {
                                     actor: scatter_account,
                                     permission: "active"
                                 }],
-                             
+
                                 data: {
                                     "from": scatter_account,
                                     "to": 'sovdexrelays',
@@ -2753,7 +2754,7 @@ function showValBTCCPU(val) {
 
                             }]
                         }).then(result => {
-                            
+
                             console.log("Success!!!");
 
                             alert('Success!');
@@ -2777,7 +2778,7 @@ function showValBTCCPU(val) {
 
 
                     function sellPOWPBTC() {
-                        
+
                         var transfer_amount = document.getElementById('pow_transfer_amount').value;
                         alert("Exchange " + transfer_amount + " POW for pBTC");
                         transfer_amount = format_btc_amount(transfer_amount);

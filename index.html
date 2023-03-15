@@ -12,7 +12,7 @@
     <script src="js/bundles/scatterjs-core.min.js"></script>
     <script src="js/bundles/scatterjs-plugin-eosjs.min.js"></script>
     <script src="js/bundles/scatterjs-plugin-lynx.min.js"></script>
-   
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -28,7 +28,7 @@
 <body>
     <!--contains the "header" with SOVDEX | BURN-MINER | TRADE-MINER, login button, and account name display on login-->
 
-    <div class="container-fluid rounded bg-dark shadow"> 
+    <div class="container-fluid rounded bg-dark shadow">
         <nav>
             <div class="nav nav-pills justify-content-end" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" href="https://soveos.github.io/SOVDEX/">EN</a>
@@ -36,25 +36,25 @@
             </div>
         </nav>
         <br>
-        <h1 class="row justify-content-center text-white">SOV<img src="image\SVXLOGOtransparentII.png" style="width: 50px; height: 50px;">DEX</h1>   
+        <h1 class="row justify-content-center text-white">SOV<img src="image\SVXLOGOtransparentII.png" style="width: 50px; height: 50px;">DEX</h1>
         <h4 id='accountname' class="text-center text-white">...</h4>
         <br>
         <div class="container" style="max-width: 576px">
             <button type="button" class="btn btn-primary btn-lg btn-block" id='buttontext' onclick='loginclick()'>LOGIN</button>
         </div>
-        <br>   
+        <br>
     </div>
-    <!-- end of "header"--> 
-            
+    <!-- end of "header"-->
+
     <!--this container basically contains the rest of the dapp, the rest of the containers and rows fit inside this one-->
     <div class="container" style="max-width: 576px">
 
-        <!-- vanishing button to initialize SVX for trading and mining -->   
+        <!-- vanishing button to initialize SVX for trading and mining -->
     <div class="d-flex mt-1 mb-1 justify-content-center">
         <button type="button" id='doinit' class='btn btn-block btn-outline-success btn-sm' onclick='doinit()'>Click Here to Initialize SVX for Mining </button>
     </div>
     <!-- end of vanishing button to initialize SVX for trading and mining -->
-        
+
 
         <!--SOV and SVX Balance Display directly beneath "header"-->
         <div class="row row-cols-2">
@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col">
                 <svg viewbox="0, 0, 400, 400">
-                    <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" /> 
+                    <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" />
                     <path id='mycpu' d="" fill="none" stroke="#55ff55" stroke-width="30"   stroke-linecap="round"  />
                     <text id='mycpu_text' x='200' y='190' text-anchor="middle" font-size='70'>0%</text>
                     <text id='mycpu_text' x='200' y='260' text-anchor="middle" font-size='70'>CPU</text>
@@ -84,16 +84,16 @@
 
             <div class="col">
                 <svg viewbox="0, 0, 400, 400">
-                    <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" /> 
+                    <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" />
                     <path id='mynode' d="" fill="none" stroke="#55ff55" stroke-width="30"   stroke-linecap="round"  />
                     <text id='mynode_text' x='200' y='188' text-anchor="middle" font-size='65'>SVX</text>
                     <text id='mynode_text' x='200' y='252' text-anchor="middle" font-size='65'>NODE</text>
                 </svg>
             </div>
-                
+
             <div class="col">
                 <svg viewbox="0, 0, 400, 400">
-                    <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" /> 
+                    <circle id='kreis' cx="200" cy="200" r="120" stroke="#eeeeee" stroke-width="30" fill="#ffffff" />
                     <path id='mynet' d="" fill="none" stroke="#55ff55" stroke-width="30"   stroke-linecap="round"  />
                     <text id='mynet_text' x='200' y='190' text-anchor="middle" font-size='70'>0%</text>
                     <text id='mynet_text' x='200' y='260' text-anchor="middle" font-size='70'>NET</text>
@@ -103,8 +103,8 @@
         <!-- end of CPU and NET circles -->
         <br>
 
-      
-        
+
+
         <nav>
             <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-STAKER" role="tab" aria-controls="nav-STAKER" aria-selected="true">STAKE</a>
@@ -112,7 +112,7 @@
                 <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-MINER" role="tab" aria-controls="nav-MINER" aria-selected="false">MINE</a>
             </div>
         </nav>
-        
+
 
         <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-STAKER" role="tabpanel" aria-labelledby="nav-STAKER-tab">
@@ -132,13 +132,13 @@
                 <input class="text-center form-control border-0" type='text' id='svx_stake_balance' readonly="readonly" value=''>
                 </p>
                 <p class="col text-center text-white">
-                    &nbsp;Unstaking SVX 
-                        <br>         
+                    &nbsp;Unstaking SVX
+                        <br>
                     <input class="text-center form-control border-0" type='text' id='svx_unstaking_balance' readonly="readonly" value=''>
                     <small id='svx_unstake_time'></small>
                 </p>
             </div>
-        
+
             <div class="row row-cols-2">
                 <div class="col text-center">
                     <input class="text-center form-control mb-1" type='number' min="0" step="1" id='svx_to_stake'>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="col text-center">
                     <input class="text-center form-control mb-1" type='number' min="0" step="1" id='svx_to_unstake'>
-                    <button class="btn btn-primary btn-lg btn-block shadow" id='stakebutton' onclick='svx_to_unstake_action()'>Unstake</button> 
+                    <button class="btn btn-primary btn-lg btn-block shadow" id='stakebutton' onclick='svx_to_unstake_action()'>Unstake</button>
                 </div>
             </div>
 
@@ -176,12 +176,12 @@
             <br>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-PBTC" role="tabpanel" aria-labelledby="nav-PBTC-tab">
-                    
+
                     <h6 class="text-center text-white">EOS/pBTC Trading Balance</h6>
                     <row class="d-flex justify-content-around">
                         <small id="PBTCBALANCE" class="col text-center text-light">...</small>
                         <small id= "balance2" class="col text-light text-center">...</small>
-                    </row>  
+                    </row>
 
                     <div class="row row-cols-2">
                         <div class="col text-center">
@@ -196,12 +196,12 @@
                                 <div>
                                     <p id="BUYEOSPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
-                                
+
                         </div>
 
                         <div class="col text-center">
                             <input class="text-center form-control mb-1" type='number' id='eos_transfer_amount2' min="0" value='1' step=".01">
-                            <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellEOSPBTC()'>SendEOS<br>Sell EOS/pBTC</button> 
+                            <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellEOSPBTC()'>SendEOS<br>Sell EOS/pBTC</button>
                             <small class="text-center text-white">Receive</small>
                             <small class="text-center text-warning" id="selleospbtcBancorDiv">...</small>
                             <small class="text-center text-white">pBTC before fees</small>
@@ -211,7 +211,7 @@
                                 <div>
                                     <p id="SELLEOSPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
-                                
+
                         </div>
                     </div>
                     <div>
@@ -224,7 +224,7 @@
                     <row class="d-flex justify-content-around">
                         <small id="balance" class="col text-center text-light">...</small>
                         <small id= "SOVBALANCE" class="col text-light text-center">...</small>
-                    </row>  
+                    </row>
 
                     <div class="row row-cols-2">
                         <div class="col text-center">
@@ -237,7 +237,7 @@
                             <br>
                             <small class="text-center text-white" id="buysoveosMiningRateDiv">...</small>
                             <br>
-                            
+
                                 <div>
                                     <p id="BUYSOVEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
@@ -245,7 +245,7 @@
 
                         <div class="col text-center">
                             <input class="text-center form-control mb-1" type='number' id='sov_transfer_amount' min="0" value='350'>
-                            <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSOVEOS()'>SendSOV<br>Sell SOV/EOS</button> 
+                            <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSOVEOS()'>SendSOV<br>Sell SOV/EOS</button>
                             <small class="text-center text-white">Receive</small>
                             <small class="text-center text-warning" id="sellsoveosBancorDiv">...</small>
                             <small class="text-center text-white">EOS before fees</small>
@@ -253,7 +253,7 @@
                             <br>
                             <small class="text-center text-white" id="sellsoveosMiningRateDiv">...</small>
                             <br>
-                            
+
                             <div>
                                 <p id="SELLSOVEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                             </div>
@@ -270,7 +270,7 @@
                     <row class="d-flex justify-content-around">
                         <small id="USDTBALANCE" class="col text-center text-light">...</small>
                         <small id= "SOVUSDTBALANCE" class="col text-light text-center">...</small>
-                    </row> 
+                    </row>
 
                     <div class="row row-cols-2">
                         <div class="col text-center">
@@ -283,7 +283,7 @@
                             <br>
                             <small class="text-center text-white" id="buysovusdtMiningRateDiv">...</small>
                             <br>
-        
+
                             <div>
                                 <p id="BUYSOVUSDTAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                             </div>
@@ -291,7 +291,7 @@
 
                         <div class="col text-center">
                             <input class="text-center form-control mb-1" type='number' id='sov_transfer_amount10' min="0" value='350'>
-                            <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSOVUSDT()'>SendSOV<br>Sell SOV/USDT</button> 
+                            <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSOVUSDT()'>SendSOV<br>Sell SOV/USDT</button>
                             <small class="text-center text-white">Receive</small>
                             <small class="text-center text-warning" id="sellsovusdtBancorDiv">...</small>
                             <small class="text-center text-white">USDT before fees</small>
@@ -299,7 +299,7 @@
                             <br>
                             <small class="text-center text-white" id="sellsovusdtMiningRateDiv">...</small>
                             <br>
-                            
+
                                 <div>
                                     <p id="SELLSOVUSDTAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
@@ -309,13 +309,13 @@
                         <p id="SOVUSDTPRICE" class="d-flex justify-content-center text-light">...</p>
                     </div>
                 </div>
-  
+
                 <div class="tab-pane fade" id="nav-SVXEOS" role="tabpanel" aria-labelledby="nav-SVXEOS-tab">
                     <h6 class="text-center text-white">SVX/EOS Trading Balance</h6>
                     <row class="d-flex justify-content-around">
                         <small id="balance1" class="col text-center text-light">...</small>
                         <small id= "SVXBALANCE" class="col text-light text-center">...</small>
-                    </row>  
+                    </row>
                     <div class="row row-cols-2">
                         <div class="col text-center">
                             <input class="text-center form-control mb-1" type='number' id='eos_transfer_amount1' min="0" value= '1' step=".01">
@@ -325,7 +325,7 @@
                             <small class="text-center text-white">SVX before fees</small>
                             <br>
                             <br>
-                            <br>                  
+                            <br>
                                 <div>
                                     <p id="BUYSVXEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
@@ -333,7 +333,7 @@
 
                             <div class="col text-center">
                                 <input class="text-center form-control mb-1" type='number' id='svx_transfer_amount' min="0" value='350'>
-                                <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSVXEOS()'>SendSVX<br>Sell SVX/EOS</button> 
+                                <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellSVXEOS()'>SendSVX<br>Sell SVX/EOS</button>
                                 <small class="text-center text-white">Receive</small>
                                 <small class="text-center text-warning" id="sellsvxeosBancorDiv">...</small>
                                 <small class="text-center text-white">EOS before fees</small>
@@ -342,7 +342,7 @@
                                 <br>
                                 <div>
                                     <p id="SELLSVXEOSAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
-                                </div>                   
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -356,7 +356,7 @@
                     <row class="d-flex justify-content-around">
                         <small id="PBTCBALANCE2" class="col text-center text-light">...</small>
                         <small id= "POWBALANCE" class="col text-light text-center">...</small>
-                    </row>  
+                    </row>
                     <div class="row row-cols-2">
                         <div class="col text-center">
                             <input class="text-center form-control mb-1" type='number' id='pbtc_transfer_amount1' min="0" value= '.0001' step=".000001">
@@ -366,7 +366,7 @@
                             <small class="text-center text-white">POW before fees</small>
                             <br>
                             <br>
-                            <br>                  
+                            <br>
                                 <div>
                                     <p id="BUYPOWPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
                                 </div>
@@ -374,7 +374,7 @@
 
                             <div class="col text-center">
                                 <input class="text-center form-control mb-1" type='number' id='pow_transfer_amount' min="0" value='1'>
-                                <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellPOWPBTC()'>SendPOW<br>Sell POW/pBTC</button> 
+                                <button class="btn btn-danger btn-lg btn-block shadow" onclick='sellPOWPBTC()'>SendPOW<br>Sell POW/pBTC</button>
                                 <small class="text-center text-white">Receive</small>
                                 <small class="text-center text-warning" id="sellpowpbtcBancorDiv">...</small>
                                 <small class="text-center text-white">pBTC before fees</small>
@@ -383,7 +383,7 @@
                                 <br>
                                 <div>
                                     <p id="SELLPOWPBTCAVGPRICE" class="d-flex justify-content-center text-light" style="font-size:80%;">...</p>
-                                </div>                   
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -405,7 +405,7 @@
 
         <div class="tab-pane fade" id="nav-MINER" role="tabpanel" aria-labelledby="nav-MINER-tab">
 
-        <br>   
+        <br>
         <h6 id='mining_hint' class="text-center">...</h6>
          <nav>
             <div class="nav nav-pills nav-justified" id="nav-tab" role="tablist">
@@ -419,16 +419,16 @@
         <h6 id='svx_bonus' class="text-center">...</h6>
 
         <!-- detailed miner information box -->
-        <div class="container bg-dark border border-primary rounded shadow">  
+        <div class="container bg-dark border border-primary rounded shadow">
             <p id='svxMiningRate' class="text-center text-white mt-3">...</p>
             <p id='totalSVXMiningRate' class="text-center text-white">...</p>
             <p id='svxMiningBurn' class="text-center text-white">...</p>
         </div>
         <!-- end of detailed miner information box -->
         <br>
-        
+
         <!-- box for mining cost in sov -->
-        <div class="container bg-dark border border-warning rounded shadow"> 
+        <div class="container bg-dark border border-warning rounded shadow">
             <p id='svxMiningCost' class="text-center text-white mt-3">...</p>
         </div>
         <!-- end of box for mining cost in sov -->
@@ -447,8 +447,8 @@
                 <input type='checkbox' class="custom-control-input" id='checkbox' onclick='switch_autominer(this)'>
                 <label class="custom-control-label" for='checkbox' style='font-size:16px;'>Auto</label>
             </div>
-        
-        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Burn Mine X 1</button>  
+
+        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='dotransaction_bundle' onclick='dotransaction_bundle()'>Burn Mine X 1</button>
         </div>
 
         <div class="slidecontainer" style='width:100%;'>
@@ -459,7 +459,7 @@
             <small>Bundled burn mining actions per transaction</small>
         </div>
 
-          <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+          <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->
         <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
             <svg viewbox="0, 0, 400, 10">
                 <rect id='rect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
@@ -477,7 +477,7 @@
     </div>
         <!-- end of little blocks for miner feedback -->
 
-        
+
         <!-- end ofminer / autominer inputs and info-->
 
         <div class="tab-pane fade" id="nav-CPU-MINER" role="tabpanel" aria-labelledby="nav-CPU-MINER-tab">
@@ -491,8 +491,8 @@
                 <input type='checkbox' class="custom-control-input" id='checkbox-1' onclick='switch_cpu_autominer(this)'>
                 <label class="custom-control-label" for='checkbox-1' style='font-size:16px;'>Auto</label>
             </div>
-        
-        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_cpu_transaction_bundle' onclick='do_cpu_transaction_bundle()'>SVX/CPU Mine X 1</button>  
+
+        <button type="button" class="btn btn-info btn-block border border-dark col m-3 shadow" id='do_cpu_transaction_bundle' onclick='do_cpu_transaction_bundle()'>SVX/CPU Mine X 1</button>
         </div>
         <div class="text-center">
             <small>SVX/CPU mining does not receive staking bonuses</small>
@@ -506,7 +506,7 @@
             <small>CPU mining actions x 30</small>
         </div>
 
-          <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+          <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->
         <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
             <svg viewbox="0, 0, 400, 10">
                 <rect id='cpurect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
@@ -533,8 +533,8 @@
                 <input type='checkbox' class="custom-control-input" id='checkbox-2' onclick='switch_sov_cpu_autominer(this)'>
                 <label class="custom-control-label" for='checkbox-2' style='font-size:16px;'>Auto</label>
             </div>
-        
-        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='do_sov_cpu_transaction_bundle' onclick='do_sov_cpu_transaction_bundle()'>SOV/CPU Mine X 1</button>  
+
+        <button type="button" class="btn btn-primary btn-block border border-dark col m-3 shadow" id='do_sov_cpu_transaction_bundle' onclick='do_sov_cpu_transaction_bundle()'>SOV/CPU Mine X 1</button>
         </div>
         <div class="text-center">
             <small>SOV/CPU mining does not receive staking bonuses</small>
@@ -548,7 +548,7 @@
             <small>CPU mining actions x 30</small>
         </div>
 
-           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->
         <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
             <svg viewbox="0, 0, 400, 10">
                 <rect id='sovrect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
@@ -583,8 +583,8 @@
                 <input type='checkbox' class="custom-control-input" id='checkbox-3' onclick='switch_btc_cpu_autominer(this)'>
                 <label class="custom-control-label" for='checkbox-3' style='font-size:16px;'>Auto</label>
             </div>
-        
-        <button type="button" class="btn btn-warning btn-block border border-dark col m-3 shadow" id='do_btc_cpu_transaction_bundle' onclick='do_btc_cpu_transaction_bundle()'>BTC/CPU Mine X 1</button>  
+
+        <button type="button" class="btn btn-warning btn-block border border-dark col m-3 shadow" id='do_btc_cpu_transaction_bundle' onclick='do_btc_cpu_transaction_bundle()'>BTC/CPU Mine X 1</button>
         </div>
         <div class="text-center">
             <small>BTC/CPU mining does not receive staking bonuses</small>
@@ -599,7 +599,7 @@
         </div>
 
 
-           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->    
+           <!--this is the little blocks that update by consecutively turning black one at a time when you are mining so that the user understands it is working-->
         <div style='width:100%;margin-left:0;margin-right:0;margin-top:10px;height:25px;border:none;'>
             <svg viewbox="0, 0, 400, 10">
                 <rect id='btcrect1'  x="0" y="0" width="38" height="10" fill='#cccccc' />
@@ -617,7 +617,7 @@
 
     </div>
 
-    
+
 </div>
 </div>
 </div>
@@ -626,13 +626,13 @@
 <!-- resources dropdown / input to purchase EOS resources with SOV -->
 
 <h6 id='resourcesInfo' class="text-center">...</h6>
-        
-        <div class="container bg-dark border border-primary rounded shadow"> 
+
+        <div class="container bg-dark border border-primary rounded shadow">
             <br>
             <div class="input-group">
                 <input type="number" placeholder="Enter SOV Amount" min="1" class="form-control" aria-label="Number input with dropdown button" id="sovresourcesInput">
                 <div class="dropup input-group-prepend">
-                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</button>                
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" onclick="rentCPUSOV()">Rent CPU</a>
                         <a class="dropdown-item" onclick="rentNETSOV()">Rent NET</a>
@@ -656,15 +656,12 @@
     <br>
     <!-- end of node changing button / input area -->
 </div> <!--closes the main container-->
-                    
+
 <script>
-    var init_node = "eu1.eosdac.io";
+    var init_node = "eos.greymass.com";
     document.getElementById('scatter_host').value = init_node;
 </script>
 
-<script type="text/javascript" src="js/main.js"></script>           
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
-
-
-
